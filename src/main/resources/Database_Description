@@ -1,0 +1,78 @@
+Table Users {
+  id UUID [primary key] // ID duy nhất của người dùng
+  name VARCHAR(255) // Tên người dùng
+  email VARCHAR(255) [unique] // Địa chỉ email duy nhất
+  password_hash VARCHAR(255) // Mật khẩu đã mã hóa
+  role VARCHAR(50) // "job_seeker" hoặc "employer"
+  phone_number VARCHAR(20) [null] // Số điện thoại
+  profile_picture TEXT [null] // Ảnh đại diện
+  gender TEXT  // Giới tính
+  bio TEXT [null] // Giới thiệu bản thân
+  location VARCHAR(255) [null] // Địa chỉ
+  cv_url TEXT [null] // URL CV của người dùng
+  education TEXT [null] // Trình độ học vấn
+  experience TEXT [null] // Kinh nghiệm làm việc
+  skills TEXT [null] // Danh sách kỹ năng
+  created_at TIMESTAMP [default: `now()`] // Ngày tạo tài khoản
+}
+
+Table Companies {
+  id UUID [primary key] // ID duy nhất của công ty
+  name VARCHAR(255) // Tên công ty
+  description TEXT // Mô tả công ty
+  location VARCHAR(255) // Địa chỉ công ty
+  website VARCHAR(255) // Trang web công ty
+  logo TEXT [null] // URL logo công ty
+  size INT // Số lượng nhân viên
+  created_at TIMESTAMP [default: `now()`] // Ngày tạo công ty
+  user_id UUID [ref: > Users.id] // ID của người sở hữu công ty
+}
+
+Table Jobs {
+  id UUID [primary key] // ID duy nhất của công việc
+  title VARCHAR(255) // Tiêu đề công việc
+  description TEXT // Mô tả công việc
+  salary_min DECIMAL(10,2) [null] // Lương tối thiểu
+  salary_max DECIMAL(10,2) [null] // Lương tối đa
+  currency VARCHAR(10) [default: "VND"] // Đơn vị tiền tệ
+  location VARCHAR(255) // Địa điểm làm việc
+  job_type VARCHAR(50) // Loại hình công việc (FULL_TIME, PART_TIME,...)
+  experience_level VARCHAR(50) // Cấp độ kinh nghiệm (ENTRY, MID_LEVEL,...)
+  company_id UUID [ref: > Companies.id] // Công ty đăng tuyển
+  created_at TIMESTAMP [default: `now()`] // Ngày đăng tin
+  posted_by UUID [ref: > Users.id] // Người đăng tin
+  benefits TEXT [null] // Lợi ích khi làm việc
+  quantity INT [default: 1] // Số lượng tuyển dụng
+  gender_require TEXT // Yêu cầu giới tính (MALE, FEMALE, ANY)
+  deadline DATE [null] // Hạn nộp đơn
+  status VARCHAR(50) // Trạng thái công việc (ACTIVE, CLOSED,...)
+  requirements TEXT [null] // Yêu cầu công việc
+  job_image TEXT [null] // Ảnh minh họa công việc
+}
+
+Table SavedJobs {
+  id UUID [primary key] // ID duy nhất của bản ghi
+  user_id UUID [ref: > Users.id] // ID người dùng đã lưu công việc
+  job_id UUID [ref: > Jobs.id] // ID công việc đã lưu
+  saved_at TIMESTAMP [default: `now()`] // Thời gian lưu công việc
+}
+
+Table Messages {
+  id UUID [primary key] // ID duy nhất của tin nhắn
+  sender_id UUID [ref: > Users.id] // Người gửi tin nhắn
+  receiver_id UUID [ref: > Users.id] // Người nhận tin nhắn
+  message TEXT // Nội dung tin nhắn
+  sent_at TIMESTAMP [default: `now()`] // Thời gian gửi
+  is_read BOOLEAN [default: false] // Đã đọc hay chưa
+}
+
+Table JobCategories {
+  id UUID [primary key] // ID duy nhất của danh mục
+  name VARCHAR(255) [unique] // Tên danh mục công việc
+}
+
+Table JobCategoryMapping {
+  job_id UUID [ref: > Jobs.id] // ID công việc
+  category_id UUID [ref: > JobCategories.id] // ID danh mục
+  primary key (job_id, category_id) // Khóa chính kết hợp
+}
