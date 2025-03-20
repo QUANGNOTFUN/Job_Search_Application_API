@@ -4,6 +4,7 @@ import net.jobsearchapplication_api.data.db.schemas.CommentTable
 import net.jobsearchapplication_api.data.db.schemas.StoryTable
 import net.jobsearchapplication_api.data.db.schemas.UserTable
 import net.jobsearchapplication_api.data.models.Comment
+import net.jobsearchapplication_api.data.models.Job
 import net.jobsearchapplication_api.data.models.Story
 import net.jobsearchapplication_api.data.models.User
 import org.jetbrains.exposed.sql.ResultRow
@@ -57,4 +58,8 @@ fun ResultRow?.toComment(): Comment? {
         comment = this[CommentTable.comment],
         createdAt = this[CommentTable.createdAt].toString()
     )
+}
+
+fun ResultRow?.toJob(): Job?{
+
 }
