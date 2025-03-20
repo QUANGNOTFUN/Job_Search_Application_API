@@ -7,6 +7,7 @@ import io.ktor.http.*
 import io.ktor.response.*
 import net.jobsearchapplication_api.base.BaseResponse
 import net.jobsearchapplication_api.config.INVALID_AUTHENTICATION_TOKEN
+import java.util.UUID
 
 fun Application.configureSecurity() {
     JwtConfig.initialize("my-story-app")
@@ -14,9 +15,10 @@ fun Application.configureSecurity() {
         jwt {
             verifier(JwtConfig.instance.verifier)
             validate {
-                val claim = it.payload.getClaim(JwtConfig.CLAIM).asInt()
+                val claim = it.payload.getClaim(JwtConfig.CLAIM).asString()
                 if (claim != null) {
-                    UserIdPrincipalForUser(claim)
+                    val userId = UUID.fromString(claim)
+                    UserIdPrincipalForUser(userId)
                 } else {
                     null
                 }

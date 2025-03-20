@@ -3,6 +3,7 @@ package net.jobsearchapplication_api.security
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
+import java.util.UUID
 
 class JwtConfig private constructor(secret: String){
 
@@ -14,11 +15,11 @@ class JwtConfig private constructor(secret: String){
         .withAudience(AUDIENCE)
         .build()
 
-    fun createAccessToken(id: Int): String = JWT
+    fun createAccessToken(id: UUID): String = JWT
         .create()
         .withIssuer(ISSUER)
         .withAudience(AUDIENCE)
-        .withClaim(CLAIM, id)
+        .withClaim(CLAIM, id.toString())
         .sign(algorithm)
 
     companion object{
