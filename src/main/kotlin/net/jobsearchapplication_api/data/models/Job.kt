@@ -2,7 +2,6 @@ package net.jobsearchapplication_api.data.models
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import java.math.BigDecimal
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
@@ -23,7 +22,7 @@ data class Job(
     val benefits: String?,
     val quantity: Int = 1,
     val genderRequire: GenderRequirement,
-    val deadline: LocalDate?,
+    val deadline: LocalDateTime?,
     val status: JobStatus,
     val requirements: String?,
     val jobImage: String?
