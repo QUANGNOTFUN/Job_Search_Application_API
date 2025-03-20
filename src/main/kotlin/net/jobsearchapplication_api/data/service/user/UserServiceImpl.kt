@@ -5,9 +5,10 @@ import net.jobsearchapplication_api.data.db.extensions.toUser
 import net.jobsearchapplication_api.data.db.schemas.UserTable
 import net.jobsearchapplication_api.data.models.User
 import org.jetbrains.exposed.sql.select
+import java.util.*
 
 class UserServiceImpl : UserService {
-    override suspend fun getUser(id: Int): User {
+    override suspend fun getUser(id: UUID): User {
         val userRow = dbQuery { UserTable.select { UserTable.id eq id }.first() }
         return userRow.toUser()!!
     }

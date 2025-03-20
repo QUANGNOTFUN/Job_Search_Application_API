@@ -6,11 +6,12 @@ import net.jobsearchapplication_api.config.GENERIC_ERROR
 import net.jobsearchapplication_api.config.SUCCESS
 import net.jobsearchapplication_api.data.service.story.StoryService
 import net.jobsearchapplication_api.routes.story.StoryParams
+import java.util.UUID
 
 class StoryRepositoryImpl(
     private val storyService: StoryService
 ) : StoryRepository {
-    override suspend fun getMyStories(userId: Int, page: Int, limit: Int, isDraft: Boolean): BaseResponse<Any> {
+    override suspend fun getMyStories(userId: UUID, page: Int, limit: Int, isDraft: Boolean): BaseResponse<Any> {
         return BaseResponse.SuccessResponse(data = storyService.getMyStories(userId, page, limit, isDraft), message = SUCCESS)
     }
 
@@ -50,14 +51,14 @@ class StoryRepositoryImpl(
         return BaseResponse.ErrorResponse(message = GENERIC_ERROR)
     }
 
-    override suspend fun like(userId: Int, storyId: Int): BaseResponse<Any> {
+    override suspend fun like(userId: UUID, storyId: Int): BaseResponse<Any> {
         if (storyService.like(userId, storyId)) {
             return BaseResponse.SuccessResponse(data = null, message = SUCCESS)
         }
         return BaseResponse.ErrorResponse(message = GENERIC_ERROR)
     }
 
-    override suspend fun comment(userId: Int, storyId: Int, comment: String): BaseResponse<Any> {
+    override suspend fun comment(userId: UUID, storyId: Int, comment: String): BaseResponse<Any> {
         if (storyService.comment(userId, storyId, comment)) {
             return BaseResponse.SuccessResponse(data = null, message = SUCCESS)
         }

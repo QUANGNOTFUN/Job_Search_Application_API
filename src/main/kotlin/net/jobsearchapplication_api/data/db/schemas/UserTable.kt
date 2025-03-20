@@ -1,16 +1,26 @@
 package net.jobsearchapplication_api.data.db.schemas
 
+import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.javatime.CurrentTimestamp
 import org.jetbrains.exposed.sql.javatime.datetime
+import org.jetbrains.exposed.sql.javatime.timestamp
+import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
 
 object UserTable : Table("users") {
-    val id = integer("id").autoIncrement()
-    val fullName = varchar("full_name", 256)
-    val avatar = text("avatar")
-    val email = varchar("email", 256)
-    val password = text("password")
-    val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
+    val id = uuid("id").autoGenerate()
+    val fullName = varchar("full_name", 50)
+    val email = varchar("email", 100)
+    val password_hash = text("password_hash")
+    val phone_number = varchar("phone_number", 20)
+    val avatar = text("avatar").nullable()
+    val bio = varchar("bio", 250).nullable()
+    val location = varchar("location", 255).nullable()
+    val cv_url = text("cv_url").nullable()
+    val education = text("education").nullable()
+    val experience = text("experience").nullable()
+    val createdAt = timestamp("created_at").defaultExpression(CurrentTimestamp())
 
     override val primaryKey = PrimaryKey(id)
 }

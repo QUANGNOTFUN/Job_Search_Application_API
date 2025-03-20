@@ -3,19 +3,30 @@ package net.jobsearchapplication_api.data.db.extensions
 import net.jobsearchapplication_api.data.db.schemas.CommentTable
 import net.jobsearchapplication_api.data.db.schemas.StoryTable
 import net.jobsearchapplication_api.data.db.schemas.UserTable
+import net.jobsearchapplication_api.data.db.schemas.UserTable.bio
 import net.jobsearchapplication_api.data.models.Comment
 import net.jobsearchapplication_api.data.models.Job
 import net.jobsearchapplication_api.data.models.Story
 import net.jobsearchapplication_api.data.models.User
+import org.jetbrains.exposed.dao.withHook
 import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.transactions.transaction
 
 fun ResultRow?.toUser(): User? {
     return if (this == null) null
     else User(
         id = this[UserTable.id],
         fullName = this[UserTable.fullName],
-        avatar = this[UserTable.avatar],
         email = this[UserTable.email],
+        passwordHash = this[UserTable.password_hash],
+        phoneNumber = this[UserTable.phone_number],
+        avatar = this[UserTable.avatar],
+        bio = this[UserTable.bio],
+        location = this[UserTable.location],
+        cvUrl = this[UserTable.cv_url],
+        education = this[UserTable.education],
+        experience = this[UserTable.experience],
         createdAt = this[UserTable.createdAt].toString(),
     )
 }
@@ -38,9 +49,16 @@ fun ResultRow?.toStoryJoinedWithUser(): Story? {
         user = User(
             id = this[UserTable.id],
             fullName = this[UserTable.fullName],
-            avatar = this[UserTable.avatar],
             email = this[UserTable.email],
-            createdAt = this[UserTable.createdAt].toString()
+            passwordHash = this[UserTable.password_hash],
+            phoneNumber = this[UserTable.phone_number],
+            avatar = this[UserTable.avatar],
+            bio = this[UserTable.bio],
+            location = this[UserTable.location],
+            cvUrl = this[UserTable.cv_url],
+            education = this[UserTable.education],
+            experience = this[UserTable.experience],
+            createdAt = this[UserTable.createdAt].toString(),
         ),
         title = this[StoryTable.title],
         content = this[StoryTable.content],
@@ -60,6 +78,8 @@ fun ResultRow?.toComment(): Comment? {
     )
 }
 
-fun ResultRow?.toJob(): Job?{
-
+fun addNewColumn() {
+    transaction {
+        SchemaUtils.createMissingTablesAndColumns(UserTable)
+    }
 }

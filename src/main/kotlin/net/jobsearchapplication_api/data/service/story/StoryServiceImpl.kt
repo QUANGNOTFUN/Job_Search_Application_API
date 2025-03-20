@@ -14,6 +14,7 @@ import net.jobsearchapplication_api.data.models.common.PaginatedResult
 import net.jobsearchapplication_api.routes.story.StoryParams
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.statements.InsertStatement
+import java.util.UUID
 
 class StoryServiceImpl : StoryService {
 
@@ -22,7 +23,7 @@ class StoryServiceImpl : StoryService {
         return storyRow.toStory()
     }
 
-    override suspend fun getMyStories(userId: Int, page: Int, limit: Int, isDraft: Boolean): PaginatedResult<Story> {
+    override suspend fun getMyStories(userId: UUID, page: Int, limit: Int, isDraft: Boolean): PaginatedResult<Story> {
         var pageCount: Long = 0
         var nextPage: Long? = null
 
@@ -61,7 +62,7 @@ class StoryServiceImpl : StoryService {
         return PaginatedResult(pageCount, nextPage, stories)
     }
 
-    override suspend fun getLikedStories(userId: Int): List<Story> {
+    override suspend fun getLikedStories(userId: UUID): List<Story> {
         return DatabaseFactory.dbQuery {
             val storyTable = StoryTable.alias("s")
             LikeTable.innerJoin(storyTable, { LikeTable.storyId }, { storyTable[StoryTable.id] })
@@ -104,7 +105,7 @@ class StoryServiceImpl : StoryService {
         return result == 1
     }
 
-    override suspend fun like(userId: Int, storyId: Int): Boolean {
+    override suspend fun like(userId: UUID, storyId: Int): Boolean {
         var statement: InsertStatement<Number>? = null
         DatabaseFactory.dbQuery {
             statement = LikeTable.insert {
@@ -115,7 +116,7 @@ class StoryServiceImpl : StoryService {
         return statement?.resultedValues?.isNotEmpty() ?: false
     }
 
-    override suspend fun comment(userId: Int, storyId: Int, comment: String): Boolean {
+    override suspend fun comment(userId: UUID, storyId: Int, comment: String): Boolean {
         var statement: InsertStatement<Number>? = null
         DatabaseFactory.dbQuery {
             statement = CommentTable.insert {
