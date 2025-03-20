@@ -17,5 +17,5 @@ data class User(
     val education: String? = null,
     val experience: String? = null,
     var authToken: String? = null,
-    val createdAt: String
+    var createdAt: String
 )

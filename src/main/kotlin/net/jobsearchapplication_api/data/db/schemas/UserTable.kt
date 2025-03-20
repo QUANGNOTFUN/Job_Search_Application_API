@@ -13,14 +13,14 @@ object UserTable : Table("users") {
     val fullName = varchar("full_name", 50)
     val email = varchar("email", 100)
     val password_hash = text("password_hash")
-    val phone_number = varchar("phone_number", 20)
+    val phone_number = varchar("phone_number", 20).nullable()
     val avatar = text("avatar").nullable()
     val bio = varchar("bio", 250).nullable()
     val location = varchar("location", 255).nullable()
     val cv_url = text("cv_url").nullable()
     val education = text("education").nullable()
     val experience = text("experience").nullable()
-    val createdAt = timestamp("created_at").defaultExpression(CurrentTimestamp())
+    var createdAt = timestamp("created_at").defaultExpression(CurrentTimestamp())
 
     override val primaryKey = PrimaryKey(id)
 }
