@@ -8,6 +8,8 @@ import net.jobsearchapplication_api.di.RepositoryProvider
 import net.jobsearchapplication_api.routes.auth.authRoutes
 import net.jobsearchapplication_api.routes.story.storyRoutes
 import net.jobsearchapplication_api.routes.user.userRoutes
+import net.jobsearchapplication_api.routes.company.companyRoutes
+
 
 fun configureDatabase() {
     DatabaseFactory.init()
@@ -23,5 +25,5 @@ fun Application.configureRouting(){
     authRoutes(RepositoryProvider.provideAuthRepository())
     userRoutes(RepositoryProvider.provideUserRepository())
     storyRoutes(RepositoryProvider.provideStoryRepository())
-    CompanyRoutes(RepositoryProvider.provideStoryRepository())
+    companyRoutes(RepositoryProvider.provideCompanyRepository())
 }

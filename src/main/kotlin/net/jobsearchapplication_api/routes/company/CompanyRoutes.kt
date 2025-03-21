@@ -1,6 +1,13 @@
 package net.jobsearchapplication_api.routes.company
 
+import io.ktor.application.*
+import io.ktor.auth.*
+import io.ktor.request.*
+import io.ktor.response.*
+import io.ktor.routing.*
 import net.jobsearchapplication_api.data.repository.company.CompanyRepository
+import java.util.*
+import kotlin.text.get
 
 fun Application.companyRoutes(repository: CompanyRepository) {
     routing {
