@@ -4,16 +4,9 @@ import io.ktor.http.*
 import net.jobsearchapplication_api.base.BaseResponse
 import net.jobsearchapplication_api.config.GENERIC_ERROR
 import net.jobsearchapplication_api.config.SUCCESS
-import net.jobsearchapplication_api.data.db.DatabaseFactory
-import net.jobsearchapplication_api.data.db.extensions.toJob
-import net.jobsearchapplication_api.data.db.schemas.JobTable
-import net.jobsearchapplication_api.data.models.common.PaginatedResult
 import net.jobsearchapplication_api.data.service.job.JobService
 import net.jobsearchapplication_api.routes.job.JobParams
-import org.jetbrains.exposed.sql.SortOrder
-import org.jetbrains.exposed.sql.selectAll
 import java.util.*
-import kotlin.math.ceil
 
 // JobRepositoryImpl.kt
 class JobRepositoryImpl(private val jobService: JobService ) : JobRepository {

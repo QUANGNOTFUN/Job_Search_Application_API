@@ -35,7 +35,6 @@ fun Application.configureRouting(){
     authRoutes(RepositoryProvider.provideAuthRepository())
     userRoutes(RepositoryProvider.provideUserRepository())
     storyRoutes(RepositoryProvider.provideStoryRepository())
-        jobRoutes(RepositoryProvider.provideJobRepository())
-
+    jobRoutes(RepositoryProvider.provideJobRepository())
     companyRoutes(RepositoryProvider.provideCompanyRepository())
 }

@@ -1,16 +1,10 @@
 package net.jobsearchapplication_api.data.db.extensions
 
-import net.jobsearchapplication_api.data.db.schemas.CommentTable
-import net.jobsearchapplication_api.data.db.schemas.StoryTable
-import net.jobsearchapplication_api.data.db.schemas.UserTable
-import net.jobsearchapplication_api.data.db.schemas.UserTable.bio
-import net.jobsearchapplication_api.data.models.Comment
-import net.jobsearchapplication_api.data.models.Story
-import net.jobsearchapplication_api.data.models.User
+import net.jobsearchapplication_api.data.db.schemas.*
+import net.jobsearchapplication_api.data.models.*
 import org.jetbrains.exposed.dao.withHook
 import org.jetbrains.exposed.sql.ResultRow
 import java.math.BigDecimal
-import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -48,30 +42,7 @@ fun ResultRow?.toStory(): Story? {
     )
 }
 
-fun ResultRow?.toStoryJoinedWithUser(): Story? {
-    return if (this == null) null
-    else Story(
-        id = this[StoryTable.id],
-        user = User(
-            id = this[UserTable.id],
-            fullName = this[UserTable.fullName],
-            email = this[UserTable.email],
-            passwordHash = this[UserTable.password_hash],
-            phoneNumber = this[UserTable.phone_number],
-            avatar = this[UserTable.avatar],
-            bio = this[UserTable.bio],
-            location = this[UserTable.location],
-            cvUrl = this[UserTable.cv_url],
-            education = this[UserTable.education],
-            experience = this[UserTable.experience],
-            createdAt = this[UserTable.createdAt].toString(),
-        ),
-        title = this[StoryTable.title],
-        content = this[StoryTable.content],
-        isDraft = this[StoryTable.isDraft],
-        createdAt = this[StoryTable.createdAt].toString()
-    )
-}
+
 
 fun ResultRow?.toComment(): Comment? {
     return if (this == null) null
@@ -173,8 +144,4 @@ fun ResultRow.toJobWithDetails(): Job {
         jobImage = this[JobTable.jobImage],
         createdAt = this[JobTable.createdAt]
     )
-fun addNewColumn() {
-    transaction {
-        SchemaUtils.createMissingTablesAndColumns(UserTable)
-    }
 }
