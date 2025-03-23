@@ -1,10 +1,10 @@
 package net.jobsearchapplication_api.data.service.job
 
+import net.jobsearchapplication_api.base.BaseResponse
 import net.jobsearchapplication_api.data.db.DatabaseFactory
 import net.jobsearchapplication_api.data.db.extensions.*
 import net.jobsearchapplication_api.data.db.schemas.*
 import net.jobsearchapplication_api.data.models.Job
-import net.jobsearchapplication_api.data.models.JobStatus
 import net.jobsearchapplication_api.data.models.common.PaginatedResult
 import net.jobsearchapplication_api.routes.job.JobParams
 import org.jetbrains.exposed.sql.*
@@ -14,7 +14,6 @@ import java.time.LocalDateTime
 import java.util.*
 
 class JobServiceImpl : JobService {
-
     override suspend fun getJobsByCompanyId(companyId: UUID): List<Job> {
 //        var pageCount: Long = 0
 //        var nextPage: Long? = null
@@ -115,18 +114,90 @@ class JobServiceImpl : JobService {
                     it[createdAt] = LocalDateTime.now()
                 }
             }
-            return statement?.resultedValues?.get(0)?.toJob()
+        return statement?.resultedValues?.get(0)?.toJob()
+    }
+
+    override suspend fun updateJob(id: UUID, params: JobParams): BaseResponse<Job> {
+        TODO("Not yet implemented")
+
+//        return try {
+//            // Kiểm tra job có tồn tại không
+//            val existingJob = JobService.getJobById(id)
+//            if (existingJob == null) {
+//                return BaseResponse.ErrorResponse(
+//                    message = "Job not found"
+//                )
+//            }
+//
+//            // Validate input
+//            val validationErrors = validateJobParams(params)
+//            if (validationErrors.isNotEmpty()) {
+//                return BaseResponse.ErrorResponse(
+//                    message = "Validation failed",
+//                    errors = validationErrors
+//                )
+//            }
+//
+//            // Thực hiện update
+//            val success = jobService.updateJob(id, params)
+//            if (success) {
+//                // Lấy job đã update để trả về
+//                val updatedJob = jobService.getJobById(id)
+//                BaseResponse.SuccessResponse(
+//                    data = updatedJob,
+//                    message = "Job updated successfully"
+//                )
+//            } else {
+//                BaseResponse.ErrorResponse(
+//                    message = "Failed to update job"
+//                )
+//            }
+//        } catch (e: Exception) {
+//            BaseResponse.ErrorResponse(
+//                message = "Error updating job: ${e.localizedMessage}"
+//            )
+//        }
+    }
+
+    // Hàm validate input
+    private fun validateJobParams(params: JobParams): List<String> {
+        val errors = mutableListOf<String>()
+
+        // Validate title
+        if (params.title.isBlank()) {
+            errors.add("Title is required")
+        }
+        if (params.title.length < 10) {
+            errors.add("Title must be at least 10 characters")
         }
 
-        override suspend fun updateJob(id: UUID, jobParams: JobParams): Boolean {
-            TODO("Not yet implemented")
+        // Validate description
+        if (params.description.isBlank()) {
+            errors.add("Description is required")
         }
 
-        override suspend fun deleteJob(id: UUID): Boolean {
-            TODO("Not yet implemented")
+        // Validate salary
+        if (params.salary.min > params.salary.max) {
+            errors.add("Minimum salary cannot be greater than maximum salary")
         }
 
-        override suspend fun searchJobs(query: String, location: String?, type: String?, page: Int): List<Job> {
-            TODO("Not yet implemented")
+        // Validate deadline
+        if (params.deadline?.isBefore(LocalDateTime.now()) == true) {
+            errors.add("Deadline must be in the future")
         }
+
+        return errors
+    }
+
+    override suspend fun deleteJob(id: UUID): Boolean {
+        var result = -1
+        DatabaseFactory.dbQuery {
+            result = JobTable.deleteWhere { JobTable.id eq id }
+        }
+        return result == 1
+   }
+
+    override suspend fun searchJobs(query: String, location: String?, type: String?, page: Int): List<Job> {
+        TODO("Not yet implemented")
+    }
 }

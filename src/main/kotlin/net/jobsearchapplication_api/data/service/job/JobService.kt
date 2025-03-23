@@ -16,7 +16,7 @@ interface JobService {
 
     suspend fun createJob(params: JobParams): Job?
 
-    suspend fun updateJob(id: UUID, params: JobParams): Boolean
+    suspend fun updateJob(id: UUID, params: JobParams): BaseResponse<Job>
 
     suspend fun deleteJob(id: UUID): Boolean
 
