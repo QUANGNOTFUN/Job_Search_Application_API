@@ -30,7 +30,7 @@ fun Application.storyRoutes(repository: StoryRepository) {
                     }
                 }
 
-                get("all/{page?}") {
+                get("/get/all/{page?}") {
                     val pageParam = call.parameters["page"]?.toIntOrNull()
                     val page = when {
                         pageParam == null || pageParam < 1 -> 1 // Mặc định trang 1
@@ -81,7 +81,7 @@ fun Application.storyRoutes(repository: StoryRepository) {
                     }
                 }
 
-                get("{id}") {
+                get("/get/{id}") {
                     // Lấy id từ URL
                     val id = call.parameters["id"]?.toIntOrNull()
 
@@ -109,7 +109,7 @@ fun Application.storyRoutes(repository: StoryRepository) {
                     }
                 }
 
-                put("update/{id}") {
+                put("/update/{id}") {
                     val id = call.parameters["id"]?.toIntOrNull() ?: -1
 
                     if (id == null || id < 0) {
@@ -124,7 +124,7 @@ fun Application.storyRoutes(repository: StoryRepository) {
                     call.respond(result.statusCode, result)
                 }
 
-                delete("delete/{id}") {
+                delete("/delete/{id}") {
                     val id = call.parameters["id"]?.toIntOrNull() ?: -1
                     if(id <= 0){
                         call.respond(HttpStatusCode.BadRequest)

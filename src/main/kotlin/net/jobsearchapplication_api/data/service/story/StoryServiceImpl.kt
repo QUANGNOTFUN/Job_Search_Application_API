@@ -84,16 +84,15 @@ class StoryServiceImpl : StoryService {
     }
 
     override suspend fun update(id: Int, storyParams: StoryParams): Boolean {
-        var result = -1
-        DatabaseFactory.dbQuery {
-            result = StoryTable.update({ StoryTable.id eq id }) {
-                it[userId] = storyParams.userId
-                it[title] = storyParams.title
-                it[content] = storyParams.content
-                it[isDraft] = storyParams.isDraft
+        val result = DatabaseFactory.dbQuery {
+            StoryTable.update({ StoryTable.id eq id }) {
+                if (storyParams.userId != null) it[userId] = storyParams.userId
+                if (storyParams.title != null) it[title] = storyParams.title
+                if (storyParams.content != null) it[content] = storyParams.content
+                if (storyParams.isDraft != null) it[isDraft] = storyParams.isDraft
             }
         }
-        return result == 1
+        return result > 0 // Trả về true nếu có bản ghi được cập nhật
     }
 
     override suspend fun delete(storyId: Int): Boolean {
