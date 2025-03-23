@@ -1,7 +1,7 @@
-package net.jobsearchapplication_api.data.service.savedjob
-
-import net.jobsearchapplication_api.data.db.extensions.JobWithCompany
-import java.util.*
+//package net.jobsearchapplication_api.data.service.savedjob
+//
+//import net.jobsearchapplication_api.data.db.extensions.JobWithCompany
+//import java.util.*
 
 //class SavedJobServiceImpl : SavedJobService {
 //    override suspend fun getSavedJobs(userId: UUID): List<JobWithCompany> {

@@ -11,6 +11,8 @@ import net.jobsearchapplication_api.routes.auth.authRoutes
 import net.jobsearchapplication_api.routes.job.jobRoutes
 import net.jobsearchapplication_api.routes.story.storyRoutes
 import net.jobsearchapplication_api.routes.user.userRoutes
+import net.jobsearchapplication_api.routes.company.companyRoutes
+
 
 fun configureDatabase() {
     DatabaseFactory.init()
@@ -32,5 +34,8 @@ fun Application.configureContentNegotiation() {
 fun Application.configureRouting(){
     authRoutes(RepositoryProvider.provideAuthRepository())
     userRoutes(RepositoryProvider.provideUserRepository())
-    jobRoutes(RepositoryProvider.provideJobRepository())
+    storyRoutes(RepositoryProvider.provideStoryRepository())
+        jobRoutes(RepositoryProvider.provideJobRepository())
+
+    companyRoutes(RepositoryProvider.provideCompanyRepository())
 }

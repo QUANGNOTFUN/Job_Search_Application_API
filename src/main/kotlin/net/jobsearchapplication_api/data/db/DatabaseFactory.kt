@@ -21,6 +21,7 @@ object DatabaseFactory {
             SchemaUtils.create(CommentTable)
             SchemaUtils.create(JobTable)
 
+            SchemaUtils.create(CompanyTable)
         }
     }
 
