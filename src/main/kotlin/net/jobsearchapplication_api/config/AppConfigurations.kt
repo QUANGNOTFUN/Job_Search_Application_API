@@ -8,8 +8,7 @@ import net.jobsearchapplication_api.di.RepositoryProvider
 import net.jobsearchapplication_api.routes.auth.authRoutes
 import net.jobsearchapplication_api.routes.story.storyRoutes
 import net.jobsearchapplication_api.routes.user.userRoutes
-import jakarta.validation.Validation
-import jakarta.validation.Validator
+import net.jobsearchapplication_api.routes.company.companyRoutes
 
 
 fun configureDatabase() {
@@ -26,6 +25,5 @@ fun Application.configureRouting(){
     authRoutes(RepositoryProvider.provideAuthRepository())
     userRoutes(RepositoryProvider.provideUserRepository())
     storyRoutes(RepositoryProvider.provideStoryRepository())
+    companyRoutes(RepositoryProvider.provideCompanyRepository())
 }
-
-fun Application.configureValidation() {}

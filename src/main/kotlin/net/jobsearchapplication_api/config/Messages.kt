@@ -12,3 +12,4 @@ const val SUCCESS = "Success"
 // Users Message
 const val EMPTY_FORM = "Không có giá trị nào cần cập nhật"
 const val SUCCESS_UPDATE_INFO_USER = "Cập nhật thông tin thành công"
+const val ERROR_CREATE_COMPANY = "Khong tao duoc cong ty"
