@@ -8,3 +8,4 @@ const val GENERIC_ERROR = "Some error occurred! Please try again later"
 const val INVALID_AUTHENTICATION_TOKEN = "Invalid authentication token, please login again"
 
 const val SUCCESS = "Success"
+const val ERROR_CREATE_COMPANY = "Khong tao duoc cong ty"

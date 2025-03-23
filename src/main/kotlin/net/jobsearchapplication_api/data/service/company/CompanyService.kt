@@ -6,10 +6,10 @@ import net.jobsearchapplication_api.routes.company.CompanyParams
 import java.util.*
 
 interface CompanyService {
-    suspend fun getAllCompanies(page: Int): List<Company>
+    suspend fun getAllCompanies(page: Int, limit :Int): List<Company>
     suspend fun getCompanyById(id: UUID): Company?
-    suspend fun createCompany(params: CompanyParams): Company?
+    suspend fun createCompany(params: CompanyParams): UUID?
     suspend fun updateCompany(id: UUID, params: CompanyParams): Boolean
+    suspend fun deleteCompany(id: UUID): Boolean
     suspend fun getCompanyJobs(id: UUID): List<Job>
 }
-

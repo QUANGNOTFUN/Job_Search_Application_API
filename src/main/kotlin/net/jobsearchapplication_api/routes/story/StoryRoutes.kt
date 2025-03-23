@@ -111,6 +111,14 @@ fun Application.storyRoutes(repository: StoryRepository) {
 
                 put("update/{id}") {
                     val id = call.parameters["id"]?.toIntOrNull() ?: -1
+
+                    if (id == null || id < 0) {
+                        call.respond(
+                            HttpStatusCode.BadRequest,
+                            BaseResponse.ErrorResponse(message = "Invalid story ID")
+                        )
+                        return@put
+                    }
                     val params = call.receive<StoryParams>()
                     val result = repository.update(id, params)
                     call.respond(result.statusCode, result)

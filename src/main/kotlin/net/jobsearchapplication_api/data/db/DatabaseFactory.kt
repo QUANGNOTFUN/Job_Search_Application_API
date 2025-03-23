@@ -8,6 +8,7 @@ import net.jobsearchapplication_api.data.db.schemas.CommentTable
 import net.jobsearchapplication_api.data.db.schemas.LikeTable
 import net.jobsearchapplication_api.data.db.schemas.StoryTable
 import net.jobsearchapplication_api.data.db.schemas.UserTable
+import net.jobsearchapplication_api.data.db.schemas.CompanyTable
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -21,6 +22,7 @@ object DatabaseFactory {
             SchemaUtils.create(StoryTable)
             SchemaUtils.create(LikeTable)
             SchemaUtils.create(CommentTable)
+            SchemaUtils.create(CompanyTable)
         }
     }
 
