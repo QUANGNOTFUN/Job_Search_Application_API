@@ -34,7 +34,7 @@ fun Application.configureContentNegotiation() {
 fun Application.configureRouting(){
     authRoutes(RepositoryProvider.provideAuthRepository())
     userRoutes(RepositoryProvider.provideUserRepository())
-    storyRoutes(RepositoryProvider.provideStoryRepository())
+//    storyRoutes(RepositoryProvider.provideStoryRepository())
     jobRoutes(RepositoryProvider.provideJobRepository())
     companyRoutes(RepositoryProvider.provideCompanyRepository())
 }

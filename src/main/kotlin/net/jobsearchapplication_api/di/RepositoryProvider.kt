@@ -14,7 +14,6 @@ import net.jobsearchapplication_api.data.repository.user.UserRepositoryImpl
 import net.jobsearchapplication_api.data.service.auth.AuthServiceImpl
 import net.jobsearchapplication_api.data.service.job.JobServiceImpl
 //import net.jobsearchapplication_api.data.service.story.StoryServiceImpl
-import net.jobsearchapplication_api.data.service.story.StoryServiceImpl
 import net.jobsearchapplication_api.data.service.user.UserServiceImpl
 
 object RepositoryProvider {
@@ -22,6 +21,6 @@ object RepositoryProvider {
     fun provideUserRepository(): UserRepository = UserRepositoryImpl(UserServiceImpl())
     fun provideJobRepository(): JobRepository = JobRepositoryImpl(JobServiceImpl())
 
-    fun provideStoryRepository(): StoryRepository = StoryRepositoryImpl(StoryServiceImpl())
+//    fun provideStoryRepository(): StoryRepository = StoryRepositoryImpl(StoryServiceImpl())
     fun provideCompanyRepository(): CompanyRepository = CompanyRepositoryImpl(CompanyServiceImpl())
 }
