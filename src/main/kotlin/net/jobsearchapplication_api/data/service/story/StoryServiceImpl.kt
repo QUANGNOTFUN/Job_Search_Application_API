@@ -45,18 +45,17 @@
 //    override suspend fun getAllStories(page: Int, limit: Int): PaginatedResult<Story> {
 //        var pageCount: Long = 0
 //        var nextPage: Long? = null
-//
 //        val stories = DatabaseFactory.dbQuery {
 //            StoryTable
 //                .innerJoin(UserTable, { UserTable.id }, { StoryTable.userId })
-//                .select {
-//                    StoryTable.isDraft eq false
+//                .selectAll() // Bỏ điều kiện isDraft eq false để lấy tất cả Story
+//                .orderBy(StoryTable.createdAt, SortOrder.DESC)
+//                .also {
+//                    val totalStories = it.count()
+//                    pageCount = (totalStories + limit - 1) / limit // Sửa cách tính pageCount
+//                    if (page < pageCount) nextPage = page + 1L
 //                }
-//                .orderBy(StoryTable.createdAt, SortOrder.DESC).also {
-//                    pageCount = it.count() / limit
-//                    if (page < pageCount)
-//                        nextPage = page + 1L
-//                }.limit(limit, (limit * page).toLong())
+//                .limit(limit, (limit * page).toLong())
 //                .mapNotNull { it.toStoryJoinedWithUser() }
 //        }
 //        return PaginatedResult(pageCount, nextPage, stories)
@@ -85,16 +84,15 @@
 //    }
 //
 //    override suspend fun update(id: Int, storyParams: StoryParams): Boolean {
-//        var result = -1
-//        DatabaseFactory.dbQuery {
-//            result = StoryTable.update({ StoryTable.id eq id }) {
-//                it[userId] = storyParams.userId
-//                it[title] = storyParams.title
-//                it[content] = storyParams.content
-//                it[isDraft] = storyParams.isDraft
+//        val result = DatabaseFactory.dbQuery {
+//            StoryTable.update({ StoryTable.id eq id }) {
+//                if (storyParams.userId != null) it[userId] = storyParams.userId
+//                if (storyParams.title != null) it[title] = storyParams.title
+//                if (storyParams.content != null) it[content] = storyParams.content
+//                if (storyParams.isDraft != null) it[isDraft] = storyParams.isDraft
 //            }
 //        }
-//        return result == 1
+//        return result > 0 // Trả về true nếu có bản ghi được cập nhật
 //    }
 //
 //    override suspend fun delete(storyId: Int): Boolean {

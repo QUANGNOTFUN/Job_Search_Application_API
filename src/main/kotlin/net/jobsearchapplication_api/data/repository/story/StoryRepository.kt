@@ -5,7 +5,6 @@ import net.jobsearchapplication_api.routes.story.StoryParams
 import java.util.*
 
 interface StoryRepository {
-
     suspend fun getMyStories(userId: UUID, page: Int, limit: Int, isDraft: Boolean): BaseResponse<Any>
     suspend fun getAllStories(page: Int, limit: Int): BaseResponse<Any>
     suspend fun add(storyParams: StoryParams): BaseResponse<Any>

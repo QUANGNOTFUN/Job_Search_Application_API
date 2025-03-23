@@ -7,12 +7,12 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import net.jobsearchapplication_api.data.repository.job.JobRepository
 import java.util.*
-import kotlin.text.get
 
 fun Application.jobRoutes(repository: JobRepository) {
     routing {
-        authenticate {
+//        authenticate {
             route("/jobs") {
+
                 // Lấy danh sách jobs
                 get {
                     val page = call.request.queryParameters["page"]?.toIntOrNull() ?: 1
@@ -20,10 +20,29 @@ fun Application.jobRoutes(repository: JobRepository) {
                     call.respond(repository.getAllJobs(page, limit))
                 }
 
+                // Lấy danh sách jobs theo user
+                get("/posted") {
+//                    try {
+//                        val currentUser = call.getUser()
+//                        val page = call.request.queryParameters["page"]?.toIntOrNull() ?: 1
+//                        val limit = call.request.queryParameters["limit"]?.toIntOrNull() ?: 10
+//
+//                        val response = JobRepository.getJobsByUserId(currentUser.id, page, limit)
+//                        call.respond(response)
+//                    } catch (e: Exception) {
+//                        call.respond(
+//                            HttpStatusCode.InternalServerError,
+//                            BaseResponse.ErrorResponse("Failed to get jobs")
+//                        )
+//                    }
+                }
+
+
                 // Tạo job mới
-                post {
+                post("add") {
                     val params = call.receive<JobParams>()
-                    call.respond(repository.createJob(params))
+                    val result = repository.createJob(params)
+                    call.respond(result.statusCode, result)
                 }
 
                 // Chi tiết job
@@ -59,7 +78,7 @@ fun Application.jobRoutes(repository: JobRepository) {
                     val page = call.request.queryParameters["page"]?.toIntOrNull() ?: 1
                     call.respond(repository.searchJobs(query, location, type, page))
                 }
-            }
+//            }
         }
     }
 }

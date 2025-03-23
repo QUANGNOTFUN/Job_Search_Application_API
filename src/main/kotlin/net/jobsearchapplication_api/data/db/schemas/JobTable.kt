@@ -1,7 +1,10 @@
 package net.jobsearchapplication_api.data.db.schemas
 
+import net.jobsearchapplication_api.data.db.schemas.UserTable.defaultExpression
 import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.javatime.CurrentTimestamp
 import org.jetbrains.exposed.sql.javatime.datetime
+import org.jetbrains.exposed.sql.javatime.timestamp
 
 object JobTable : Table("jobs") {
     val id = uuid("id").autoGenerate()
@@ -14,7 +17,6 @@ object JobTable : Table("jobs") {
     val jobType = varchar("job_type", 50)
     val experienceLevel = varchar("experience_level", 50)
     val companyId = uuid("company_id").references(CompanyTable.id)
-    val createdAt = datetime("created_at")
     val postedBy = uuid("posted_by").references(UserTable.id)
     val benefits = text("benefits").nullable()
     val quantity = integer("quantity").default(1)
@@ -23,6 +25,8 @@ object JobTable : Table("jobs") {
     val status = varchar("status", 50)
     val requirements = text("requirements").nullable()
     val jobImage = text("job_image").nullable()
+    val createdAt = datetime("created_at")
+
 
     override val primaryKey = PrimaryKey(id)
 }
