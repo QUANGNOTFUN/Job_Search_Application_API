@@ -2,14 +2,16 @@ package net.jobsearchapplication_api.routes.job
 
 import java.time.LocalDateTime
 import java.util.UUID
+import java.math.BigDecimal
 
 data class JobParams(
     // Thông tin cơ bản
     val companyId: UUID,
     val title: String,
     val description: String,
-    val requirements: List<String>,
-    val benefits: List<String>,
+    val requirements: String,
+    val benefits: String,
+    val postedBy: UUID,
     
     // Thông tin lương
     val salary: SalaryInfo,
@@ -23,10 +25,9 @@ data class JobParams(
     val categories: List<UUID>,
     val deadline: LocalDateTime,
     val positionsAvailable: Int,
-    val skillsRequired: List<String>,
     val genderRequirement: String, // MALE, FEMALE, ANY
     val status: String = "ACTIVE", // ACTIVE, CLOSED, DRAFT
-    
+
     // Thông tin thêm
     val additionalInfo: AdditionalInfo
 )
@@ -54,5 +55,8 @@ data class ExperienceInfo(
 data class AdditionalInfo(
     val workingHours: String,
     val overtimePolicy: String?,
-    val probationPeriod: String?
-)
+    val probationPeriod: String?,
+    val jobImage: String?,
+
+    )
+

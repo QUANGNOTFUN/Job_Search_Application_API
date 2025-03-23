@@ -17,7 +17,6 @@ data class Job(
     val jobType: JobType,
     val experienceLevel: ExperienceLevel,
     val companyId: UUID,
-    val createdAt: LocalDateTime = LocalDateTime.now(),
     val postedBy: UUID,
     val benefits: String?,
     val quantity: Int = 1,
@@ -25,8 +24,9 @@ data class Job(
     val deadline: LocalDateTime?,
     val status: JobStatus,
     val requirements: String?,
-    val jobImage: String?
-)
+    val jobImage: String?,
+    val createdAt: LocalDateTime
+    )
 // Enums cần thiết
 enum class JobType {
     FULL_TIME,
