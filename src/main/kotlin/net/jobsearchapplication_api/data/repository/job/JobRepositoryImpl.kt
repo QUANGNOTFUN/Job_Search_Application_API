@@ -4,8 +4,11 @@ import io.ktor.http.*
 import net.jobsearchapplication_api.base.BaseResponse
 import net.jobsearchapplication_api.config.GENERIC_ERROR
 import net.jobsearchapplication_api.config.SUCCESS
+import net.jobsearchapplication_api.data.models.GenderRequirement
+import net.jobsearchapplication_api.data.models.JobType
 import net.jobsearchapplication_api.data.service.job.JobService
 import net.jobsearchapplication_api.routes.job.JobParams
+import java.time.LocalDateTime
 import java.util.*
 
 // JobRepositoryImpl.kt
@@ -51,12 +54,76 @@ class JobRepositoryImpl(private val jobService: JobService ) : JobRepository {
     }
 
     override suspend fun updateJob(id: UUID, params: JobParams): BaseResponse<Any> {
-//        if (jobService.updateJob(id, params)) {
-//            return BaseResponse.SuccessResponse(data = null, message = SUCCESS)
-//        }
-//        return BaseResponse.ErrorResponse(message = GENERIC_ERROR)
-        TODO("Not yet implemented")
+        return try {
+            // Validate input
+            val validationErrors = validateJobParams(params)
+            if (validationErrors.isNotEmpty()) {
+                return BaseResponse.ErrorResponse(
+                    message = "Validation failed: ${validationErrors.joinToString(", ")}"
+                )
+            }
 
+            // Kiểm tra job tồn tại
+            val existingJob = jobService.getJobById(id)
+            if (existingJob == null) {
+                return BaseResponse.ErrorResponse(message = "Job not found")
+            }
+
+            // Thực hiện update
+            val updatedJob = jobService.updateJob(id, params)
+            if (updatedJob != null) {
+                BaseResponse.SuccessResponse(
+                    data = updatedJob,
+                    message = "Job updated successfully"
+                )
+            } else {
+                BaseResponse.ErrorResponse(message = "Failed to update job")
+            }
+        } catch (e: Exception) {
+            BaseResponse.ErrorResponse(message = "Error updating job: ${e.localizedMessage}")
+        }
+    }
+
+    private fun validateJobParams(params: JobParams): List<String> {
+        val errors = mutableListOf<String>()
+
+        // Validate title
+        if (params.title.isBlank()) {
+            errors.add("Title is required")
+        }
+
+        // Validate description
+        if (params.description.isBlank()) {
+            errors.add("Description is required")
+        }
+
+        // Validate salary
+        if (params.salary.min > params.salary.max) {
+            errors.add("Minimum salary cannot be greater than maximum salary")
+        }
+
+        // Validate deadline
+        params.deadline.let {
+            if (it.isBefore(LocalDateTime.now())) {
+                errors.add("Deadline must be in the future")
+            }
+        }
+
+        // Validate job type
+        try {
+            JobType.valueOf(params.employmentType)
+        } catch (e: IllegalArgumentException) {
+            errors.add("Invalid job type")
+        }
+
+        // Validate gender requirement
+        try {
+            GenderRequirement.valueOf(params.genderRequirement)
+        } catch (e: IllegalArgumentException) {
+            errors.add("Invalid gender requirement")
+        }
+
+        return errors
     }
 
     override suspend fun deleteJob(id: UUID): BaseResponse<Any> {

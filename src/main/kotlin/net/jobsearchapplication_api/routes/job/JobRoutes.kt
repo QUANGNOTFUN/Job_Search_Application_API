@@ -2,9 +2,11 @@ package net.jobsearchapplication_api.routes.job
 
 import io.ktor.application.*
 import io.ktor.auth.*
+import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import net.jobsearchapplication_api.base.BaseResponse
 import net.jobsearchapplication_api.data.repository.job.JobRepository
 import java.util.*
 
@@ -53,12 +55,37 @@ fun Application.jobRoutes(repository: JobRepository) {
                     }
                 }
 
-                // Cập nhật job
                 put("/{id}") {
-                    val id = call.parameters["id"]?.let { UUID.fromString(it) }
-                    val params = call.receive<JobParams>()
-                    if (id != null) {
-                        call.respond(repository.updateJob(id, params))
+                    try {
+                        // Parse và validate ID
+                        val id = call.parameters["id"]?.let {
+                            try {
+                                UUID.fromString(it)
+                            } catch (e: IllegalArgumentException) {
+                                null
+                            }
+                        }
+
+                        if (id == null) {
+                            call.respond(
+                                HttpStatusCode.BadRequest,
+                                BaseResponse.ErrorResponse("Invalid job ID")
+                            )
+                            return@put
+                        }
+
+                        // Parse request body
+                        val params = call.receive<JobParams>()
+
+                        // Thực hiện update
+                        val response = repository.updateJob(id, params)
+                        call.respond(response.statusCode, response)
+
+                    } catch (e: Exception) {
+                        call.respond(
+                            HttpStatusCode.InternalServerError,
+                            BaseResponse.ErrorResponse("Failed to update job: ${e.localizedMessage}")
+                        )
                     }
                 }
 
