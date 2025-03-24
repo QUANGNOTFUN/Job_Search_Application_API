@@ -17,7 +17,7 @@ fun Application.storyRoutes(repository: StoryRepository) {
         authenticate {
             route("story") {
 
-                get("my/{page}") {
+                get("/my/{page}") {
                     val userId = call.principal<UserIdPrincipalForUser>()?.id
                     if (userId != null) {
                         val isDraft = call.request.queryParameters["is_draft"] == "true"
@@ -30,7 +30,7 @@ fun Application.storyRoutes(repository: StoryRepository) {
                     }
                 }
 
-                get("/get/all/{page?}") {
+                get("/all/{page?}") {
                     val pageParam = call.parameters["page"]?.toIntOrNull()
                     val page = when {
                         pageParam == null || pageParam < 1 -> 1 // Mặc định trang 1

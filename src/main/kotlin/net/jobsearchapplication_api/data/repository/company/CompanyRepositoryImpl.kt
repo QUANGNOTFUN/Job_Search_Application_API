@@ -27,12 +27,12 @@ class CompanyRepositoryImpl (
     }
 
     override suspend fun createCompany(params: CompanyParams): BaseResponse<Any> {
-        val companyId = companyService.createCompany(params)
+        val company = companyService.createCompany(params)
 
-        val response = if (companyId != null) SUCCESS else ERROR_CREATE_COMPANY
+        val response = if (company != null) SUCCESS else ERROR_CREATE_COMPANY
 
         return BaseResponse.SuccessResponse(
-            data = companyId,
+            data = company,
             message = response
         )
     }
