@@ -3,6 +3,7 @@ package net.jobsearchapplication_api.data.models
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonInclude
 import net.jobsearchapplication_api.data.db.schemas.Gender
+import net.jobsearchapplication_api.data.db.schemas.UserRole
 import java.time.Instant
 import java.time.LocalDateTime
 import java.util.UUID
@@ -24,5 +25,6 @@ data class User(
     val experience: String? = null,
     var authToken: String? = null,
     var createdAt: LocalDateTime,
-    var updatedAt: LocalDateTime
+    var updatedAt: LocalDateTime,
+    val role: String = UserRole.USER.name
 )

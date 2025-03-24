@@ -8,11 +8,10 @@ import io.ktor.jackson.*
 import net.jobsearchapplication_api.data.db.DatabaseFactory
 import net.jobsearchapplication_api.di.RepositoryProvider
 import net.jobsearchapplication_api.routes.auth.authRoutes
-import net.jobsearchapplication_api.routes.job.jobRoutes
-import net.jobsearchapplication_api.routes.story.storyRoutes
-import net.jobsearchapplication_api.routes.user.userRoutes
 import net.jobsearchapplication_api.routes.company.companyRoutes
-
+import net.jobsearchapplication_api.routes.job.jobRoutes
+import net.jobsearchapplication_api.routes.savedjob.savedJobRoutes
+import net.jobsearchapplication_api.routes.user.userRoutes
 
 fun configureDatabase() {
     DatabaseFactory.init()
@@ -37,4 +36,5 @@ fun Application.configureRouting(){
 //    storyRoutes(RepositoryProvider.provideStoryRepository())
     jobRoutes(RepositoryProvider.provideJobRepository())
     companyRoutes(RepositoryProvider.provideCompanyRepository())
+    savedJobRoutes(RepositoryProvider.provideSavedJobRepository())
 }

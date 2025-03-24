@@ -7,6 +7,7 @@ import net.jobsearchapplication_api.data.service.auth.AuthService
 import net.jobsearchapplication_api.routes.auth.CreateUserParams
 import net.jobsearchapplication_api.routes.auth.UserLoginParams
 import net.jobsearchapplication_api.security.JwtConfig
+import net.jobsearchapplication_api.security.TokenResponse
 import java.util.*
 
 class AuthRepositoryImpl(
@@ -18,9 +19,23 @@ class AuthRepositoryImpl(
         } else {
             val user = authService.registerUser(params)
             if (user != null) {
-                val token = JwtConfig.instance.createAccessToken(user.id)
-                user.authToken = token
-                BaseResponse.SuccessResponse(data = user, message = USER_REGISTRATION_SUCCESS)
+                val token = JwtConfig.instance.createAccessToken(
+                    id = user.id,
+                    name = user.fullName,
+                    email = user.email,
+                    role = user.role
+                )
+                
+                BaseResponse.SuccessResponse(
+                    data = TokenResponse(
+                        accessToken = token,
+                        userId = user.id.toString(),
+                        name = user.fullName,
+                        email = user.email,
+                        role = user.role
+                    ),
+                    message = USER_REGISTRATION_SUCCESS
+                )
             } else {
                 BaseResponse.ErrorResponse(GENERIC_ERROR)
             }
@@ -30,9 +45,23 @@ class AuthRepositoryImpl(
     override suspend fun loginUser(params: UserLoginParams): BaseResponse<Any> {
         val user = authService.loginUser(params.email, params.password)
         return if (user != null) {
-            val token = JwtConfig.instance.createAccessToken(user.id)
-            user.authToken = token
-            BaseResponse.SuccessResponse(data = user, message = USER_LOGIN_SUCCESS)
+            val token = JwtConfig.instance.createAccessToken(
+                id = user.id,
+                name = user.fullName,
+                email = user.email,
+                role = user.role
+            )
+            
+            BaseResponse.SuccessResponse(
+                data = TokenResponse(
+                    accessToken = token,
+                    userId = user.id.toString(),
+                    name = user.fullName,
+                    email = user.email,
+                    role = user.role
+                ),
+                message = USER_LOGIN_SUCCESS
+            )
         } else {
             BaseResponse.ErrorResponse(USER_LOGIN_FAILURE, HttpStatusCode.Unauthorized)
         }

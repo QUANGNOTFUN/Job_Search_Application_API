@@ -77,7 +77,6 @@ class JobServiceImpl : JobService {
         TODO("Not yet implemented")
     }
 
-
     override suspend fun createJob(params: JobParams): Job? {
             var statement: InsertStatement<Number>? = null
             DatabaseFactory.dbQuery {
@@ -163,7 +162,6 @@ class JobServiceImpl : JobService {
             null
         }
     }
-
     // Hàm validate input
     private fun validateJobParams(params: JobParams): List<String> {
         val errors = mutableListOf<String>()
@@ -187,7 +185,7 @@ class JobServiceImpl : JobService {
         }
 
         // Validate deadline
-        if (params.deadline?.isBefore(LocalDateTime.now()) == true) {
+        if (params.deadline.isBefore(LocalDateTime.now())) {
             errors.add("Deadline must be in the future")
         }
 

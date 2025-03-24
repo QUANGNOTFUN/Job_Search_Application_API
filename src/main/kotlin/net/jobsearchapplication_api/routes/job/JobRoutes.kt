@@ -14,7 +14,6 @@ fun Application.jobRoutes(repository: JobRepository) {
     routing {
 //        authenticate {
             route("/jobs") {
-
                 // Lấy danh sách jobs
                 get {
                     val page = call.request.queryParameters["page"]?.toIntOrNull() ?: 1
@@ -38,7 +37,6 @@ fun Application.jobRoutes(repository: JobRepository) {
 //                        )
 //                    }
                 }
-
 
                 // Tạo job mới
                 post("add") {
@@ -97,7 +95,7 @@ fun Application.jobRoutes(repository: JobRepository) {
                     }
                 }
 
-                // Tìm kiếm job
+                // Tìm kiếm job -- CHƯA XONG --
                 get("/search") {
                     val query = call.request.queryParameters["q"] ?: ""
                     val location = call.request.queryParameters["location"]

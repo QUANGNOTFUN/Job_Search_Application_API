@@ -7,6 +7,8 @@ import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.response.*
 import net.jobsearchapplication_api.base.BaseResponse
+import io.ktor.http.HttpStatusCode
+import net.jobsearchapplication_api.utils.UnauthorizedException
 
 fun Application.configureStatusPages() {
     install(StatusPages) {
@@ -19,6 +21,12 @@ fun Application.configureStatusPages() {
         }
         exception<JsonParseException> { cause ->
             call.respond(BaseResponse.ErrorResponse(cause.message!!))
+        }
+        exception<UnauthorizedException> { cause ->
+            call.respond(
+                HttpStatusCode.Forbidden,
+                BaseResponse.ErrorResponse(cause.message ?: PERMISSION_DENIED)
+            )
         }
     }
 }

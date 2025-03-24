@@ -10,6 +10,7 @@ import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.statements.InsertStatement
+import java.time.LocalDateTime
 
 class AuthServiceImpl : AuthService {
     override suspend fun registerUser(params: CreateUserParams): User? {
@@ -20,6 +21,9 @@ class AuthServiceImpl : AuthService {
                 it[password_hash] = hash(params.password)
                 it[fullName] = params.fullName
                 it[avatar] = params.avatar
+                it[role] = params.role.uppercase()
+                it[createdAt] = LocalDateTime.now()
+                it[updatedAt] = LocalDateTime.now()
             }
         }
         return statement?.resultedValues?.get(0).toUser()
@@ -27,15 +31,23 @@ class AuthServiceImpl : AuthService {
 
     override suspend fun loginUser(email: String, password: String): User? {
         val hashedPassword = hash(password)
-        val userRow = dbQuery { UserTable.select { UserTable.email eq email and (UserTable.password_hash eq hashedPassword) }.firstOrNull() }
+        val userRow = dbQuery { 
+            UserTable
+                .select { 
+                    UserTable.email eq email and 
+                    (UserTable.password_hash eq hashedPassword) 
+                }
+                .firstOrNull() 
+        }
         return userRow.toUser()
     }
 
     override suspend fun findUserByEmail(email: String): User? {
-        val user = dbQuery {
-            UserTable.select { UserTable.email.eq(email) }
-                .map { it.toUser() }.singleOrNull()
+        return dbQuery {
+            UserTable
+                .select { UserTable.email.eq(email) }
+                .map { it.toUser() }
+                .singleOrNull()
         }
-        return user
     }
 }

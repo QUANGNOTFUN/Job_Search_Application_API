@@ -1,12 +1,9 @@
 package net.jobsearchapplication_api.data.db.schemas
 
-import net.jobsearchapplication_api.data.db.schemas.UserTable.defaultExpression
-import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.CurrentTimestamp
 import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.sql.javatime.timestamp
-import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
 
 object UserTable : Table("users") {
@@ -22,12 +19,24 @@ object UserTable : Table("users") {
     val cv_url = text("cv_url").nullable()
     val education = text("education").nullable()
     val experience = text("experience").nullable()
-    val createdAt = timestamp("created_at").defaultExpression(CurrentTimestamp())
-    val updatedAt = timestamp("updated_at").defaultExpression(CurrentTimestamp())
+    val createdAt = datetime("created_at").default(LocalDateTime.now())
+    val updatedAt = datetime("updated_at").default(LocalDateTime.now())
+    val role = varchar("role", 20).default(UserRole.USER.name)
 
     override val primaryKey = PrimaryKey(id)
 }
 
 enum class Gender {
     Male, FeMale, Other
+}
+enum class UserRole {
+    USER,
+    RECRUITER,
+    ADMIN;
+
+    companion object {
+        fun isValid(role: String): Boolean {
+            return values().any { it.name == role.uppercase() }
+        }
+    }
 }

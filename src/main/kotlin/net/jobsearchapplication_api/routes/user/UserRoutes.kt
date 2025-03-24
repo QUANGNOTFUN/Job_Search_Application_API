@@ -26,7 +26,7 @@ fun Application.userRoutes(_repository: UserRepository) {
                     call.respond(result.statusCode, result)
                 }
 
-                post("/update-info-user") {
+                put("/update-info-user") {
                     try {
                         val principal = call.principal<UserIdPrincipalForUser>()
                         val params = call.receive<UpdateInfoUserParams>()

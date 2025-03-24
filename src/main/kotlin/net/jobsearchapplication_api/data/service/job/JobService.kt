@@ -3,6 +3,7 @@ package net.jobsearchapplication_api.data.service.job
 import net.jobsearchapplication_api.base.BaseResponse
 import net.jobsearchapplication_api.data.db.extensions.JobWithCompany
 import net.jobsearchapplication_api.data.models.Job
+import net.jobsearchapplication_api.data.models.SavedJob
 import net.jobsearchapplication_api.data.models.Story
 import net.jobsearchapplication_api.data.models.common.PaginatedResult
 import net.jobsearchapplication_api.routes.job.JobParams

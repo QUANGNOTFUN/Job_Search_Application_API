@@ -2,12 +2,8 @@ package net.jobsearchapplication_api.data.db.extensions
 
 import net.jobsearchapplication_api.data.db.schemas.*
 import net.jobsearchapplication_api.data.models.*
-import org.jetbrains.exposed.dao.withHook
 import org.jetbrains.exposed.sql.ResultRow
 import java.math.BigDecimal
-import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.ZoneId
 import java.util.UUID
 
@@ -27,7 +23,8 @@ fun ResultRow?.toUser(): User? {
         education = this[UserTable.education],
         experience = this[UserTable.experience],
         createdAt = this[UserTable.createdAt].atZone(ZoneId.systemDefault()).toLocalDateTime(),
-        updatedAt = this[UserTable.updatedAt].atZone(ZoneId.systemDefault()).toLocalDateTime()
+        updatedAt = this[UserTable.updatedAt].atZone(ZoneId.systemDefault()).toLocalDateTime(),
+        role = this[UserTable.role]
     )
 }
 
