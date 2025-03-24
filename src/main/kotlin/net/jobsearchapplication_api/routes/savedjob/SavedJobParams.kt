@@ -1,4 +1,8 @@
 package net.jobsearchapplication_api.routes.savedjob
 
-class SavedJobParams {
-}
+import java.util.*
+
+data class SavedJobParams(
+    val userId: UUID,
+    val jobId: UUID
+)

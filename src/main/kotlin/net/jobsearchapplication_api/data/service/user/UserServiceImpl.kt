@@ -34,9 +34,10 @@ class UserServiceImpl : UserService {
                 params.education?.takeIf { it.isNotBlank() }?.let { row[education] = it; isChanged = true }
                 params.experience?.takeIf { it.isNotBlank() }?.let { row[experience] = it; isChanged = true }
 
-                if (isChanged) row[updatedAt] = Instant.now()
+                if (isChanged) {
+                    row[updatedAt] = LocalDateTime.now()
+                }
             } > 0
         }
-
     }
 }

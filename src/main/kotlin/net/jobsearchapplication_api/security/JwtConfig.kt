@@ -3,36 +3,43 @@ package net.jobsearchapplication_api.security
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
-import java.util.UUID
+import java.util.*
 
-class JwtConfig private constructor(secret: String){
-
+class JwtConfig private constructor(secret: String) {
     private val algorithm = Algorithm.HMAC256(secret)
+    private val accessTokenExpiration = 24 * 60 * 60 * 1000L // 24 giờ
 
     val verifier: JWTVerifier = JWT
         .require(algorithm)
-        .withIssuer(ISSUER)
-        .withAudience(AUDIENCE)
         .build()
 
-    fun createAccessToken(id: UUID): String = JWT
+    fun createAccessToken(
+        id: UUID,
+        name: String,
+        email: String,
+        role: String
+    ): String = JWT
         .create()
-        .withIssuer(ISSUER)
-        .withAudience(AUDIENCE)
-        .withClaim(CLAIM, id.toString())
+        .withSubject(id.toString())
+        .withClaim(CLAIM_NAME, name)
+        .withClaim(CLAIM_EMAIL, email)
+        .withClaim(CLAIM_ROLE, role)
+        .withIssuedAt(Date())
+        .withExpiresAt(Date(System.currentTimeMillis() + accessTokenExpiration))
+        .withJWTId(UUID.randomUUID().toString()) // jti for preventing replay attacks
         .sign(algorithm)
 
-    companion object{
-        private const val ISSUER = "my-story-app"
-        private const val AUDIENCE = "my-story-app"
-        const val CLAIM = "id"
+    companion object {
+        const val CLAIM_NAME = "name"
+        const val CLAIM_EMAIL = "email"
+        const val CLAIM_ROLE = "role"
 
         lateinit var instance: JwtConfig
             private set
 
-        fun initialize(secret: String){
-            synchronized(this){
-                if(!this::instance.isInitialized){
+        fun initialize(secret: String) {
+            synchronized(this) {
+                if (!this::instance.isInitialized) {
                     instance = JwtConfig(secret)
                 }
             }

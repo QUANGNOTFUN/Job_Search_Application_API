@@ -77,7 +77,6 @@ class JobServiceImpl : JobService {
         TODO("Not yet implemented")
     }
 
-
     override suspend fun createJob(params: JobParams): Job? {
             var statement: InsertStatement<Number>? = null
             DatabaseFactory.dbQuery {
@@ -117,48 +116,52 @@ class JobServiceImpl : JobService {
         return statement?.resultedValues?.get(0)?.toJob()
     }
 
-    override suspend fun updateJob(id: UUID, params: JobParams): BaseResponse<Job> {
-        TODO("Not yet implemented")
+    override suspend fun updateJob(id: UUID, params: JobParams): Job? {
+        return try {
+            DatabaseFactory.dbQuery {
+                JobTable.update({ JobTable.id eq id }) { table ->
+                    // Thông tin cơ bản
+                    table[title] = params.title
+                    table[description] = params.description
+                    table[companyId] = params.companyId
+                    table[postedBy] = params.postedBy
 
-//        return try {
-//            // Kiểm tra job có tồn tại không
-//            val existingJob = JobService.getJobById(id)
-//            if (existingJob == null) {
-//                return BaseResponse.ErrorResponse(
-//                    message = "Job not found"
-//                )
-//            }
-//
-//            // Validate input
-//            val validationErrors = validateJobParams(params)
-//            if (validationErrors.isNotEmpty()) {
-//                return BaseResponse.ErrorResponse(
-//                    message = "Validation failed",
-//                    errors = validationErrors
-//                )
-//            }
-//
-//            // Thực hiện update
-//            val success = jobService.updateJob(id, params)
-//            if (success) {
-//                // Lấy job đã update để trả về
-//                val updatedJob = jobService.getJobById(id)
-//                BaseResponse.SuccessResponse(
-//                    data = updatedJob,
-//                    message = "Job updated successfully"
-//                )
-//            } else {
-//                BaseResponse.ErrorResponse(
-//                    message = "Failed to update job"
-//                )
-//            }
-//        } catch (e: Exception) {
-//            BaseResponse.ErrorResponse(
-//                message = "Error updating job: ${e.localizedMessage}"
-//            )
-//        }
+                    // Thông tin lương
+                    table[salaryMin] = BigDecimal(params.salary.min.toString())
+                    table[salaryMax] = BigDecimal(params.salary.max.toString())
+                    table[currency] = params.salary.currency
+
+                    // Địa điểm và loại công việc
+                    table[location] = params.location.city
+                    table[jobType] = params.employmentType
+                    table[experienceLevel] = params.experience.level
+
+                    // Yêu cầu và quyền lợi
+                    table[requirements] = params.requirements
+                    table[benefits] = params.benefits
+
+                    // Thông tin tuyển dụng
+                    table[quantity] = params.positionsAvailable
+                    table[genderRequire] = params.genderRequirement
+                    table[deadline] = params.deadline
+                    table[status] = params.status
+
+                    // Hình ảnh job
+                    params.additionalInfo.jobImage?.let {
+                        table[jobImage] = it
+                    }
+                }
+
+                // Trả về job đã update
+                JobTable
+                    .select { JobTable.id eq id }
+                    .firstOrNull()
+                    ?.toJob()
+            }
+        } catch (e: Exception) {
+            null
+        }
     }
-
     // Hàm validate input
     private fun validateJobParams(params: JobParams): List<String> {
         val errors = mutableListOf<String>()
@@ -182,7 +185,7 @@ class JobServiceImpl : JobService {
         }
 
         // Validate deadline
-        if (params.deadline?.isBefore(LocalDateTime.now()) == true) {
+        if (params.deadline.isBefore(LocalDateTime.now())) {
             errors.add("Deadline must be in the future")
         }
 

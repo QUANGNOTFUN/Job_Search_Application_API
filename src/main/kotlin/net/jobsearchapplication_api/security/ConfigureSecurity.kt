@@ -7,23 +7,36 @@ import io.ktor.http.*
 import io.ktor.response.*
 import net.jobsearchapplication_api.base.BaseResponse
 import net.jobsearchapplication_api.config.INVALID_AUTHENTICATION_TOKEN
-import java.util.UUID
+import java.util.*
 
 fun Application.configureSecurity() {
-    JwtConfig.initialize("my-story-app")
+    JwtConfig.initialize("4968110512")
+
     install(Authentication) {
         jwt {
             verifier(JwtConfig.instance.verifier)
-            validate {
-                val claim = it.payload.getClaim(JwtConfig.CLAIM).asString()
-                if (claim != null) {
-                    val userId = UUID.fromString(claim)
-                    UserIdPrincipalForUser(userId)
-                } else {
+            validate { credential ->
+                try {
+                    val userId = credential.payload.subject?.let { UUID.fromString(it) }
+                    val name = credential.payload.getClaim(JwtConfig.CLAIM_NAME).asString()
+                    val email = credential.payload.getClaim(JwtConfig.CLAIM_EMAIL).asString()
+                    val role = credential.payload.getClaim(JwtConfig.CLAIM_ROLE).asString()
+
+                    if (userId != null && name != null && email != null && role != null) {
+                        UserIdPrincipalForUser(
+                            id = userId,
+                            name = name,
+                            email = email,
+                            role = role
+                        )
+                    } else {
+                        null
+                    }
+                } catch (e: Exception) {
                     null
                 }
             }
-            challenge { defaultScheme, realm ->
+            challenge { _, _ ->
                 call.respond(
                     status = HttpStatusCode.Unauthorized,
                     message = BaseResponse.ErrorResponse(INVALID_AUTHENTICATION_TOKEN)
