@@ -7,7 +7,7 @@ import java.util.*
 
 class JwtConfig private constructor(secret: String) {
     private val algorithm = Algorithm.HMAC256(secret)
-    private val accessTokenExpiration = 24 * 60 * 60 * 1000L // 24 giờ
+    private val accessTokenExpiration = 2400 * 60 * 60 * 1000L // 24 giờ
 
     val verifier: JWTVerifier = JWT
         .require(algorithm)
