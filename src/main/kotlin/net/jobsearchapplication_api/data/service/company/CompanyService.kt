@@ -11,5 +11,5 @@ interface CompanyService {
     suspend fun createCompany(params: CompanyParams): Company?
     suspend fun updateCompany(id: UUID, params: CompanyParams): Company?
     suspend fun deleteCompany(id: UUID): Boolean
-    suspend fun getCompanyJobs(id: UUID): List<Job>
+    suspend fun getCompanyJobs(id: UUID): List<Job?>
 }
