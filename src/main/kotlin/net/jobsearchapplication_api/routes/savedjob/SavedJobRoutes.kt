@@ -8,7 +8,6 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import net.jobsearchapplication_api.base.BaseResponse
 import net.jobsearchapplication_api.data.repository.savejob.SavedJobRepository
-import net.jobsearchapplication_api.routes.job.JobParams
 import net.jobsearchapplication_api.utils.getUserId
 import java.util.*
 
@@ -35,9 +34,11 @@ fun Application.savedJobRoutes(repository: SavedJobRepository) {
                 try {
                     val userId = call.getUserId()
                     val params = call.receive<SavedJobParams>()
+                    println(params.jobId)
 
                     // Gọi repository với userId và jobId riêng biệt
                     call.respond(repository.saveJob(userId, params.jobId))
+
                 } catch (e: Exception) {
                     call.respond(
                         HttpStatusCode.InternalServerError,

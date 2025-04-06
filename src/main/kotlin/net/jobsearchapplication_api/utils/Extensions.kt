@@ -8,7 +8,7 @@ import java.util.*
 
 // Extension function cho ApplicationCall
 // Mục đích: Lấy ID của user đã authenticate từ request hiện tại
-fun ApplicationCall.getUserId(): UUID {
+fun ApplicationCall. getUserId(): UUID {
     return principal<UserIdPrincipalForUser>()?.id  // Lấy UserIdPrincipalForUser từ request
         ?: throw IllegalStateException("No authenticated user found")  // Nếu không tìm thấy, throw exception
 }
