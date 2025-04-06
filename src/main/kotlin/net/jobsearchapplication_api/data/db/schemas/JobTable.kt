@@ -1,10 +1,7 @@
 package net.jobsearchapplication_api.data.db.schemas
 
-import net.jobsearchapplication_api.data.db.schemas.UserTable.defaultExpression
 import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.javatime.CurrentTimestamp
 import org.jetbrains.exposed.sql.javatime.datetime
-import org.jetbrains.exposed.sql.javatime.timestamp
 
 object JobTable : Table("jobs") {
     val id = uuid("id").autoGenerate()

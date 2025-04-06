@@ -13,3 +13,6 @@ const val SUCCESS = "Success"
 const val EMPTY_FORM = "Không có giá trị nào cần cập nhật"
 const val SUCCESS_UPDATE_INFO_USER = "Cập nhật thông tin thành công"
 const val ERROR_CREATE_COMPANY = "Khong tao duoc cong ty"
+
+const val INVALID_ROLE = "Invalid role. Must be USER, RECRUITER, or ADMIN"
+const val PERMISSION_DENIED = "You don't have permission to perform this action"

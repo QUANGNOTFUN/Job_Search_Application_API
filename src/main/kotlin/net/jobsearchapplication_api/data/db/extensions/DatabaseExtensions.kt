@@ -2,12 +2,8 @@ package net.jobsearchapplication_api.data.db.extensions
 
 import net.jobsearchapplication_api.data.db.schemas.*
 import net.jobsearchapplication_api.data.models.*
-import org.jetbrains.exposed.dao.withHook
 import org.jetbrains.exposed.sql.ResultRow
 import java.math.BigDecimal
-import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.ZoneId
 import java.util.UUID
 
@@ -27,7 +23,8 @@ fun ResultRow?.toUser(): User? {
         education = this[UserTable.education],
         experience = this[UserTable.experience],
         createdAt = this[UserTable.createdAt].atZone(ZoneId.systemDefault()).toLocalDateTime(),
-        updatedAt = this[UserTable.updatedAt].atZone(ZoneId.systemDefault()).toLocalDateTime()
+        updatedAt = this[UserTable.updatedAt].atZone(ZoneId.systemDefault()).toLocalDateTime(),
+        role = this[UserTable.role]
     )
 }
 
@@ -167,5 +164,46 @@ fun ResultRow?.toJob(): Job? {
         status = JobStatus.valueOf(this[JobTable.status]),
         requirements = this[JobTable.requirements],
         jobImage = this[JobTable.jobImage]
+    )
+}
+
+fun ResultRow?.toStoryJoinedWithUser(): Story? {
+    return if (this == null) null
+    else Story(
+        id = this[StoryTable.id],
+        user = User(
+            id = this[UserTable.id],
+            fullName = this[UserTable.fullName],
+            email = this[UserTable.email],
+            passwordHash = this[UserTable.password_hash],
+            phoneNumber = this[UserTable.phone_number],
+            avatar = this[UserTable.avatar],
+            bio = this[UserTable.bio],
+            gender = this[UserTable.gender],
+            location = this[UserTable.location],
+            cvUrl = this[UserTable.cv_url],
+            education = this[UserTable.education],
+            experience = this[UserTable.experience],
+            createdAt = this[UserTable.createdAt].atZone(ZoneId.systemDefault()).toLocalDateTime(),
+            updatedAt = this[UserTable.updatedAt].atZone(ZoneId.systemDefault()).toLocalDateTime()
+        ),
+        title = this[StoryTable.title],
+        content = this[StoryTable.content],
+        isDraft = this[StoryTable.isDraft],
+        createdAt = this[StoryTable.createdAt].toString()
+    )
+}
+fun ResultRow?.toCompany(): Company? {
+    return if (this == null) null
+    else Company(
+        id = this[CompanyTable.id],
+        name = this[CompanyTable.name],
+        description = this[CompanyTable.description],
+        location = this[CompanyTable.location],
+        website = this[CompanyTable.website],
+        logo = this[CompanyTable.logo],
+        size = this[CompanyTable.size],
+        createdAt = this[CompanyTable.createdAt].atZone(ZoneId.systemDefault()).toLocalDateTime(),
+        userId = this[CompanyTable.userId]
     )
 }

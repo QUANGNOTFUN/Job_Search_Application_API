@@ -1,8 +1,9 @@
 package net.jobsearchapplication_api.data.models
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import java.time.LocalDateTime
 import java.util.*
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class Company(
     val id: UUID,
     val name: String,
