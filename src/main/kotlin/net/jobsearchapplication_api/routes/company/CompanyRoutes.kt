@@ -2,7 +2,6 @@ package net.jobsearchapplication_api.routes.company
 
 import io.ktor.application.*
 import io.ktor.auth.*
-import io.ktor.client.engine.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
@@ -71,7 +70,7 @@ fun Application.companyRoutes(repository: CompanyRepository) {
 
 
                 // DELETE /companies/delete/{id} - Xóa công ty
-                delete("/company/delete/{id}") {
+                delete("/delete/{id}") {
                     val idString =
                         call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest, "Missing ID")
                     val id = try {
@@ -83,7 +82,7 @@ fun Application.companyRoutes(repository: CompanyRepository) {
                     call.respond(response)
                 }
                 // GET /companies/{id}/jobs - Lấy danh sách công việc của công ty
-                get("/{id}/jobs") {
+                get("/jobs/{id}") {
                     val id = call.parameters["id"]?.let { UUID.fromString(it) }
                         ?: return@get call.respond(HttpStatusCode.BadRequest, "Invalid company ID")
                     val response = repository.getCompanyJobs(id)

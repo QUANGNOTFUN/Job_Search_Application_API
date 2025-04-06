@@ -16,3 +16,4 @@ object CompanyTable : Table("companies") {
 
     override val primaryKey = PrimaryKey(id)
 }
+
