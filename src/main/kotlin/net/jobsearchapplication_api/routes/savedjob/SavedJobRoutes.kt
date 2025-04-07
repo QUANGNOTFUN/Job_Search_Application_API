@@ -67,7 +67,7 @@ fun Application.savedJobRoutes(repository: SavedJobRepository) {
                         return@delete
                     }
 
-                    call.respond(repository.unsaveJob(userId, jobId))
+                    call.respond(repository.unSaveJob(userId, jobId))
                 } catch (e: Exception) {
                     call.respond(
                         HttpStatusCode.InternalServerError,

@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 
 object LikeTable : Table("likes") {
     val id = integer("id").autoIncrement()
-    val userId = uuid("user_id").references(ref = UserTable.id, onDelete = ReferenceOption.CASCADE)
+    val userId = varchar("user_id", 50).references(ref = UserTable.id, onDelete = ReferenceOption.CASCADE)
     val storyId = integer("story_id").references(ref = StoryTable.id, onDelete = ReferenceOption.CASCADE)
     val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
     override val primaryKey = PrimaryKey(StoryTable.id)

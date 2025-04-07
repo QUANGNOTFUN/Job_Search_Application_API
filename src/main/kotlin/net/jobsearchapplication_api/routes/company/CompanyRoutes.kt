@@ -32,8 +32,8 @@ fun Application.companyRoutes(repository: CompanyRepository) {
                 // GET /companies/get/{id} - Lấy thông tin công ty theo ID
                 get("/get/{id}") {
                     val idParam = call.parameters["id"]
-                    val id: UUID = try {
-                        idParam?.let { UUID.fromString(it) }
+                    val id: String = try {
+                        idParam
                             ?: return@get call.respond(
                                 HttpStatusCode.BadRequest,
                                 BaseResponse.ErrorResponse(message = "Invalid company ID")
@@ -59,11 +59,8 @@ fun Application.companyRoutes(repository: CompanyRepository) {
                 put("/update/{id}") {
                     val idPrincipal = call.parameters["id"]
                     val params = call.receive<CompanyParams>()
-                    val id = try {
-                        UUID.fromString(idPrincipal)
-                    } catch (e: IllegalArgumentException) {
-                        return@put call.respond(HttpStatusCode.BadRequest, "Invalid UUID format")
-                    }
+                    val id: String = idPrincipal.toString()
+
                     val response = repository.updateCompany(id, params)
                     call.respond(response)
                 }
@@ -73,17 +70,13 @@ fun Application.companyRoutes(repository: CompanyRepository) {
                 delete("/delete/{id}") {
                     val idString =
                         call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest, "Missing ID")
-                    val id = try {
-                        UUID.fromString(idString)
-                    } catch (e: IllegalArgumentException) {
-                        return@delete call.respond(HttpStatusCode.BadRequest, "Invalid UUID format")
-                    }
+                    val id: String = idString
                     val response = repository.deleteCompany(id)
                     call.respond(response)
                 }
                 // GET /companies/{id}/jobs - Lấy danh sách công việc của công ty
                 get("/jobs/{id}") {
-                    val id = call.parameters["id"]?.let { UUID.fromString(it) }
+                    val id = call.parameters["id"]
                         ?: return@get call.respond(HttpStatusCode.BadRequest, "Invalid company ID")
                     val response = repository.getCompanyJobs(id)
                     call.respond(response)
