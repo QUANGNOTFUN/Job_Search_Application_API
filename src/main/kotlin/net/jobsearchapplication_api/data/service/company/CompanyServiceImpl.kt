@@ -21,7 +21,7 @@ class CompanyServiceImpl : CompanyService {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getCompanyById(id: UUID): Company? {
+    override suspend fun getCompanyById(id: String): Company? {
         return dbQuery {
             CompanyTable.select { CompanyTable.id eq id }.firstOrNull()?.let {
                 Company(
@@ -43,7 +43,7 @@ class CompanyServiceImpl : CompanyService {
     override suspend fun createCompany(params: CompanyParams): Company? {
         val statement = dbQuery {
             CompanyTable.insert {
-                it[id] = UUID.randomUUID()
+                it[id] = UUID.randomUUID().toString()
                 it[name] = params.name
                 it[description] = params.description
                 it[location] = params.location
@@ -59,7 +59,7 @@ class CompanyServiceImpl : CompanyService {
             ?: throw IllegalStateException("Failed to create company")
     }
 
-    override suspend fun updateCompany(id: UUID, params: CompanyParams): Company? {
+    override suspend fun updateCompany(id: String, params: CompanyParams): Company? {
         val updated = dbQuery {
             CompanyTable.update({ CompanyTable.id eq id }) {
                 it[name] = params.name
@@ -84,7 +84,7 @@ class CompanyServiceImpl : CompanyService {
     }
 
 
-    override suspend fun deleteCompany(id: UUID): Boolean {
+    override suspend fun deleteCompany(id: String): Boolean {
         return try {
             dbQuery {
                 val deleteCount = CompanyTable.deleteWhere { CompanyTable.id eq id }
@@ -95,7 +95,7 @@ class CompanyServiceImpl : CompanyService {
         }
     }
 
-    override suspend fun getCompanyJobs(id: UUID): List<Job?> {
+    override suspend fun getCompanyJobs(id: String): List<Job?> {
         return dbQuery {
             JobTable.select{ JobTable.companyId eq id }.map { it.toJob() }
             .toList()

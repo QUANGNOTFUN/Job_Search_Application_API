@@ -4,32 +4,43 @@ import net.jobsearchapplication_api.base.BaseResponse
 import net.jobsearchapplication_api.config.SUCCESS
 import net.jobsearchapplication_api.data.service.jobcategory.JobCategoryService
 import java.util.*
+import net.jobsearchapplication_api.data.db.schemas.JobCategoryTable
+import net.jobsearchapplication_api.data.models.JobCategory
+import net.jobsearchapplication_api.routes.jobcategory.JobCategoryParams
+import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.transactions.transaction
 
-// JobCategoryRepositoryImpl.kt
-class JobCategoryRepositoryImpl(
-    private val categoryService: JobCategoryService
-) : JobCategoryRepository {
-    override suspend fun getAllCategories(): BaseResponse<Any> {
-        return BaseResponse.SuccessResponse(
-            data = categoryService.getAllCategories(),
-            message = SUCCESS
-        )
+//  JobCategoryRepositoryImpl.kt
+class JobCategoryRepositoryImpl(private val jobCategoryService: JobCategoryService) : JobCategoryRepository {
+
+    override suspend fun getAllCategories(page: Int, limit: Int): BaseResponse<Any> {
+
+        return try {
+            BaseResponse.SuccessResponse(data = jobCategoryService.getAllJobCategories(page, limit), message = SUCCESS)
+        } catch (e: Exception) {
+            BaseResponse.ErrorResponse(
+                message = "Error getting jobs category: ${e.localizedMessage}"
+            )
+        }
     }
 
     override suspend fun getCategoryById(id: UUID): BaseResponse<Any> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun createCategory(name: String): BaseResponse<Any> {
+    override suspend fun createCategory(params: JobCategoryParams): BaseResponse<Any> {
         TODO("Not yet implemented")
+
     }
 
-    override suspend fun updateCategory(id: UUID, name: String): BaseResponse<Any> {
-        TODO("Not yet implemented")
+    override suspend fun updateCategory(id: Int, params: JobCategoryParams): Boolean = transaction {
+        JobCategoryTable.update({ JobCategoryTable.id eq id }) {
+            it[name] = params.name
+        } > 0
     }
 
-    override suspend fun deleteCategory(id: UUID): BaseResponse<Any> {
-        TODO("Not yet implemented")
+    override suspend fun deleteCategory(id: Int): Boolean = transaction {
+        JobCategoryTable.deleteWhere { JobCategoryTable.id eq id } > 0
     }
 
     override suspend fun getJobsByCategory(categoryId: UUID): BaseResponse<Any> {

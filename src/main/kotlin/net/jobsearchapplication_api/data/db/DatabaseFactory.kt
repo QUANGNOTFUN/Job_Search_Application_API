@@ -22,6 +22,10 @@ object DatabaseFactory {
             SchemaUtils.create(JobTable)
             SchemaUtils.create(SavedJobTable)
             SchemaUtils.create(CompanyTable)
+			SchemaUtils.create(NotificationTable)
+            SchemaUtils.create(JobCategoryTable)
+            SchemaUtils.create(JobCategoryMappingTable)
+
         }
     }
 

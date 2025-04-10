@@ -8,18 +8,15 @@ import net.jobsearchapplication_api.routes.user.UpdateInfoUserParams
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
-import java.time.DateTimeException
-import java.time.Instant
 import java.time.LocalDateTime
-import java.util.*
 
 class UserServiceImpl : UserService {
-    override suspend fun getUser(id: UUID): User {
+    override suspend fun getUser(id: String): User {
         val userRow = dbQuery { UserTable.select { UserTable.id eq id }.first() }
         return userRow.toUser()!!
     }
 
-    override suspend fun updateInfoUser(id: UUID, params: UpdateInfoUserParams): Boolean {
+    override suspend fun updateInfoUser(id: String, params: UpdateInfoUserParams): Boolean {
         return transaction {
             UserTable.update({ UserTable.id eq id }) { row ->
                 var isChanged = false

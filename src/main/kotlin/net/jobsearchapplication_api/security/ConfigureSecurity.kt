@@ -24,7 +24,7 @@ fun Application.configureSecurity() {
 
                     if (userId != null && name != null && email != null && role != null) {
                         UserIdPrincipalForUser(
-                            id = userId,
+                            id = userId.toString(),
                             name = name,
                             email = email,
                             role = role

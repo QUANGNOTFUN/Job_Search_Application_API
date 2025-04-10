@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 import java.util.*
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class Company(
-    val id: UUID,
+    val id: String,
     val name: String,
     val description: String? = null,
     val location: String? = null,
@@ -13,5 +13,5 @@ data class Company(
     val logo: String? = null,
     val size: Int? = null,
     val createdAt: LocalDateTime = LocalDateTime.now(),
-    val userId: UUID? = null
+    val userId: String? = null
 )

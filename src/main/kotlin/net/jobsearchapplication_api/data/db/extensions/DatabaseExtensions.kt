@@ -12,8 +12,6 @@ fun ResultRow?.toUser(): User? {
     else User(
         id = this[UserTable.id],
         fullName = this[UserTable.fullName],
-        email = this[UserTable.email],
-        passwordHash = this[UserTable.password_hash],
         phoneNumber = this[UserTable.phone_number],
         avatar = this[UserTable.avatar],
         bio = this[UserTable.bio],
@@ -142,6 +140,7 @@ fun ResultRow.toJobWithDetails(): Job {
         createdAt = this[JobTable.createdAt]
     )
 }
+
 fun ResultRow?.toJob(): Job? {
     return if (this == null) null
     else Job(
@@ -174,8 +173,6 @@ fun ResultRow?.toStoryJoinedWithUser(): Story? {
         user = User(
             id = this[UserTable.id],
             fullName = this[UserTable.fullName],
-            email = this[UserTable.email],
-            passwordHash = this[UserTable.password_hash],
             phoneNumber = this[UserTable.phone_number],
             avatar = this[UserTable.avatar],
             bio = this[UserTable.bio],
@@ -206,4 +203,17 @@ fun ResultRow?.toCompany(): Company? {
         createdAt = this[CompanyTable.createdAt].atZone(ZoneId.systemDefault()).toLocalDateTime(),
         userId = this[CompanyTable.userId]
     )
+}
+fun ResultRow?.toNotification(): Notification? {
+	return if (this == null) null
+	else Notification(
+		id = this[NotificationTable.id],
+		userId = this[NotificationTable.userId],
+		title = this[NotificationTable.title],
+		message = this[NotificationTable.description],
+		type = this[NotificationTable.type],
+		relateId = this[NotificationTable.relatedId],
+		isRead = this[NotificationTable.isRead],
+		createAt = this[NotificationTable.createdAt].atZone(ZoneId.systemDefault()).toLocalDateTime(),
+	)
 }

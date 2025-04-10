@@ -5,7 +5,7 @@ import java.util.UUID
 
 data class SavedJob(
     val id: UUID,
-    val userId: UUID,
+    val userId: String,
     val jobId: UUID,
     val savedAt: LocalDateTime = LocalDateTime.now()
 )

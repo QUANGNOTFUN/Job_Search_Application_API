@@ -4,7 +4,7 @@ import io.ktor.auth.*
 import java.util.*
 
 data class UserIdPrincipalForUser(
-    val id: UUID,
+    val id: String,
     val name: String,
     val email: String,
     val role: String
