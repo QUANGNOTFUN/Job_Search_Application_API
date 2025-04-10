@@ -54,7 +54,7 @@ class NotificationServiceImpl :NotificationService {
 				it[title] = params.title
 				it[description] = params.message
 				it[type] = params.type
-				it[relatedId] = params.relateId
+//				it[relatedId] = params.relateId
 				it[createdAt] = LocalDateTime.now()
 			}
 		}
@@ -69,7 +69,7 @@ class NotificationServiceImpl :NotificationService {
 				if (params.title != null) it[title] = params.title
 				if (params.message != null) it[NotificationTable.description] = params.message
 				if (params.type != null) it[type] = params.type
-				if (params.relateId != null) it[relatedId] = params.relateId
+//				if (params.relateId != null) it[relatedId] = params.relateId
 			}
 		}
 

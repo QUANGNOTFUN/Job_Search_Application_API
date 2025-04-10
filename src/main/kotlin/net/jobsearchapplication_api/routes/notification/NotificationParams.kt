@@ -8,5 +8,4 @@ data class NotificationParams (
     val title: String,
     val message: String,
     val type:String,
-    val relateId:UUID,
 )
