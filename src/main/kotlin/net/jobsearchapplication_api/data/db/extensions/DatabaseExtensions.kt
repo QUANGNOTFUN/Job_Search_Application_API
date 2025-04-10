@@ -207,3 +207,16 @@ fun ResultRow?.toCompany(): Company? {
         userId = this[CompanyTable.userId]
     )
 }
+fun ResultRow?.toNotification(): Notification? {
+	return if (this == null) null
+	else Notification(
+		id = this[NotificationTable.id],
+		userId = this[NotificationTable.userId],
+		title = this[NotificationTable.title],
+		message = this[NotificationTable.description],
+		type = this[NotificationTable.type],
+		relateId = this[NotificationTable.relatedId],
+		isRead = this[NotificationTable.isRead],
+		createAt = this[NotificationTable.createdAt].atZone(ZoneId.systemDefault()).toLocalDateTime(),
+	)
+}

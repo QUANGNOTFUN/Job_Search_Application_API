@@ -7,7 +7,7 @@ object MessageTable : Table("messages") {
     val id = uuid("id").autoGenerate()
     val senderId = uuid("sender_id").references(UserTable.id)
     val receiverId = uuid("receiver_id").references(UserTable.id)
-    val message = text("message")
+    val message = text("description")
     val sentAt = datetime("sent_at")
     val isRead = bool("is_read").default(false)
 

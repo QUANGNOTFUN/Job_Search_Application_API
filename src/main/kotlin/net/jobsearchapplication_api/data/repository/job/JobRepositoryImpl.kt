@@ -28,7 +28,7 @@ class JobRepositoryImpl(private val jobService: JobService ) : JobRepository {
 //        val job = jobService.getJobById(id)
 //        return BaseResponse.SuccessResponse(
 //            data = jobService.getJobsByCompanyId(id)
-//            message = SUCCESS
+//            description = SUCCESS
 //        )
 
         TODO("Not yet implemented")
