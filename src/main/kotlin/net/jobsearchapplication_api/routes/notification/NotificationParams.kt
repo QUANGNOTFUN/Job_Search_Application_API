@@ -4,7 +4,7 @@ import net.jobsearchapplication_api.data.models.Message
 import java.util.UUID
 
 data class NotificationParams (
-    val userId: UUID,
+    val userId: String,
     val title: String,
     val message: String,
     val type:String,
