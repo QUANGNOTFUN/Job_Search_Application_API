@@ -10,6 +10,7 @@ import net.jobsearchapplication_api.di.RepositoryProvider
 import net.jobsearchapplication_api.routes.auth.authRoutes
 import net.jobsearchapplication_api.routes.company.companyRoutes
 import net.jobsearchapplication_api.routes.job.jobRoutes
+import net.jobsearchapplication_api.routes.jobcategory.jobCategoryRoutes
 import net.jobsearchapplication_api.routes.notification.notificationRoutes
 import net.jobsearchapplication_api.routes.savedjob.savedJobRoutes
 import net.jobsearchapplication_api.routes.user.userRoutes
@@ -39,4 +40,5 @@ fun Application.configureRouting(){
     companyRoutes(RepositoryProvider.provideCompanyRepository())
     savedJobRoutes(RepositoryProvider.provideSavedJobRepository())
 	notificationRoutes(RepositoryProvider.provideNotificationRepository())
+    jobCategoryRoutes(RepositoryProvider.provideJobCategoryRepository())
 }

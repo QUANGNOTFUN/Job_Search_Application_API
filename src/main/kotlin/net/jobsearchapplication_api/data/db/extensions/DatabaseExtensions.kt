@@ -140,6 +140,7 @@ fun ResultRow.toJobWithDetails(): Job {
         createdAt = this[JobTable.createdAt]
     )
 }
+
 fun ResultRow?.toJob(): Job? {
     return if (this == null) null
     else Job(
