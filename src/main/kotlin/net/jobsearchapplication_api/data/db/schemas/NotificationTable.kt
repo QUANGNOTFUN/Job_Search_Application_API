@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 
 object NotificationTable : Table("notifications") {
 	val id = uuid("id").autoGenerate()
-    val userId = uuid("user_id").references(UserTable.id) // Liên kết với người nhận
+    val userId = varchar("user_id",36).references(ref =  UserTable.id)// Liên kết với người nhận
     val title = varchar("title", 100).nullable() // Tiêu đề thông báo
     val description = text("description").nullable()// Nội dung thông báo
     val type = varchar("type", 50).nullable() // Loại thông báo (ví dụ: "new_message", "job_match")

@@ -2,12 +2,8 @@ package net.jobsearchapplication_api.data.service.notification
 
 import net.jobsearchapplication_api.data.db.DatabaseFactory.dbQuery
 import net.jobsearchapplication_api.data.db.extensions.toNotification
-import net.jobsearchapplication_api.data.db.schemas.CompanyTable
 import net.jobsearchapplication_api.data.db.schemas.NotificationTable
 import net.jobsearchapplication_api.data.db.schemas.NotificationTable.id
-import net.jobsearchapplication_api.data.db.schemas.NotificationTable.relatedId
-import net.jobsearchapplication_api.data.db.schemas.NotificationTable.title
-import net.jobsearchapplication_api.data.db.schemas.NotificationTable.type
 import net.jobsearchapplication_api.data.models.Notification
 import net.jobsearchapplication_api.routes.notification.NotificationParams
 import org.jetbrains.exposed.sql.*
@@ -69,7 +65,7 @@ class NotificationServiceImpl :NotificationService {
 
 	override suspend fun updateNotification(id: UUID, params: NotificationParams): Notification? {
 		val updated = dbQuery {
-			CompanyTable.update({ CompanyTable.id eq id }) {
+			NotificationTable.update({ NotificationTable.id eq id }) {
 				if (params.title != null) it[title] = params.title
 				if (params.message != null) it[NotificationTable.description] = params.message
 				if (params.type != null) it[type] = params.type
@@ -79,7 +75,7 @@ class NotificationServiceImpl :NotificationService {
 
 		if (updated > 0) {
 			return dbQuery {
-				NotificationTable.select { CompanyTable.id eq id }
+				NotificationTable.select { NotificationTable.id eq id }
 					.map { it.toNotification() }
 					.firstOrNull()
 			}
