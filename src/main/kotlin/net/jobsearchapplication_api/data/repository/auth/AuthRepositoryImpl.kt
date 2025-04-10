@@ -5,10 +5,6 @@ import net.jobsearchapplication_api.base.BaseResponse
 import net.jobsearchapplication_api.config.*
 import net.jobsearchapplication_api.data.service.auth.AuthService
 import net.jobsearchapplication_api.routes.auth.CreateUserParams
-import net.jobsearchapplication_api.routes.auth.LoginWithGoogleParams
-import net.jobsearchapplication_api.routes.auth.UserLoginParams
-import net.jobsearchapplication_api.security.JwtConfig
-import net.jobsearchapplication_api.security.TokenResponse
 
 class AuthRepositoryImpl(
     private val authService: AuthService
@@ -67,8 +63,15 @@ class AuthRepositoryImpl(
 //        }
 //    }
 
-    override suspend fun loginWithGoogle(params: LoginWithGoogleParams): BaseResponse<Any> {
-        return if (authService.loginWithGoogle(params)) {
+    override suspend fun createUser(params: CreateUserParams): BaseResponse<Any> {
+        if (isUuidExist(params.uuid)) {
+            return BaseResponse.SuccessResponse(
+                data = null,
+                message = "Đăng nhập trở lại"
+            )
+        }
+
+        return if (authService.createUser(params)) {
             BaseResponse.SuccessResponse(
                 data = null,
                 message = USER_LOGIN_SUCCESS
@@ -76,10 +79,9 @@ class AuthRepositoryImpl(
         } else {
             BaseResponse.ErrorResponse(USER_LOGIN_FAILURE, HttpStatusCode.Unauthorized)
         }
-
     }
 
-//    private suspend fun isEmailExist(email: String): Boolean {
-//        return authService.findUserByEmail(email) != null
-//    }
+    private suspend fun isUuidExist(uuid: String): Boolean {
+        return authService.findUserByUUID(uuid) != null
+    }
 }

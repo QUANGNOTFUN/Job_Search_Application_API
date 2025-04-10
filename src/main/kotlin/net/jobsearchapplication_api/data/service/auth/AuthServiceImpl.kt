@@ -1,19 +1,12 @@
 package net.jobsearchapplication_api.data.service.auth
 
-import com.fasterxml.jackson.databind.deser.impl.CreatorCandidate.Param
 import net.jobsearchapplication_api.data.db.DatabaseFactory.dbQuery
 import net.jobsearchapplication_api.data.db.extensions.toUser
 import net.jobsearchapplication_api.data.db.schemas.UserTable
 import net.jobsearchapplication_api.data.models.User
 import net.jobsearchapplication_api.routes.auth.CreateUserParams
-import net.jobsearchapplication_api.routes.auth.LoginWithGoogleParams
-import net.jobsearchapplication_api.security.hash
-import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.statements.InsertStatement
-import java.time.LocalDateTime
-import java.util.*
 
 class AuthServiceImpl : AuthService {
 //    override suspend fun registerUser(params: CreateUserParams): User? {
@@ -45,16 +38,16 @@ class AuthServiceImpl : AuthService {
 //        return userRow.toUser()
 //    }
 //
-//    override suspend fun findUserByEmail(email: String): User? {
-//        return dbQuery {
-//            UserTable
-//                .select { UserTable.email.eq(email) }
-//                .map { it.toUser() }
-//                .singleOrNull()
-//        }
-//    }
+    override suspend fun findUserByUUID(uuid: String): User? {
+        return dbQuery {
+            UserTable
+                .select { UserTable.id.eq(uuid) }
+                .map { it.toUser() }
+                .singleOrNull()
+        }
+    }
 
-    override suspend fun loginWithGoogle(params: LoginWithGoogleParams): Boolean {
+    override suspend fun createUser(params: CreateUserParams): Boolean {
         return dbQuery {
             val result = UserTable.insert {
                 it[id] = params.uuid

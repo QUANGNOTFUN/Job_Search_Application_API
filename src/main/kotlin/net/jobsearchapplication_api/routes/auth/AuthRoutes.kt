@@ -6,7 +6,6 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import net.jobsearchapplication_api.base.BaseResponse
-import net.jobsearchapplication_api.data.db.schemas.UserRole
 import net.jobsearchapplication_api.data.repository.auth.AuthRepository
 
 fun Application.authRoutes(repository: AuthRepository) {
@@ -47,10 +46,10 @@ fun Application.authRoutes(repository: AuthRepository) {
 //                }
 //            }
 
-            post("/login-with-google") {
+            post("/createUser") {
                 try {
-                    val params = call.receive<LoginWithGoogleParams>()
-                    val result = repository.loginWithGoogle(params)
+                    val params = call.receive<CreateUserParams>()
+                    val result = repository.createUser(params)
                     call.respond(result.statusCode, result)
                 } catch (e: Exception) {
                     call.respond(

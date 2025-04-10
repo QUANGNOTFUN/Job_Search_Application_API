@@ -7,8 +7,8 @@ import org.jetbrains.exposed.sql.javatime.timestamp
 import java.time.LocalDateTime
 
 object UserTable : Table("users") {
-    val id = varchar("id", 50)
-    val fullName = varchar("full_name", 50)
+    val id = varchar("id", 36)
+    val fullName = varchar("full_name", 50).nullable()
     val phone_number = varchar("phone_number", 20).nullable()
     val avatar = text("avatar").nullable()
     val bio = varchar("bio", 250).nullable()

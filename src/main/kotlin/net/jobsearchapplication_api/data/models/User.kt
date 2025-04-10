@@ -12,7 +12,7 @@ import java.util.UUID
 @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 data class User(
     val id: String,
-    val fullName: String,
+    val fullName: String? = null,
     val phoneNumber: String? = null,
     val avatar: String? = null,
     val bio: String? = null,
