@@ -12,8 +12,6 @@ fun ResultRow?.toUser(): User? {
     else User(
         id = this[UserTable.id],
         fullName = this[UserTable.fullName],
-        email = this[UserTable.email],
-        passwordHash = this[UserTable.password_hash],
         phoneNumber = this[UserTable.phone_number],
         avatar = this[UserTable.avatar],
         bio = this[UserTable.bio],
@@ -174,8 +172,6 @@ fun ResultRow?.toStoryJoinedWithUser(): Story? {
         user = User(
             id = this[UserTable.id],
             fullName = this[UserTable.fullName],
-            email = this[UserTable.email],
-            passwordHash = this[UserTable.password_hash],
             phoneNumber = this[UserTable.phone_number],
             avatar = this[UserTable.avatar],
             bio = this[UserTable.bio],

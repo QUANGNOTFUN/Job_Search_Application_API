@@ -18,7 +18,7 @@ class CompanyRepositoryImpl (
         )
     }
 
-    override suspend fun getCompanyById(id: UUID): BaseResponse<Any> {
+    override suspend fun getCompanyById(id: String): BaseResponse<Any> {
         val companyId = companyService.getCompanyById(id)
         return BaseResponse.SuccessResponse(
             data = companyId,
@@ -37,7 +37,7 @@ class CompanyRepositoryImpl (
         )
     }
 
-    override suspend fun updateCompany(id: UUID, params: CompanyParams): BaseResponse<Any> {
+    override suspend fun updateCompany(id: String, params: CompanyParams): BaseResponse<Any> {
         val companyId = companyService.updateCompany(id, params)
         return BaseResponse.SuccessResponse(
             data = companyId,
@@ -45,7 +45,7 @@ class CompanyRepositoryImpl (
         )
     }
 
-    override suspend fun deleteCompany(id: UUID): BaseResponse<Any> {
+    override suspend fun deleteCompany(id: String): BaseResponse<Any> {
         val deletedId = companyService.deleteCompany(id)
         return BaseResponse.SuccessResponse(
             data = deletedId,
@@ -53,7 +53,7 @@ class CompanyRepositoryImpl (
         )
     }
 
-    override suspend fun getCompanyJobs(id: UUID): BaseResponse<Any> {
+    override suspend fun getCompanyJobs(id: String): BaseResponse<Any> {
        val cpmpanyjob = companyService.getCompanyJobs(id)
         return BaseResponse.SuccessResponse(
             data = cpmpanyjob,

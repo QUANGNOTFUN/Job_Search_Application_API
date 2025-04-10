@@ -7,9 +7,9 @@ import java.util.*
 
 interface CompanyService {
     suspend fun getAllCompanies(page: Int, limit :Int): List<Company>
-    suspend fun getCompanyById(id: UUID): Company?
+    suspend fun getCompanyById(id: String): Company?
     suspend fun createCompany(params: CompanyParams): Company?
-    suspend fun updateCompany(id: UUID, params: CompanyParams): Company?
-    suspend fun deleteCompany(id: UUID): Boolean
-    suspend fun getCompanyJobs(id: UUID): List<Job?>
+    suspend fun updateCompany(id: String, params: CompanyParams): Company?
+    suspend fun deleteCompany(id: String): Boolean
+    suspend fun getCompanyJobs(id: String): List<Job?>
 }

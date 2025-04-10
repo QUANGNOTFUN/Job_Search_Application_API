@@ -9,5 +9,5 @@ data class CompanyParams(
     val website: String? = null,
     val logo: String? = null,
     val size: Int? = null,
-    val userId: UUID? = null
+    val userId: String? = null
 )

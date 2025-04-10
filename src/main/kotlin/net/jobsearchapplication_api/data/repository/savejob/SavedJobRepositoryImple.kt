@@ -7,7 +7,7 @@ import net.jobsearchapplication_api.config.SUCCESS
 
 class SavedJobRepositoryImpl(private val savedJobService: SavedJobService ) : SavedJobRepository {
 
-    override suspend fun getSavedJobs(userId: UUID, page: Int, limit: Int): BaseResponse<Any> {
+    override suspend fun getSavedJobs(userId: String, page: Int, limit: Int): BaseResponse<Any> {
         return try {
             val savedJobs = savedJobService.getSavedJobs(userId)
             BaseResponse.SuccessResponse(
@@ -19,7 +19,7 @@ class SavedJobRepositoryImpl(private val savedJobService: SavedJobService ) : Sa
         }
     }
 
-    override suspend fun saveJob(userId: UUID, jobId: UUID): BaseResponse<Any> {
+    override suspend fun saveJob(userId: String, jobId: UUID): BaseResponse<Any> {
         return try {
             val savedJob = savedJobService.saveJob(userId, jobId)
             if (savedJob) {
@@ -35,9 +35,9 @@ class SavedJobRepositoryImpl(private val savedJobService: SavedJobService ) : Sa
         }
     }
 
-    override suspend fun unsaveJob(userId: UUID, jobId: UUID): BaseResponse<Any> {
+    override suspend fun unSaveJob(userId: String, jobId: UUID): BaseResponse<Any> {
         return try {
-            val result = savedJobService.unsaveJob(userId, jobId)
+            val result = savedJobService.unSaveJob(userId, jobId)
             if (result) {
                 BaseResponse.SuccessResponse(
                     data = null,
@@ -51,7 +51,7 @@ class SavedJobRepositoryImpl(private val savedJobService: SavedJobService ) : Sa
         }
     }
 
-    override suspend fun isJobSaved(userId: UUID, jobId: UUID): BaseResponse<Any> {
+    override suspend fun isJobSaved(userId: String, jobId: UUID): BaseResponse<Any> {
         return try {
             val isSaved = savedJobService.isJobSaved(userId, jobId)
             BaseResponse.SuccessResponse(
@@ -63,7 +63,7 @@ class SavedJobRepositoryImpl(private val savedJobService: SavedJobService ) : Sa
         }
     }
 
-    override suspend fun getSavedJobCount(userId: UUID): BaseResponse<Any> {
+    override suspend fun getSavedJobCount(userId: String): BaseResponse<Any> {
         return try {
             val count = savedJobService.getSavedJobCount(userId)
             BaseResponse.SuccessResponse(

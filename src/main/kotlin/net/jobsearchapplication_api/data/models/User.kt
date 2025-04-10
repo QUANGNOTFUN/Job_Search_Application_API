@@ -11,10 +11,8 @@ import java.util.UUID
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 data class User(
-    val id: UUID,
-    val fullName: String,
-    val email: String,
-    val passwordHash: String,
+    val id: String,
+    val fullName: String? = null,
     val phoneNumber: String? = null,
     val avatar: String? = null,
     val bio: String? = null,

@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 
 object CommentTable : Table("comments") {
     val id = integer("id").autoIncrement()
-    val userId = uuid("user_id").references(ref = UserTable.id, onDelete = ReferenceOption.CASCADE)
+    val userId = varchar("user_id", 36).references(ref = UserTable.id, onDelete = ReferenceOption.CASCADE)
     val storyId = integer("story_id").references(ref = StoryTable.id, onDelete = ReferenceOption.CASCADE)
     val comment = text("comment")
     val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
