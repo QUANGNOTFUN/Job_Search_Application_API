@@ -44,8 +44,8 @@ class JobRepositoryImpl(private val jobService: JobService ) : JobRepository {
         }
     }
 
-    override suspend fun createJob(jobParams: JobParams): BaseResponse<Any> {
-        val job = jobService.createJob(jobParams)
+    override suspend fun createJob(params: JobParams): BaseResponse<Any> {
+        val job = jobService.createJob(params)
         return if(job != null){
             BaseResponse.SuccessResponse(data = job, message = SUCCESS)
         }else{

@@ -64,7 +64,7 @@ class JobServiceImpl : JobService {
         return PaginatedResult(
             pageCount = pageCount,
             nextPage = nextPage,
-            data = jobs.filterNotNull() // Đảm bảo không có phần tử null
+            data = jobs // Đảm bảo không có phần tử null
         )
     }
 
