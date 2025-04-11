@@ -79,7 +79,8 @@ fun ResultRow?.toJobCategory(): JobCategory? {
     return if (this == null) null
     else JobCategory(
         id = this[JobCategoryTable.id],
-        name = this[JobCategoryTable.name]
+        name = this[JobCategoryTable.name],
+        imageUrl = this[JobCategoryTable.jobCategoryImage]
     )
 }
 
