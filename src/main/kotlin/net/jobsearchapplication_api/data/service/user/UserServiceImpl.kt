@@ -11,8 +11,8 @@ import org.jetbrains.exposed.sql.update
 import java.time.LocalDateTime
 
 class UserServiceImpl : UserService {
-    override suspend fun getUser(id: String): User {
-        val userRow = dbQuery { UserTable.select { UserTable.id eq id }.first() }
+    override suspend fun getUser(uuid: String): User {
+        val userRow = dbQuery { UserTable.select { UserTable.id eq uuid }.first() }
         return userRow.toUser()!!
     }
 
@@ -22,12 +22,12 @@ class UserServiceImpl : UserService {
                 var isChanged = false
 
                 params.fullName?.takeIf { it.isNotBlank() }?.let { row[fullName] = it; isChanged = true }
-                params.phoneNumber?.takeIf { it.isNotBlank() }?.let { row[phone_number] = it; isChanged = true }
+                params.phoneNumber?.takeIf { it.isNotBlank() }?.let { row[phoneNumber] = it; isChanged = true }
                 params.avatar?.takeIf { it.isNotBlank() }?.let { row[avatar] = it; isChanged = true }
                 params.bio?.takeIf { it.isNotBlank() }?.let { row[bio] = it; isChanged = true }
                 params.gender.let { row[gender] = it; isChanged = true }
                 params.location?.takeIf { it.isNotBlank() }?.let { row[location] = it; isChanged = true }
-                params.cvUrl?.takeIf { it.isNotBlank() }?.let { row[cv_url] = it; isChanged = true }
+                params.cvUrl?.takeIf { it.isNotBlank() }?.let { row[cvUrl] = it; isChanged = true }
                 params.education?.takeIf { it.isNotBlank() }?.let { row[education] = it; isChanged = true }
                 params.experience?.takeIf { it.isNotBlank() }?.let { row[experience] = it; isChanged = true }
 

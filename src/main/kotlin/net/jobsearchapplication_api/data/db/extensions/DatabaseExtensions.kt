@@ -4,6 +4,7 @@ import net.jobsearchapplication_api.data.db.schemas.*
 import net.jobsearchapplication_api.data.models.*
 import org.jetbrains.exposed.sql.ResultRow
 import java.math.BigDecimal
+import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.UUID
 
@@ -11,15 +12,16 @@ fun ResultRow?.toUser(): User? {
     return if (this == null) null
     else User(
         id = this[UserTable.id],
-        fullName = this[UserTable.fullName],
-        phoneNumber = this[UserTable.phone_number],
-        avatar = this[UserTable.avatar],
-        bio = this[UserTable.bio],
-        gender = this[UserTable.gender],
-        location = this[UserTable.location],
-        cvUrl = this[UserTable.cv_url],
-        education = this[UserTable.education],
-        experience = this[UserTable.experience],
+        fullName = this[UserTable.fullName] ?: "",
+        phoneNumber = this[UserTable.phoneNumber] ?: "",
+        avatar = this[UserTable.avatar] ?: "",
+        bio = this[UserTable.bio] ?: "",
+        birthDay = this[UserTable.birthDay]?.atZone(ZoneId.systemDefault())?.toLocalDateTime() ?: LocalDateTime.now(),
+        gender = this[UserTable.gender] ?: Gender.Male,
+        location = this[UserTable.location] ?: "",
+        cvUrl = this[UserTable.cvUrl] ?: "",
+        education = this[UserTable.education] ?: "",
+        experience = this[UserTable.experience] ?: "",
         createdAt = this[UserTable.createdAt].atZone(ZoneId.systemDefault()).toLocalDateTime(),
         updatedAt = this[UserTable.updatedAt].atZone(ZoneId.systemDefault()).toLocalDateTime(),
         role = this[UserTable.role]
@@ -172,12 +174,13 @@ fun ResultRow?.toStoryJoinedWithUser(): Story? {
         user = User(
             id = this[UserTable.id],
             fullName = this[UserTable.fullName],
-            phoneNumber = this[UserTable.phone_number],
+            phoneNumber = this[UserTable.phoneNumber],
             avatar = this[UserTable.avatar],
             bio = this[UserTable.bio],
+            birthDay = this[UserTable.birthDay]?.atZone(ZoneId.systemDefault())?.toLocalDateTime() ?: LocalDateTime.now(),
             gender = this[UserTable.gender],
             location = this[UserTable.location],
-            cvUrl = this[UserTable.cv_url],
+            cvUrl = this[UserTable.cvUrl],
             education = this[UserTable.education],
             experience = this[UserTable.experience],
             createdAt = this[UserTable.createdAt].atZone(ZoneId.systemDefault()).toLocalDateTime(),

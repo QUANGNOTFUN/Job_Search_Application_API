@@ -5,32 +5,40 @@ import io.ktor.auth.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import net.jobsearchapplication_api.base.BaseResponse
 import net.jobsearchapplication_api.data.repository.user.UserRepository
 import net.jobsearchapplication_api.security.UserIdPrincipalForUser
 
-fun Application.userRoutes(_repository: UserRepository) {
+fun Application.userRoutes(repository: UserRepository) {
     routing {
-        authenticate {
+//        authenticate {
             route("/user") {
                 get("/get-user") {
                     val principal = call.principal<UserIdPrincipalForUser>()
 
-                    val result = _repository.getUser(principal!!.id)
+                    val result = repository.getInfoUser(principal!!.id)
                     call.respond(result.statusCode, result)
                 }
 
-                put("/update-info-user") {
+                get("getInfo") {
+                    val query = call.request.queryParameters["uuid"] ?: throw IllegalArgumentException("Không có UUID")
+
+                    val result = repository.getInfoUser(query)
+                    call.respond(result)
+                }
+
+                put("/updateInfo") {
                     try {
                         val principal = call.principal<UserIdPrincipalForUser>()
                         val params = call.receive<UpdateInfoUserParams>()
 
-                        val result = _repository.updateInfoUser(principal!!.id, params)
+                        val result = repository.updateInfoUser(principal!!.id, params)
                         call.respond(result.statusCode, result)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
                 }
             }
-        }
+//        }
     }
 }
