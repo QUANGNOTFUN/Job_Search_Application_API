@@ -6,13 +6,15 @@ import java.time.LocalDateTime
 
 object NotificationTable : Table("notifications") {
 	val id = uuid("id").autoGenerate()
-    val userId = varchar("user_id",36).references(ref =  UserTable.id)// Liên kết với người nhận
-    val title = varchar("title", 100).nullable() // Tiêu đề thông báo
-    val description = text("description").nullable()// Nội dung thông báo
-    val type = varchar("type", 50).nullable() // Loại thông báo (ví dụ: "new_message", "job_match")
-    val relatedId = uuid("related_id").nullable() // ID liên quan (ví dụ: jobId, messageId)
-    val isRead = bool("is_read").default(false).nullable()// Trạng thái đã đọc
-    val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() } // Thời gian tạo
+	val userId = varchar("user_id", 36).references(UserTable.id).index() // Người nhận, thêm index
+	val senderId = varchar("sender_id", 36).references(UserTable.id).nullable() // Người gửi, có thể null
+	val title = varchar("title", 100).nullable() // Bắt buộc có tiêu đề
+	val description = text("description").nullable() // Mô tả có thể rỗng
+	val type = varchar("type", 50).nullable()// Bắt buộc có loại
+	val imageRes = integer("image_res").nullable() // Hình ảnh cho avatar
+	val relatedId = uuid("related_id").nullable() // ID liên quan
+	val isRead = bool("is_read").default(false).nullable()// Mặc định chưa đọc
+	val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() } // Thời gian tạo
 
-    override val primaryKey = PrimaryKey(id)
+	override val primaryKey = PrimaryKey(id)
 }

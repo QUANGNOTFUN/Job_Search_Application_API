@@ -211,7 +211,7 @@ fun ResultRow?.toNotification(): Notification? {
 		id = this[NotificationTable.id],
 		userId = this[NotificationTable.userId],
 		title = this[NotificationTable.title],
-		message = this[NotificationTable.description],
+		description = this[NotificationTable.description],
 		type = this[NotificationTable.type],
 		relateId = this[NotificationTable.relatedId],
 		isRead = this[NotificationTable.isRead],
