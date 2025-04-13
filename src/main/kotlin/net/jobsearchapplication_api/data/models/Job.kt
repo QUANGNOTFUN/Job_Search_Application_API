@@ -18,6 +18,7 @@ data class Job(
     val experienceLevel: ExperienceLevel,
     val companyId: String,
     val postedBy: String,
+    val categoryId: Int,
     val benefits: String?,
     val quantity: Int = 1,
     val genderRequire: GenderRequirement,

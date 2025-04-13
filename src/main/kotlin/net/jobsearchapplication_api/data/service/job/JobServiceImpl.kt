@@ -86,6 +86,8 @@ class JobServiceImpl : JobService {
                     it[description] = params.description
                     it[companyId] = params.companyId
                     it[postedBy] = params.postedBy
+                    it[jobCategory] = params.categoryId
+
                     // Lương
                     it[salaryMin] = BigDecimal(params.salary.min)
                     it[salaryMax] = BigDecimal(params.salary.max)

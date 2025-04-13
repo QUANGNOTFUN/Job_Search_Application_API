@@ -11,6 +11,7 @@ data class JobParams(
     val requirements: String,
     val benefits: String,
     val postedBy: String,
+    val categoryId: Int,
     
     // Thông tin lương
     val salary: SalaryInfo,
@@ -21,7 +22,6 @@ data class JobParams(
     val experience: ExperienceInfo,
     
     // Thông tin bổ sung
-    val categories: List<String>,
     val deadline: LocalDateTime,
     val positionsAvailable: Int,
     val genderRequirement: String, // MALE, FEMALE, ANY

@@ -16,15 +16,11 @@ object DatabaseFactory {
         Database.connect(hikari())
         transaction {
             SchemaUtils.create(UserTable)
-//            SchemaUtils.create(StoryTable)
-//            SchemaUtils.create(LikeTable)
-//            SchemaUtils.create(CommentTable)
             SchemaUtils.create(JobTable)
             SchemaUtils.create(SavedJobTable)
             SchemaUtils.create(CompanyTable)
 			SchemaUtils.create(NotificationTable)
             SchemaUtils.create(JobCategoryTable)
-            SchemaUtils.create(JobCategoryMappingTable)
 
         }
     }

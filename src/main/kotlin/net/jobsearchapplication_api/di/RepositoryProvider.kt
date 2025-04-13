@@ -29,8 +29,6 @@ object RepositoryProvider {
     fun provideCompanyRepository(): CompanyRepository = CompanyRepositoryImpl(CompanyServiceImpl())
     fun provideSavedJobRepository(): SavedJobRepository = SavedJobRepositoryImpl(SavedJobServiceImpl())
     fun provideNotificationRepository(): NotificationRepositoryImpl = NotificationRepositoryImpl(NotificationServiceImpl())
-
     fun provideJobCategoryRepository(): JobCategoryRepositoryImpl = JobCategoryRepositoryImpl(JobCategoryServiceImpl())
-//    fun provideJobCategoryMappingRepository(): JobCategoryMappingRepositoryImpl = JobCategoryMappingRepositoryImpl(jobCategoryMappingServiceImpl())
 
 }
