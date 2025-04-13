@@ -20,6 +20,7 @@ repositories {
 }
 
 dependencies {
+    implementation("com.google.firebase:firebase-admin:9.2.0")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.2")
     // bắt lỗi khi nhập
     implementation("jakarta.validation:jakarta.validation-api:3.0.2")
