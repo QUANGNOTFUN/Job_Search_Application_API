@@ -76,23 +76,3 @@ Table JobCategoryMapping {
   category_id UUID [ref: > JobCategories.id] // ID danh mục
   primary key (job_id, category_id) // Khóa chính kết hợp
 }
-Table Applications {
-  id UUID [primary key] // ID duy nhất của đơn ứng tuyển
-  user_id UUID [ref: > Users.id] // Người ứng tuyển
-  job_id UUID [ref: > Jobs.id] // Công việc ứng tuyển
-  status VARCHAR(50) // Trạng thái đơn (PENDING, APPROVED, REJECTED,...)
-  applied_at TIMESTAMP [default: `now()`] // Thời gian nộp đơn
-  cover_letter TEXT [null] // Thư ứng tuyển
-  cv_url TEXT [null] // URL CV đính kèm
-  additional_info TEXT [null] // Thông tin bổ sung
-}
-Table Notifications {
-  id UUID [primary key] // ID duy nhất của thông báo
-  user_id UUID [ref: > Users.id] // ID của người nhận thông báo
-  title VARCHAR(255) [null] // Tiêu đề thông báo
-  message TEXT [null] // Nội dung thông báo
-  type VARCHAR(50) [null] // Loại thông báo (JOB_POSTED, APPLICATION_UPDATE,...)
-  relate_id UUID [null] // ID liên quan (ví dụ: job_id, application_id)
-  is_read BOOLEAN [default: false] // Trạng thái đã đọc
-  created_at TIMESTAMP [default: `now()`] // Thời gian tạo thông báo
-}
