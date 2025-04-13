@@ -21,9 +21,13 @@ class NotificationServiceImpl :NotificationService {
 					Notification(
 						id = row[NotificationTable.id],
 						userId = row[NotificationTable.userId],
+						senderId = row[NotificationTable.senderId],
 						title = row[NotificationTable.title],
-						message = row[NotificationTable.description],
+						description = row[NotificationTable.description],
+						type = row[NotificationTable.type],
+						imageRes = row[NotificationTable.imageRes],
 						relateId = row[NotificationTable.relatedId],
+						isRead = row[NotificationTable.isRead],
 						createAt = row[NotificationTable.createdAt]
 					)
 				}
@@ -36,10 +40,13 @@ class NotificationServiceImpl :NotificationService {
 				Notification(
 					id = it[NotificationTable.id],
 					userId = it[NotificationTable.userId],
+					senderId = it[NotificationTable.senderId],
 					title = it[NotificationTable.title],
-					message = it[NotificationTable.description],
+					description = it[NotificationTable.description],
 					type = it[NotificationTable.type],
+					imageRes = it[NotificationTable.imageRes],
 					relateId = it[NotificationTable.relatedId],
+					isRead = it[NotificationTable.isRead],
 					createAt = it[NotificationTable.createdAt]
 				)
 			}
@@ -52,9 +59,9 @@ class NotificationServiceImpl :NotificationService {
 				it[id] = UUID.randomUUID()
 				it[userId] = params.userId
 				it[title] = params.title
-				it[description] = params.message
+				it[description] = params.description
 				it[type] = params.type
-				it[relatedId] = params.relateId
+//				it[relatedId] = params.relateId
 				it[createdAt] = LocalDateTime.now()
 			}
 		}
@@ -67,9 +74,9 @@ class NotificationServiceImpl :NotificationService {
 		val updated = dbQuery {
 			NotificationTable.update({ NotificationTable.id eq id }) {
 				if (params.title != null) it[title] = params.title
-				if (params.message != null) it[NotificationTable.description] = params.message
+				if (params.description != null) it[NotificationTable.description] = params.description
 				if (params.type != null) it[type] = params.type
-				if (params.relateId != null) it[relatedId] = params.relateId
+//				if (params.relateId != null) it[relatedId] = params.relateId
 			}
 		}
 
