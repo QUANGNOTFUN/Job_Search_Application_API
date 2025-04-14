@@ -1,7 +1,9 @@
 package net.jobsearchapplication_api.data.repository.user
 
+import io.ktor.http.*
 import net.jobsearchapplication_api.base.BaseResponse
 import net.jobsearchapplication_api.config.EMPTY_FORM
+import net.jobsearchapplication_api.config.EMPTY_UUID
 import net.jobsearchapplication_api.config.SUCCESS_UPDATE_INFO_USER
 import net.jobsearchapplication_api.data.models.User
 import net.jobsearchapplication_api.data.service.user.UserService
@@ -18,11 +20,17 @@ class UserRepositoryImpl(
         )
     }
 
-    override suspend fun updateInfoUser(id: String, params: UpdateInfoUserParams): BaseResponse<Any> {
-        return if (userService.updateInfoUser(id, params)) {
-            BaseResponse.SuccessResponse(data = null, message = SUCCESS_UPDATE_INFO_USER)
-        } else {
-            BaseResponse.ErrorResponse(message = EMPTY_FORM)
+    override suspend fun updateInfoUser(uuid: String, params: UpdateInfoUserParams): BaseResponse<Any> {
+        if (userService.getUser(uuid) == null) {
+            return BaseResponse.ErrorResponse(
+                message = EMPTY_UUID,
+                statusCode = HttpStatusCode.NotFound
+            )
         }
+
+        return BaseResponse.SuccessResponse(
+            data = userService.updateInfoUser(uuid, params),
+            message = SUCCESS_UPDATE_INFO_USER
+        )
     }
 }
