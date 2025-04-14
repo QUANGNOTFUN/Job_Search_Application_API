@@ -5,9 +5,7 @@ import net.jobsearchapplication_api.routes.notification.NotificationParams
 import java.util.UUID
 
 interface NotificationService {
-	suspend fun getAllNotifications(page:Int, limit: Int):List<Notification>
-	suspend fun getNotificationById(Id:UUID):Notification?
+	suspend fun getAllNotificationByUserId(page:Int, limit: Int, id: String):List<Notification>
 	suspend fun createNotification(params: NotificationParams):Notification?
-	suspend fun updateNotification(id:UUID,params: NotificationParams):Notification?
-	suspend fun deleteNotification(id: UUID):Boolean
+	suspend fun deleteNotification(id: String):Boolean
 }
