@@ -56,6 +56,5 @@ data class AdditionalInfo(
     val overtimePolicy: String?,
     val probationPeriod: String?,
     val jobImage: String?,
-
-    )
+)
 
