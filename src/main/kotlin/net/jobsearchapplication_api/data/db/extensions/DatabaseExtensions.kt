@@ -39,6 +39,17 @@ fun ResultRow?.toStory(): Story? {
     )
 }
 
+fun ResultRow?.toJobApplication(): JobApplication? {
+    return if (this == null) null
+    else JobApplication(
+        id = this[JobApplicationTable.id],
+        userId = this[JobApplicationTable.userId],
+        jobId = this[JobApplicationTable.jobId],
+        status = this[JobApplicationTable.status],
+        createdAt = this[JobApplicationTable.createdAt].toString(),
+        coverLetter = this[JobApplicationTable.coverLetter],
+    )
+}
 
 
 fun ResultRow?.toComment(): Comment? {
@@ -83,22 +94,6 @@ fun ResultRow?.toJobCategory(): JobCategory? {
         id = this[JobCategoryTable.id],
         name = this[JobCategoryTable.name],
         imageUrl = this[JobCategoryTable.jobCategoryImage]
-    )
-}
-
-// Job Summary (cho danh sách)
-fun ResultRow?.toJobSummary(): JobSummary? {
-    return if (this == null) null
-    else JobSummary(
-        id = this[JobTable.id],
-        title = this[JobTable.title],
-        companyName = this[CompanyTable.name],
-        location = this[JobTable.location],
-        salaryMin = this[JobTable.salaryMin],
-        salaryMax = this[JobTable.salaryMax],
-        currency = this[JobTable.currency],
-        jobType = JobType.valueOf(this[JobTable.jobType]),
-        createdAt = this[JobTable.createdAt].toString()
     )
 }
 

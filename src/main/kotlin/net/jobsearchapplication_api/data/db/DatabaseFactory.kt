@@ -21,7 +21,7 @@ object DatabaseFactory {
             SchemaUtils.create(CompanyTable)
 			SchemaUtils.create(NotificationTable)
             SchemaUtils.create(JobCategoryTable)
-
+            SchemaUtils.create(JobApplicationTable)
         }
     }
 
