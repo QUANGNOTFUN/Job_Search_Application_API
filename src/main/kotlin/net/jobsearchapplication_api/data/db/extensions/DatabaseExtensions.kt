@@ -37,6 +37,17 @@ fun ResultRow?.toStory(): Story? {
     )
 }
 
+fun ResultRow?.toJobApplication(): JobApplication? {
+    return if (this == null) null
+    else JobApplication(
+        id = this[JobApplicationTable.id],
+        userId = this[JobApplicationTable.userId],
+        jobId = this[JobApplicationTable.jobId],
+        status = this[JobApplicationTable.status],
+        createdAt = this[JobApplicationTable.createdAt].toString(),
+        coverLetter = this[JobApplicationTable.coverLetter],
+    )
+}
 
 
 fun ResultRow?.toComment(): Comment? {
@@ -79,23 +90,8 @@ fun ResultRow?.toJobCategory(): JobCategory? {
     return if (this == null) null
     else JobCategory(
         id = this[JobCategoryTable.id],
-        name = this[JobCategoryTable.name]
-    )
-}
-
-// Job Summary (cho danh sách)
-fun ResultRow?.toJobSummary(): JobSummary? {
-    return if (this == null) null
-    else JobSummary(
-        id = this[JobTable.id],
-        title = this[JobTable.title],
-        companyName = this[CompanyTable.name],
-        location = this[JobTable.location],
-        salaryMin = this[JobTable.salaryMin],
-        salaryMax = this[JobTable.salaryMax],
-        currency = this[JobTable.currency],
-        jobType = JobType.valueOf(this[JobTable.jobType]),
-        createdAt = this[JobTable.createdAt].toString()
+        name = this[JobCategoryTable.name],
+        imageUrl = this[JobCategoryTable.jobCategoryImage]
     )
 }
 
@@ -129,6 +125,7 @@ fun ResultRow.toJobWithDetails(): Job {
         jobType = JobType.valueOf(this[JobTable.jobType]),
         experienceLevel = ExperienceLevel.valueOf(this[JobTable.experienceLevel]),
         companyId = this[JobTable.companyId],
+        categoryId = this[JobTable.jobCategory],
         postedBy = this[JobTable.postedBy],
         benefits = this[JobTable.benefits],
         quantity = this[JobTable.quantity],
@@ -140,6 +137,7 @@ fun ResultRow.toJobWithDetails(): Job {
         createdAt = this[JobTable.createdAt]
     )
 }
+
 fun ResultRow?.toJob(): Job? {
     return if (this == null) null
     else Job(
@@ -153,6 +151,7 @@ fun ResultRow?.toJob(): Job? {
         jobType = JobType.valueOf(this[JobTable.jobType]),
         experienceLevel = ExperienceLevel.valueOf(this[JobTable.experienceLevel]),
         companyId = this[JobTable.companyId],
+        categoryId = this[JobTable.jobCategory],
         createdAt = this[JobTable.createdAt],
         postedBy = this[JobTable.postedBy],
         benefits = this[JobTable.benefits],
@@ -202,4 +201,17 @@ fun ResultRow?.toCompany(): Company? {
         createdAt = this[CompanyTable.createdAt].atZone(ZoneId.systemDefault()).toLocalDateTime(),
         userId = this[CompanyTable.userId]
     )
+}
+fun ResultRow?.toNotification(): Notification? {
+	return if (this == null) null
+	else Notification(
+		id = this[NotificationTable.id],
+		userId = this[NotificationTable.userId],
+		title = this[NotificationTable.title],
+		description = this[NotificationTable.description],
+		type = this[NotificationTable.type],
+		relateId = this[NotificationTable.relatedId],
+		isRead = this[NotificationTable.isRead],
+		createAt = this[NotificationTable.createdAt].atZone(ZoneId.systemDefault()).toLocalDateTime(),
+	)
 }

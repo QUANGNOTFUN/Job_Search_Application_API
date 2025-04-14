@@ -4,6 +4,7 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.datetime
 
 object JobTable : Table("jobs") {
+
     val id = uuid("id").autoGenerate()
     val title = varchar("title", 255)
     val description = text("description")
@@ -15,6 +16,7 @@ object JobTable : Table("jobs") {
     val experienceLevel = varchar("experience_level", 50)
     val companyId = varchar("company_id", 50).references(CompanyTable.id)
     val postedBy = varchar("posted_by", 50).references(UserTable.id)
+    val jobCategory = integer("job_category_id").references(JobCategoryTable.id)
     val benefits = text("benefits").nullable()
     val quantity = integer("quantity").default(1)
     val genderRequire = text("gender_require")

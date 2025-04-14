@@ -1,13 +1,10 @@
 package net.jobsearchapplication_api.data.models
 
-import java.util.*
+import com.fasterxml.jackson.annotation.JsonInclude
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class JobCategory(
-    val id: UUID = UUID.randomUUID(),
-    val name: String
-)
-data class JobCategoryMapping(
-    val jobId: UUID,
-    val categoryId: UUID
-
+    val id: Int,
+    val name: String,
+    val imageUrl: String? = null
 )

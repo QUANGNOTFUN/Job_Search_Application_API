@@ -1,4 +1,8 @@
 package net.jobsearchapplication_api.routes.jobcategory
 
-class JobCategoryParams {
-}
+
+data class JobCategoryParams (
+    val name: String,
+    val imageUrl: String? = null
+)
+
