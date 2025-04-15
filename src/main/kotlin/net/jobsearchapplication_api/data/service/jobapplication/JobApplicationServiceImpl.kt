@@ -1,14 +1,19 @@
 package net.jobsearchapplication_api.data.service.jobapplication
 
 import net.jobsearchapplication_api.data.db.DatabaseFactory
+import net.jobsearchapplication_api.data.db.extensions.toJob
 import net.jobsearchapplication_api.data.db.extensions.toJobApplication
 import net.jobsearchapplication_api.data.db.schemas.JobApplicationTable
+import net.jobsearchapplication_api.data.db.schemas.JobTable
 import net.jobsearchapplication_api.data.db.schemas.UserTable.cvUrl
 import net.jobsearchapplication_api.data.models.JobApplication
 import net.jobsearchapplication_api.routes.jobapplication.JobApplicationParams
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.statements.InsertStatement
 import java.time.LocalDateTime
+import java.util.*
 
 class JobApplicationServiceImpl: JobApplicationService {
 
@@ -26,5 +31,14 @@ class JobApplicationServiceImpl: JobApplicationService {
         }
         return statement?.resultedValues?.get(0)?.toJobApplication()
     }
+
+    override suspend fun getJobApplicationsByUserId(id: String): List<JobApplication?> {
+        return DatabaseFactory.dbQuery {
+            JobApplicationTable
+                .select { JobApplicationTable.userId eq id }
+                .map { it.toJobApplication() }
+        }
+    }
+
 
 }
