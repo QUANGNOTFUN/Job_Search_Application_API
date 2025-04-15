@@ -89,7 +89,7 @@ fun ResultRow?.toJobCategory(): JobCategory? {
     else JobCategory(
         id = this[JobCategoryTable.id],
         name = this[JobCategoryTable.name],
-        imageUrl = this[JobCategoryTable.jobCategoryImage]
+        imageUrl = this[JobCategoryTable.jobCategoryImage].toString()
     )
 }
 

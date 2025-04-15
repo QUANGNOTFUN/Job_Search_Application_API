@@ -6,5 +6,5 @@ import com.fasterxml.jackson.annotation.JsonInclude
 data class JobCategory(
     val id: Int,
     val name: String,
-    val imageUrl: String? = null
+    val imageUrl: String
 )

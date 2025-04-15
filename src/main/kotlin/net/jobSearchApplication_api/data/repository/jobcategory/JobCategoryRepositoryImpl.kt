@@ -15,7 +15,10 @@ class JobCategoryRepositoryImpl(private val jobCategoryService: JobCategoryServi
     override suspend fun getAllCategories(page: Int, limit: Int): BaseResponse<Any> {
 
         return try {
-            BaseResponse.SuccessResponse(data = jobCategoryService.getAllJobCategories(page, limit), message = SUCCESS)
+            BaseResponse.SuccessResponse(
+                data = jobCategoryService.getAllJobCategories(page, limit),
+                message = SUCCESS
+            )
         } catch (e: Exception) {
             BaseResponse.ErrorResponse(
                 message = "Error getting jobs category: ${e.localizedMessage}"
@@ -29,7 +32,6 @@ class JobCategoryRepositoryImpl(private val jobCategoryService: JobCategoryServi
 
     override suspend fun createCategory(params: JobCategoryParams): BaseResponse<Any> {
         TODO("Not yet implemented")
-
     }
 
     override suspend fun updateCategory(id: Int, params: JobCategoryParams): Boolean = transaction {

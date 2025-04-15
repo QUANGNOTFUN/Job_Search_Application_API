@@ -5,6 +5,7 @@ import net.jobSearchApplication_api.data.db.extensions.toJobCategory
 import net.jobSearchApplication_api.data.db.schemas.JobCategoryTable
 import net.jobSearchApplication_api.data.models.JobCategory
 import net.jobSearchApplication_api.data.models.common.PaginatedResult
+import net.jobSearchApplication_api.routes.jobcategory.JobCategoryParams
 import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.selectAll
 
@@ -45,7 +46,7 @@ class JobCategoryServiceImpl : JobCategoryService {
         TODO("Not yet implemented")
     }
 
-    override suspend fun createCategory(name: String): JobCategory? {
+    override suspend fun createCategory(params: JobCategoryParams): JobCategory? {
         TODO("Not yet implemented")
     }
 
