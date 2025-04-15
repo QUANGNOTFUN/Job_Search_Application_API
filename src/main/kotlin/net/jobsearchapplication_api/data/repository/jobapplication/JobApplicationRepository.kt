@@ -5,4 +5,5 @@ import net.jobSearchApplication_api.routes.jobapplication.JobApplicationParams
 
 interface JobApplicationRepository {
     suspend fun createJobApplication(params: JobApplicationParams): BaseResponse<Any>
+    suspend fun getJobApplicationsByUserId(id: String): BaseResponse<Any>
 }

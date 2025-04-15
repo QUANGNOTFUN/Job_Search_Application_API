@@ -1,17 +1,18 @@
 package net.jobsearchapplication_api.data.service.notification
 
-import net.jobsearchapplication_api.data.db.DatabaseFactory.dbQuery
-import net.jobsearchapplication_api.data.db.extensions.toNotification
-import net.jobsearchapplication_api.data.db.schemas.NotificationTable
-import net.jobsearchapplication_api.data.models.Notification
-import net.jobsearchapplication_api.routes.notification.NotificationParams
+import net.jobSearchApplication_api.data.db.DatabaseFactory.dbQuery
+import net.jobSearchApplication_api.data.db.extensions.toNotification
+import net.jobSearchApplication_api.data.db.schemas.NotificationTable
+import net.jobSearchApplication_api.data.models.Notification
+import net.jobSearchApplication_api.data.service.notification.NotificationService
+import net.jobSearchApplication_api.routes.notification.NotificationParams
 import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import java.time.LocalDateTime
 
-class NotificationServiceImpl :NotificationService {
+class NotificationServiceImpl : NotificationService {
 	override suspend fun getAllNotificationByUserId(page: Int, limit: Int, id: String): List<Notification> {
 		return dbQuery {
 			NotificationTable
