@@ -13,6 +13,7 @@ import java.time.LocalDateTime
 import java.util.*
 
 class JobServiceImpl : JobService {
+
     override suspend fun getJobsByCompanyId(companyId: UUID): List<Job> {
 //        var pageCount: Long = 0
 //        var nextPage: Long? = null
@@ -163,6 +164,7 @@ class JobServiceImpl : JobService {
             null
         }
     }
+
     // Hàm validate input
     private fun validateJobParams(params: JobParams): List<String> {
         val errors = mutableListOf<String>()
@@ -204,4 +206,5 @@ class JobServiceImpl : JobService {
     override suspend fun searchJobs(query: String, location: String?, type: String?, page: Int): List<Job> {
         TODO("Not yet implemented")
     }
+
 }

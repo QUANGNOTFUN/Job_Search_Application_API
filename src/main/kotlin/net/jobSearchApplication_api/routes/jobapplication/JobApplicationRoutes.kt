@@ -1,10 +1,13 @@
-package net.jobSearchApplication_api.routes.jobapplication
+package net.jobsearchapplication_api.routes.jobapplication
 
 import io.ktor.application.*
+import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import net.jobSearchApplication_api.data.repository.jobapplication.JobApplicationRepository
+import net.jobsearchapplication_api.data.models.JobApplication
+import net.jobsearchapplication_api.data.repository.jobapplication.JobApplicationRepository
+import java.util.*
 
 fun Application.jobApplicationRoutes(repository: JobApplicationRepository) {
     routing {
@@ -15,6 +18,17 @@ fun Application.jobApplicationRoutes(repository: JobApplicationRepository) {
                 val result = repository.createJobApplication(params)
                 call.respond(result.statusCode, result)
             }
-    }
+
+            get("/{id}") {
+                val id = call.parameters["id"]
+                if (id != null) {
+                    val result = repository.getJobApplicationsByUserId(id)
+                    call.respond(result) // Trả về list
+                } else {
+                    call.respond(HttpStatusCode.BadRequest, "Missing user ID")
+                }
+            }
+
+        }
     }
 }

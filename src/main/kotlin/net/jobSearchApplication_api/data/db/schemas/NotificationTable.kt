@@ -5,9 +5,10 @@ import org.jetbrains.exposed.sql.javatime.datetime
 import java.time.LocalDateTime
 
 object NotificationTable : Table("notifications") {
-	val id = uuid("id").autoGenerate()
+	val id = varchar("id",36)
 	val userId = varchar("user_id", 36).references(UserTable.id).index() // Người nhận, thêm index
 	val senderId = varchar("sender_id", 36).references(UserTable.id).nullable() // Người gửi, có thể null
+	val senderName = varchar("sender_name", 100).references(UserTable.id).nullable() // Người gửi, có thể null
 	val title = varchar("title", 100).nullable() // Bắt buộc có tiêu đề
 	val description = text("description").nullable() // Mô tả có thể rỗng
 	val type = varchar("type", 50).nullable()// Bắt buộc có loại

@@ -1,51 +1,50 @@
-package net.jobSearchApplication_api.data.repository.notification
+package net.jobsearchapplication_api.data.repository.notification
 
-import net.jobSearchApplication_api.base.BaseResponse
-import net.jobSearchApplication_api.config.ERROR_CREATE_COMPANY
-import net.jobSearchApplication_api.config.SUCCESS
-import net.jobSearchApplication_api.data.service.notification.NotificationService
-import net.jobSearchApplication_api.routes.notification.NotificationParams
+import net.jobsearchapplication_api.base.BaseResponse
+import net.jobsearchapplication_api.config.ERROR_CREATE_COMPANY
+import net.jobsearchapplication_api.config.SUCCESS
+import net.jobsearchapplication_api.data.service.notification.NotificationService
+import net.jobsearchapplication_api.routes.notification.NotificationParams
+import org.postgresql.shaded.com.ongres.scram.common.message.ServerFinalMessage
 import java.util.*
 
 class NotificationRepositoryImpl(
 	private val NotificationService: NotificationService
 ) :NotificationRepository{
 
-	override suspend fun getAllNotifications(page: Int, limit: Int): BaseResponse<Any> {
-		return BaseResponse.SuccessResponse(
-			data = NotificationService.getAllNotifications(page, limit),
-			message = SUCCESS
-		)
-	}
-
-	override suspend fun getNotificationById(id: UUID): BaseResponse<Any> {
-		val companyId = NotificationService.getNotificationById(id)
-		return BaseResponse.SuccessResponse(
-			data = companyId,
-			message = SUCCESS
-		)
+	override suspend fun getAllNotificationByUserId(page: Int, limit: Int, id: String?): BaseResponse<Any> {
+		return try {
+			if (id == null) {
+				BaseResponse.ErrorResponse(
+					message = "User ID is required"
+				)
+			} else {
+				val notifications = NotificationService.getAllNotificationByUserId(page, limit, id)
+				BaseResponse.SuccessResponse(
+					data = notifications,
+					message = SUCCESS
+				)
+			}
+		} catch (e: Exception) {
+			println("Error in getAllNotificationByUserId: ${e.message}")
+			BaseResponse.ErrorResponse(
+				message = "Failed to fetch notifications: ${e.message}"
+			)
+		}
 	}
 
 	override suspend fun createNotification(params: NotificationParams): BaseResponse<Any> {
-		val company = NotificationService.createNotification(params)
+		val notificationparams = NotificationService.createNotification(params)
 
-		val response = if (company != null) SUCCESS else ERROR_CREATE_COMPANY
+		val response = if (notificationparams != null) SUCCESS else ERROR_CREATE_COMPANY
 
 		return BaseResponse.SuccessResponse(
-			data = company,
+			data = notificationparams,
 			message = response
 		)
 	}
 
-	override suspend fun updateNotification(id: UUID, params: NotificationParams): BaseResponse<Any> {
-		val companyId = NotificationService.updateNotification(id, params)
-		return BaseResponse.SuccessResponse(
-			data = companyId,
-			message = SUCCESS
-		)
-	}
-
-	override suspend fun deleteNotification(id: UUID): BaseResponse<Any> {
+	override suspend fun deleteNotification(id: String): BaseResponse<Any> {
 		val deletedId = NotificationService.deleteNotification(id)
 		return BaseResponse.SuccessResponse(
 			data = deletedId,
