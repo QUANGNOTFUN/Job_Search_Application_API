@@ -5,8 +5,8 @@ import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import net.jobsearchapplication_api.data.models.JobApplication
-import net.jobsearchapplication_api.data.repository.jobapplication.JobApplicationRepository
+import net.jobSearchApplication_api.data.repository.jobapplication.JobApplicationRepository
+import net.jobSearchApplication_api.routes.jobapplication.JobApplicationParams
 import java.util.*
 
 fun Application.jobApplicationRoutes(repository: JobApplicationRepository) {

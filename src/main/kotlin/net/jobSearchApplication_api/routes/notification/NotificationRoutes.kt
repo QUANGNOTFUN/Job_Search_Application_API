@@ -5,6 +5,7 @@ import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import net.jobSearchApplication_api.routes.notification.NotificationParams
 import net.jobsearchapplication_api.data.repository.notification.NotificationRepositoryImpl
 import java.util.*
 

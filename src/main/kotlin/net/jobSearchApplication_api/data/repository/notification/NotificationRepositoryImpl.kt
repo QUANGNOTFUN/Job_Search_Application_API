@@ -1,16 +1,16 @@
 package net.jobsearchapplication_api.data.repository.notification
 
-import net.jobsearchapplication_api.base.BaseResponse
-import net.jobsearchapplication_api.config.ERROR_CREATE_COMPANY
-import net.jobsearchapplication_api.config.SUCCESS
-import net.jobsearchapplication_api.data.service.notification.NotificationService
-import net.jobsearchapplication_api.routes.notification.NotificationParams
-import org.postgresql.shaded.com.ongres.scram.common.message.ServerFinalMessage
+import net.jobSearchApplication_api.base.BaseResponse
+import net.jobSearchApplication_api.config.ERROR_CREATE_COMPANY
+import net.jobSearchApplication_api.config.SUCCESS
+import net.jobSearchApplication_api.data.repository.notification.NotificationRepository
+import net.jobSearchApplication_api.data.service.notification.NotificationService
+import net.jobSearchApplication_api.routes.notification.NotificationParams
 import java.util.*
 
 class NotificationRepositoryImpl(
 	private val NotificationService: NotificationService
-) :NotificationRepository{
+) : NotificationRepository {
 
 	override suspend fun getAllNotificationByUserId(page: Int, limit: Int, id: String?): BaseResponse<Any> {
 		return try {
