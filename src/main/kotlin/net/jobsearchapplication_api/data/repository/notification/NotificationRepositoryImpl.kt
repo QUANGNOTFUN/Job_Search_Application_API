@@ -34,12 +34,12 @@ class NotificationRepositoryImpl(
 	}
 
 	override suspend fun createNotification(params: NotificationParams): BaseResponse<Any> {
-		val company = NotificationService.createNotification(params)
+		val notificationparams = NotificationService.createNotification(params)
 
-		val response = if (company != null) SUCCESS else ERROR_CREATE_COMPANY
+		val response = if (notificationparams != null) SUCCESS else ERROR_CREATE_COMPANY
 
 		return BaseResponse.SuccessResponse(
-			data = company,
+			data = notificationparams,
 			message = response
 		)
 	}
