@@ -1,6 +1,7 @@
 package net.jobsearchapplication_api.data.db.schemas
 
 import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.javatime.date
 import org.jetbrains.exposed.sql.javatime.datetime
 import java.time.LocalDateTime
 
@@ -10,7 +11,7 @@ object UserTable : Table("users") {
     val phoneNumber = varchar("phone_number", 20).nullable()
     val avatar = text("avatar").nullable()
     val bio = varchar("bio", 250).nullable()
-    val birthDay = datetime("birth_day").nullable()
+    val birthDay = date("birth_day").nullable()
     val gender = enumerationByName("gender", 10, Gender::class).nullable()
     val location = varchar("location", 255).nullable()
     val cvUrl = text("cv_url").nullable()
@@ -24,7 +25,7 @@ object UserTable : Table("users") {
 }
 
 enum class Gender {
-    Male, FeMale, Other
+    Male, Female, Other
 }
 
 enum class UserRole {

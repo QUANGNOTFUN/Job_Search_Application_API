@@ -6,5 +6,5 @@ import net.jobsearchapplication_api.routes.user.UpdateInfoUserParams
 
 interface UserRepository {
     suspend fun getInfoUser(uuid: String): BaseResponse<User>
-    suspend fun updateInfoUser(id: String, params: UpdateInfoUserParams): BaseResponse<Any>
+    suspend fun updateInfoUser(uuid: String, params: UpdateInfoUserParams): BaseResponse<Any>
 }

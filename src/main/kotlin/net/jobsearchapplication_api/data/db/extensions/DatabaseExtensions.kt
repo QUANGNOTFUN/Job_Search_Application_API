@@ -4,20 +4,18 @@ import net.jobsearchapplication_api.data.db.schemas.*
 import net.jobsearchapplication_api.data.models.*
 import org.jetbrains.exposed.sql.ResultRow
 import java.math.BigDecimal
-import java.time.LocalDateTime
 import java.time.ZoneId
-import java.util.UUID
+import java.util.*
 
 fun ResultRow?.toUser(): User? {
     return if (this == null) null
     else User(
-        id = this[UserTable.id],
         fullName = this[UserTable.fullName] ?: "",
         phoneNumber = this[UserTable.phoneNumber] ?: "",
         avatar = this[UserTable.avatar] ?: "",
         bio = this[UserTable.bio] ?: "",
-        birthDay = this[UserTable.birthDay]?.atZone(ZoneId.systemDefault())?.toLocalDateTime() ?: LocalDateTime.now(),
-        gender = this[UserTable.gender] ?: Gender.Male,
+        birthDay = this[UserTable.birthDay]?.toString() ?: "",
+        gender = this[UserTable.gender],
         location = this[UserTable.location] ?: "",
         cvUrl = this[UserTable.cvUrl] ?: "",
         education = this[UserTable.education] ?: "",
@@ -171,12 +169,11 @@ fun ResultRow?.toStoryJoinedWithUser(): Story? {
     else Story(
         id = this[StoryTable.id],
         user = User(
-            id = this[UserTable.id],
             fullName = this[UserTable.fullName],
             phoneNumber = this[UserTable.phoneNumber],
             avatar = this[UserTable.avatar],
             bio = this[UserTable.bio],
-            birthDay = this[UserTable.birthDay]?.atZone(ZoneId.systemDefault())?.toLocalDateTime() ?: LocalDateTime.now(),
+            birthDay = this[UserTable.birthDay].toString(),
             gender = this[UserTable.gender],
             location = this[UserTable.location],
             cvUrl = this[UserTable.cvUrl],
