@@ -14,7 +14,7 @@ object JobTable : Table("jobs") {
     val location = varchar("location", 255)
     val jobType = varchar("job_type", 50)
     val experienceLevel = varchar("experience_level", 50)
-    val companyId = varchar("company_id", 50).references(CompanyTable.id)
+    val companyId = varchar("company_id", 50)
     val postedBy = varchar("posted_by", 50).references(UserTable.id)
     val jobCategory = integer("job_category_id").references(JobCategoryTable.id)
     val benefits = text("benefits").nullable()
