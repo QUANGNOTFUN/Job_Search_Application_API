@@ -1,14 +1,18 @@
 package net.jobsearchapplication_api.data.repository.jobapplication
 
 import io.ktor.http.*
-import net.jobsearchapplication_api.base.BaseResponse
-import net.jobsearchapplication_api.config.GENERIC_ERROR
-import net.jobsearchapplication_api.config.SUCCESS
-import net.jobsearchapplication_api.data.service.jobapplication.JobApplicationService
-import net.jobsearchapplication_api.routes.jobapplication.JobApplicationParams
+import net.jobSearchApplication_api.base.BaseResponse
+import net.jobSearchApplication_api.config.GENERIC_ERROR
+import net.jobSearchApplication_api.config.SUCCESS
+import net.jobSearchApplication_api.data.repository.jobapplication.JobApplicationRepository
+import net.jobSearchApplication_api.data.service.jobapplication.JobApplicationService
+import net.jobSearchApplication_api.routes.jobapplication.JobApplicationParams
 import java.util.*
 
-class JobApplicationRepositoryImpl(private val jobApplicationService: JobApplicationService) : JobApplicationRepository {
+class JobApplicationRepositoryImpl(
+    private val jobApplicationService: JobApplicationService
+) :
+    JobApplicationRepository {
 
     override suspend fun createJobApplication(params: JobApplicationParams): BaseResponse<Any> {
         val jobApplication = jobApplicationService.createJobApplication(params)

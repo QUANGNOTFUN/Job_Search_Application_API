@@ -1,11 +1,9 @@
-package net.jobsearchapplication_api.data.service.jobapplication
+package net.jobSearchApplication_api.data.service.jobapplication
 
-import net.jobsearchapplication_api.data.models.JobApplication
-import net.jobsearchapplication_api.routes.jobapplication.JobApplicationParams
-import java.util.UUID
+import net.jobSearchApplication_api.data.models.JobApplication
+import net.jobSearchApplication_api.routes.jobapplication.JobApplicationParams
 
 interface JobApplicationService {
     suspend fun createJobApplication(params: JobApplicationParams): JobApplication?
-
-    suspend fun getJobApplicationsByUserId(id: String): List<JobApplication?>
+    abstract fun getJobApplicationsByUserId(id: String): Any?
 }
