@@ -1,5 +1,6 @@
 package net.jobSearchApplication_api.data.service.job
 
+import net.jobSearchApplication_api.base.BaseResponse
 import net.jobSearchApplication_api.data.models.Job
 import net.jobSearchApplication_api.data.models.common.PaginatedResult
 import net.jobSearchApplication_api.routes.job.JobParams
@@ -10,6 +11,8 @@ interface JobService {
     suspend fun getJobById(id: UUID): Job?
     suspend fun getJobsByUserId(id: UUID): Job?
     suspend fun getJobsByCompanyId(companyId: UUID): List<Job>
+    suspend fun getJobsOfCategory(cateId: Int): List<Job>
+
 
     suspend fun createJob(params: JobParams): Job?
 

@@ -1,6 +1,7 @@
 package net.jobSearchApplication_api.data.service.job
 
 import net.jobSearchApplication_api.data.db.DatabaseFactory
+import net.jobSearchApplication_api.data.db.DatabaseFactory.dbQuery
 import net.jobSearchApplication_api.data.db.extensions.*
 import net.jobSearchApplication_api.data.db.schemas.*
 import net.jobSearchApplication_api.data.models.Job
@@ -34,6 +35,15 @@ class JobServiceImpl : JobService {
 
         TODO("Not yet implemented")
 
+    }
+
+    override suspend fun getJobsOfCategory(cateId: Int): List<Job> {
+        return dbQuery {
+            JobTable.select { JobTable.jobCategory eq cateId }
+                .mapNotNull { resultRow ->
+                    resultRow.toJob()
+                }
+        }
     }
 
     override suspend fun getAllJobs(page: Int, limit: Int): PaginatedResult<Job> {

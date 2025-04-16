@@ -44,6 +44,14 @@ class JobRepositoryImpl(private val jobService: JobService ) : JobRepository {
         }
     }
 
+    override suspend fun getJobsOfCategory(cateId: Int): BaseResponse<Any> {
+        return try {
+            BaseResponse.SuccessResponse(data = jobService.getJobsOfCategory(cateId), message = SUCCESS)
+        } catch (e: Exception) {
+            BaseResponse.ErrorResponse(statusCode = HttpStatusCode.BadRequest ,message = "Lỗi: ${e.message}")
+        }
+    }
+
     override suspend fun createJob(params: JobParams): BaseResponse<Any> {
         val job = jobService.createJob(params)
         return if(job != null){

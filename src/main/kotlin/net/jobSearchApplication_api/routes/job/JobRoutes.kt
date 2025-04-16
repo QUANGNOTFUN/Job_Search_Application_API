@@ -20,6 +20,20 @@ fun Application.jobRoutes(repository: JobRepository) {
                     call.respond(repository.getAllJobs(page, limit))
                 }
 
+                get("/getJobsOfCategory") {
+                    try {
+                        val cateId = call.request.queryParameters["categoryId"]
+                        if(cateId != null) {
+                            val result = repository.getJobsOfCategory(cateId.toInt())
+                            call.respond(result.statusCode, result)
+                        } else {
+                            call.respond(HttpStatusCode.NotFound)
+                        }
+                    } catch (e: Exception) {
+                        call.respond(HttpStatusCode.InternalServerError)
+                    }
+                }
+
                 // Lấy danh sách jobs theo user
                 get("/posted") {
 //                    try {
@@ -45,14 +59,14 @@ fun Application.jobRoutes(repository: JobRepository) {
                 }
 
                 // Chi tiết job
-                get("/{id}") {
+                get("/getById/{id}") {
                     val id = call.parameters["id"]?.let { UUID.fromString(it) }
                     if (id != null) {
                         call.respond(repository.getJobById(id))
                     }
                 }
 
-                put("/{id}") {
+                put("/update/{id}") {
                     try {
                         // Parse và validate ID
                         val id = call.parameters["id"]?.let {
@@ -87,7 +101,7 @@ fun Application.jobRoutes(repository: JobRepository) {
                 }
 
                 // Xóa job
-                delete("/{id}") {
+                delete("/delete/{id}") {
                     val id = call.parameters["id"]?.let { UUID.fromString(it) }
                     if (id != null) {
                         call.respond(repository.deleteJob(id))
