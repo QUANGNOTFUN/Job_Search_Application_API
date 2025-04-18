@@ -1,12 +1,11 @@
-package net.jobsearchapplication_api.routes.notification
+package net.jobSearchApplication_api.routes.notification
 
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import net.jobSearchApplication_api.routes.notification.NotificationParams
-import net.jobsearchapplication_api.data.repository.notification.NotificationRepositoryImpl
+import net.jobSearchApplication_api.data.repository.notification.NotificationRepositoryImpl
 import java.util.*
 
 fun Application.notificationRoutes(repository: NotificationRepositoryImpl){

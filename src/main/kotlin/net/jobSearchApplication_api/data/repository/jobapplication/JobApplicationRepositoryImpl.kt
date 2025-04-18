@@ -1,13 +1,11 @@
-package net.jobsearchapplication_api.data.repository.jobapplication
+package net.jobSearchApplication_api.data.repository.jobapplication
 
 import io.ktor.http.*
 import net.jobSearchApplication_api.base.BaseResponse
 import net.jobSearchApplication_api.config.GENERIC_ERROR
 import net.jobSearchApplication_api.config.SUCCESS
-import net.jobSearchApplication_api.data.repository.jobapplication.JobApplicationRepository
 import net.jobSearchApplication_api.data.service.jobapplication.JobApplicationService
 import net.jobSearchApplication_api.routes.jobapplication.JobApplicationParams
-import java.util.*
 
 class JobApplicationRepositoryImpl(
     private val jobApplicationService: JobApplicationService
