@@ -52,6 +52,14 @@ class JobRepositoryImpl(private val jobService: JobService ) : JobRepository {
         }
     }
 
+    override suspend fun getFavoriteJobs(userId: String): BaseResponse<Any> {
+        return try {
+            BaseResponse.SuccessResponse(data = jobService.getFavoriteJobs(userId), message = SUCCESS)
+        } catch (e: Exception) {
+            BaseResponse.ErrorResponse("Error: ${e.message}")
+        }
+    }
+
     override suspend fun getPostedJobs(userId: String): BaseResponse<Any> {
         return try {
             BaseResponse.SuccessResponse(data = jobService.getPostedJobs(userId), message = SUCCESS)
