@@ -1,4 +1,4 @@
-package net.jobsearchapplication_api.data.service.jobapplication
+package net.jobSearchapplication_api.data.service.jobapplication
 
 import net.jobSearchApplication_api.data.db.DatabaseFactory
 import net.jobSearchApplication_api.data.db.extensions.toJobApplication

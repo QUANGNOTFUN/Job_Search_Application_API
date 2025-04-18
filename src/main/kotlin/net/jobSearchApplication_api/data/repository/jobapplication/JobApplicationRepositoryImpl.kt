@@ -1,4 +1,4 @@
-package net.jobsearchapplication_api.data.repository.jobapplication
+package net.jobSearchapplication_api.data.repository.jobapplication
 
 import io.ktor.http.*
 import net.jobSearchApplication_api.base.BaseResponse

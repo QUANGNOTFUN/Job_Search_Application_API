@@ -207,6 +207,6 @@ fun ResultRow?.toNotification(): Notification? {
 		type = this[NotificationTable.type],
 		relateId = this[NotificationTable.relatedId],
 		isRead = this[NotificationTable.isRead],
-		createAt = this[NotificationTable.createdAt].atZone(ZoneId.systemDefault()).toLocalDateTime(),
+		createdAt = this[NotificationTable.createdAt].atZone(ZoneId.systemDefault()).toLocalDateTime(),
 	)
 }
