@@ -6,6 +6,7 @@ import net.jobSearchApplication_api.data.db.schemas.Gender
 import net.jobSearchApplication_api.data.db.schemas.UserTable
 import net.jobSearchApplication_api.data.models.User
 import net.jobSearchApplication_api.routes.user.UpdateInfoUserParams
+import net.jobsearchapplication_api.routes.user.FavoriteParams
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.update
 import java.time.LocalDate
@@ -38,5 +39,26 @@ class UserServiceImpl : UserService {
             params.cvUrl.takeIf { it.isNotBlank() }?.let { row[cvUrl] = it }
             row[updatedAt] = LocalDateTime.now()
         }}
+    }
+
+    override suspend fun favoriteJobPosting(uuid: String, params: FavoriteParams) {
+        dbQuery {
+            val favoritePosts = UserTable
+                .select { UserTable.id eq uuid }.firstOrNull()
+                ?.get(UserTable.favoriteJobPosting)
+                ?.split(",")?.map { it.trim() }
+                ?.filter { it.isNotBlank() }
+                ?.toMutableList() ?: mutableListOf()
+
+            if (params.status) {
+                params.jobId.takeIf { it.toString().isNotBlank() }?.let { favoritePosts.add(params.jobId.toString()) }
+            } else {
+                favoritePosts.remove(params.jobId.toString())
+            }
+
+            UserTable.update({ UserTable.id eq uuid }) {
+                it[favoriteJobPosting] = favoritePosts.joinToString(",")
+            }
+        }
     }
 }

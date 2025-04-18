@@ -37,10 +37,19 @@ class JobServiceImpl : JobService {
 
     }
 
-    override suspend fun getJobsOfCategory(cateId: Int): List<Job> {
+    override suspend fun getJobsByCategory(cateId: Int): List<Job> {
         return dbQuery {
             JobTable.select { JobTable.jobCategory eq cateId }
                 .mapNotNull { resultRow ->
+                    resultRow.toJob()
+                }
+        }
+    }
+
+    override suspend fun getPostedJobs(userId: String): List<Job?> {
+        return dbQuery {
+            JobTable.select { JobTable.postedBy eq userId }
+                .map { resultRow ->
                     resultRow.toJob()
                 }
         }
