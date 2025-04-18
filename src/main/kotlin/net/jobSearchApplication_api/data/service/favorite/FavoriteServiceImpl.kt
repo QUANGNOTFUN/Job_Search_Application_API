@@ -4,7 +4,7 @@ import net.jobSearchApplication_api.data.db.DatabaseFactory.dbQuery
 import net.jobSearchApplication_api.data.db.extensions.JobWithCompany
 import net.jobSearchApplication_api.data.db.schemas.PostTable
 import net.jobSearchApplication_api.data.db.schemas.UserTable
-import net.jobSearchApplication_api.routes.favorite.FavoriteParams
+import net.jobsearchapplication_api.routes.user.FavoriteParams
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.update

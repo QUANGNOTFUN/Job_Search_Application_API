@@ -1,7 +1,7 @@
 package net.jobSearchApplication_api.data.service.favorite
 
 import net.jobSearchApplication_api.data.db.extensions.JobWithCompany
-import net.jobSearchApplication_api.routes.favorite.FavoriteParams
+import net.jobsearchapplication_api.routes.user.FavoriteParams
 import java.util.*
 
 interface FavoriteService {
