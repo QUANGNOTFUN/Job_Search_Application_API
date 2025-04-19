@@ -10,6 +10,7 @@ interface JobRepository {
     suspend fun getAllJobs(page: Int, limit: Int): BaseResponse<Any>
     suspend fun getJobById(id: UUID): BaseResponse<Any>
     suspend fun getJobsOfCategory(cateId: Int): BaseResponse<Any>
+    suspend fun getFavoriteJobs(userId: String): BaseResponse<Any>
     suspend fun getPostedJobs(userId: String): BaseResponse<Any>
 
     suspend fun createJob(params: JobParams): BaseResponse<Any>

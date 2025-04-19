@@ -11,6 +11,7 @@ interface JobService {
     suspend fun getJobsByUserId(id: UUID): Job?
     suspend fun getJobsByCompanyId(companyId: UUID): List<Job>
     suspend fun getJobsByCategory(cateId: Int): List<Job>
+    suspend fun getFavoriteJobs(userId: String): List<Job?>
     suspend fun getPostedJobs(userId: String): List<Job?>
 
     suspend fun createJob(params: JobParams): Job?
