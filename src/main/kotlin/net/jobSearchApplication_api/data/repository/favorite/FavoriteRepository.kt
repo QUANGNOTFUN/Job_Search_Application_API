@@ -1,7 +1,6 @@
 package net.jobSearchApplication_api.data.repository.favorite
 
 import net.jobSearchApplication_api.base.BaseResponse
-import net.jobsearchapplication_api.routes.user.FavoriteParams
 import java.util.*
 
 interface FavoriteRepository {

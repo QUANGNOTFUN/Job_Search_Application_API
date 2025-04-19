@@ -38,7 +38,6 @@ fun ResultRow?.toStory(): Story? {
 fun ResultRow?.toJobApplication(): JobApplication? {
     return if (this == null) null
     else JobApplication(
-        id = this[JobApplicationTable.id],
         userId = this[JobApplicationTable.userId],
         jobId = this[JobApplicationTable.jobId],
         status = this[JobApplicationTable.status],
