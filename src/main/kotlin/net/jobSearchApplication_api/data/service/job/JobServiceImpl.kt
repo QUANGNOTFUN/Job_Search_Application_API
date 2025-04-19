@@ -8,6 +8,7 @@ import net.jobSearchApplication_api.data.models.Job
 import net.jobSearchApplication_api.data.models.common.PaginatedResult
 import net.jobSearchApplication_api.routes.job.JobParams
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.statements.InsertStatement
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -37,10 +38,39 @@ class JobServiceImpl : JobService {
 
     }
 
-    override suspend fun getJobsOfCategory(cateId: Int): List<Job> {
+    override suspend fun getJobsByCategory(cateId: Int): List<Job> {
         return dbQuery {
             JobTable.select { JobTable.jobCategory eq cateId }
                 .mapNotNull { resultRow ->
+                    resultRow.toJob()
+                }
+        }
+    }
+
+    override suspend fun getFavoriteJobs(userId: String): List<Job?> {
+        return dbQuery {
+            // Lấy favoriteJobPosting từ UserTable
+            val favoriteJobIds = UserTable
+                .select { UserTable.id eq userId }.firstOrNull()
+                ?.get(UserTable.favoriteJobPosting)
+                ?.split(",")
+                ?.mapNotNull { id ->
+                    UUID.fromString(id.trim())
+                } ?: emptyList()
+
+            if (favoriteJobIds.isEmpty()) {
+                return@dbQuery emptyList()
+            }
+
+            JobTable.select { JobTable.id inList favoriteJobIds }
+                .map { resultRow -> resultRow.toJob() }
+        }
+    }
+
+    override suspend fun getPostedJobs(userId: String): List<Job?> {
+        return dbQuery {
+            JobTable.select { JobTable.postedBy eq userId }
+                .map { resultRow ->
                     resultRow.toJob()
                 }
         }

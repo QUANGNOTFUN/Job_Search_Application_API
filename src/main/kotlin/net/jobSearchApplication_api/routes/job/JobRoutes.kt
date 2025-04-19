@@ -6,6 +6,7 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import net.jobSearchApplication_api.base.BaseResponse
+import net.jobSearchApplication_api.config.EMPTY_UUID
 import net.jobSearchApplication_api.data.repository.job.JobRepository
 import java.util.*
 
@@ -20,7 +21,7 @@ fun Application.jobRoutes(repository: JobRepository) {
                     call.respond(repository.getAllJobs(page, limit))
                 }
 
-                get("/getJobsOfCategory") {
+                get("/getJobsByCategory") {
                     try {
                         val cateId = call.request.queryParameters["categoryId"]
                         if(cateId != null) {
@@ -34,21 +35,30 @@ fun Application.jobRoutes(repository: JobRepository) {
                     }
                 }
 
-                // Lấy danh sách jobs theo user
-                get("/posted") {
-//                    try {
-//                        val currentUser = call.getUser()
-//                        val page = call.request.queryParameters["page"]?.toIntOrNull() ?: 1
-//                        val limit = call.request.queryParameters["limit"]?.toIntOrNull() ?: 10
-//
-//                        val response = JobRepository.getJobsByUserId(currentUser.id, page, limit)
-//                        call.respond(response)
-//                    } catch (e: Exception) {
-//                        call.respond(
-//                            HttpStatusCode.InternalServerError,
-//                            BaseResponse.ErrorResponse("Failed to get jobs")
-//                        )
-//                    }
+                get("/getFavoriteJobs") {
+                    try {
+                        val query = call.request.queryParameters["userId"] ?: throw IllegalArgumentException(EMPTY_UUID)
+                        val response = repository.getFavoriteJobs(query)
+                        call.respond(response.statusCode, response)
+                    } catch (e: Exception) {
+                        call.respond(
+                            HttpStatusCode.InternalServerError,
+                            BaseResponse.ErrorResponse("Failed to get jobs")
+                        )
+                    }
+                }
+
+                get("/getPostedJobs") {
+                    try {
+                        val query = call.request.queryParameters["userId"] ?: throw IllegalArgumentException(EMPTY_UUID)
+                        val response = repository.getPostedJobs(query)
+                        call.respond(response.statusCode, response)
+                    } catch (e: Exception) {
+                        call.respond(
+                            HttpStatusCode.InternalServerError,
+                            BaseResponse.ErrorResponse("Failed to get jobs")
+                        )
+                    }
                 }
 
                 // Tạo job mới

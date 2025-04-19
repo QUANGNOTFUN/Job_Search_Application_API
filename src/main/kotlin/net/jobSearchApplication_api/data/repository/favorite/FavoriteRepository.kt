@@ -1,7 +1,7 @@
 package net.jobSearchApplication_api.data.repository.favorite
 
 import net.jobSearchApplication_api.base.BaseResponse
-import net.jobSearchApplication_api.routes.favorite.FavoriteParams
+import net.jobsearchapplication_api.routes.user.FavoriteParams
 import java.util.*
 
 interface FavoriteRepository {
@@ -11,6 +11,5 @@ interface FavoriteRepository {
     suspend fun isJobSaved(userId: String, jobId: UUID): BaseResponse<Any>
     suspend fun getSavedJobCount(userId: String): BaseResponse<Any>
 
-    suspend fun favoriteJobPosting(uuid: String, params: FavoriteParams): BaseResponse<Any>
 }
 

@@ -4,7 +4,7 @@ import net.jobSearchApplication_api.base.BaseResponse
 import net.jobSearchApplication_api.data.service.favorite.FavoriteService
 import java.util.*
 import net.jobSearchApplication_api.config.SUCCESS
-import net.jobSearchApplication_api.routes.favorite.FavoriteParams
+import net.jobsearchapplication_api.routes.user.FavoriteParams
 
 class FavoriteRepositoryImpl(
     private val postService: FavoriteService
@@ -75,18 +75,6 @@ class FavoriteRepositoryImpl(
             )
         } catch (e: Exception) {
             BaseResponse.ErrorResponse(message = "Không thể đếm số công việc đã lưu")
-        }
-    }
-
-    override suspend fun favoriteJobPosting(uuid: String, params: FavoriteParams): BaseResponse<Any> {
-        return try {
-            postService.favoriteJobPosting(uuid, params)
-            BaseResponse.SuccessResponse(
-                data = null,
-                message = "Thay đổi yêu thích thành công"
-            )
-        } catch (e: Exception) {
-            BaseResponse.ErrorResponse(message = "Không thể yêu thích bài đăng")
         }
     }
 }

@@ -46,9 +46,25 @@ class JobRepositoryImpl(private val jobService: JobService ) : JobRepository {
 
     override suspend fun getJobsOfCategory(cateId: Int): BaseResponse<Any> {
         return try {
-            BaseResponse.SuccessResponse(data = jobService.getJobsOfCategory(cateId), message = SUCCESS)
+            BaseResponse.SuccessResponse(data = jobService.getJobsByCategory(cateId), message = SUCCESS)
         } catch (e: Exception) {
             BaseResponse.ErrorResponse(statusCode = HttpStatusCode.BadRequest ,message = "Lỗi: ${e.message}")
+        }
+    }
+
+    override suspend fun getFavoriteJobs(userId: String): BaseResponse<Any> {
+        return try {
+            BaseResponse.SuccessResponse(data = jobService.getFavoriteJobs(userId), message = SUCCESS)
+        } catch (e: Exception) {
+            BaseResponse.ErrorResponse("Error: ${e.message}")
+        }
+    }
+
+    override suspend fun getPostedJobs(userId: String): BaseResponse<Any> {
+        return try {
+            BaseResponse.SuccessResponse(data = jobService.getPostedJobs(userId), message = SUCCESS)
+        } catch (e: Exception) {
+            BaseResponse.ErrorResponse("Error: ${e.message}")
         }
     }
 

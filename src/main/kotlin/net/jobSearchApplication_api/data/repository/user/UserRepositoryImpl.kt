@@ -7,6 +7,7 @@ import net.jobSearchApplication_api.config.SUCCESS_UPDATE_INFO_USER
 import net.jobSearchApplication_api.data.models.User
 import net.jobSearchApplication_api.data.service.user.UserService
 import net.jobSearchApplication_api.routes.user.UpdateInfoUserParams
+import net.jobsearchapplication_api.routes.user.FavoriteParams
 
 class UserRepositoryImpl(
     private val userService: UserService
@@ -31,5 +32,17 @@ class UserRepositoryImpl(
             data = userService.updateInfoUser(uuid, params),
             message = SUCCESS_UPDATE_INFO_USER
         )
+    }
+
+    override suspend fun favoriteJobPosting(uuid: String, params: FavoriteParams): BaseResponse<Any> {
+        return try {
+            userService.favoriteJobPosting(uuid, params)
+            BaseResponse.SuccessResponse(
+                data = null,
+                message = "Thay đổi yêu thích thành công"
+            )
+        } catch (e: Exception) {
+            BaseResponse.ErrorResponse(message = "Không thể yêu thích bài đăng")
+        }
     }
 }
