@@ -1,10 +1,9 @@
-package net.jobsearchapplication_api.data.service.notification
+package net.jobSearchApplication_api.data.service.notification
 
 import net.jobSearchApplication_api.data.db.DatabaseFactory.dbQuery
 import net.jobSearchApplication_api.data.db.extensions.toNotification
 import net.jobSearchApplication_api.data.db.schemas.NotificationTable
 import net.jobSearchApplication_api.data.models.Notification
-import net.jobSearchApplication_api.data.service.notification.NotificationService
 import net.jobSearchApplication_api.routes.notification.NotificationParams
 import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.deleteWhere

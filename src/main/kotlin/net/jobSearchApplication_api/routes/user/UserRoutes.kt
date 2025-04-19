@@ -8,7 +8,6 @@ import io.ktor.routing.*
 import net.jobSearchApplication_api.base.BaseResponse
 import net.jobSearchApplication_api.config.EMPTY_UUID
 import net.jobSearchApplication_api.data.repository.user.UserRepository
-import net.jobsearchapplication_api.routes.user.FavoriteParams
 
 fun Application.userRoutes(repository: UserRepository) {
     routing {

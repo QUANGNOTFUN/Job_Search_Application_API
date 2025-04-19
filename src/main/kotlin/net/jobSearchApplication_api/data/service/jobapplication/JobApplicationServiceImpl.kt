@@ -1,16 +1,14 @@
-package net.jobsearchapplication_api.data.service.jobapplication
+package net.jobSearchApplication_api.data.service.jobapplication
 
 import net.jobSearchApplication_api.data.db.DatabaseFactory
 import net.jobSearchApplication_api.data.db.extensions.toJobApplication
 import net.jobSearchApplication_api.data.db.schemas.JobApplicationTable
 import net.jobSearchApplication_api.data.models.JobApplication
-import net.jobSearchApplication_api.data.service.jobapplication.JobApplicationService
 import net.jobSearchApplication_api.routes.jobapplication.JobApplicationParams
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.statements.InsertStatement
 import java.time.LocalDateTime
-import java.util.*
 
 class JobApplicationServiceImpl: JobApplicationService {
 

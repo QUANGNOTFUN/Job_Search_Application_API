@@ -11,10 +11,9 @@ import net.jobSearchApplication_api.routes.auth.authRoutes
 import net.jobSearchApplication_api.routes.company.companyRoutes
 import net.jobSearchApplication_api.routes.job.jobRoutes
 import net.jobSearchApplication_api.routes.jobcategory.jobCategoryRoutes
-import net.jobSearchApplication_api.routes.favorite.favoritePostsRoutes
 import net.jobSearchApplication_api.routes.user.userRoutes
-import net.jobsearchapplication_api.routes.jobapplication.jobApplicationRoutes
-import net.jobsearchapplication_api.routes.notification.notificationRoutes
+import net.jobSearchApplication_api.routes.jobapplication.jobApplicationRoutes
+import net.jobSearchApplication_api.routes.notification.notificationRoutes
 
 fun configureDatabase() {
     DatabaseFactory.init()
@@ -39,7 +38,6 @@ fun Application.configureRouting(){
 //    storyRoutes(RepositoryProvider.provideStoryRepository())
     jobRoutes(RepositoryProvider.provideJobRepository())
     companyRoutes(RepositoryProvider.provideCompanyRepository())
-    favoritePostsRoutes(RepositoryProvider.provideFavoriteJobPostingRepository())
 	notificationRoutes(RepositoryProvider.provideNotificationRepository())
     jobCategoryRoutes(RepositoryProvider.provideJobCategoryRepository())
     jobApplicationRoutes(RepositoryProvider.provideJobApplicationRepository())
