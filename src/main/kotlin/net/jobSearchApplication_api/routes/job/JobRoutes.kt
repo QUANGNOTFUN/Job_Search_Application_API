@@ -62,7 +62,7 @@ fun Application.jobRoutes(repository: JobRepository) {
                 }
 
                 // Tạo job mới
-                post("add") {
+                post("/add") {
                     val params = call.receive<JobParams>()
                     val result = repository.createJob(params)
                     call.respond(result.statusCode, result)
