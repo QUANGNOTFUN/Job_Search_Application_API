@@ -5,7 +5,7 @@ import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import net.jobsearchapplication_api.data.repository.notification.NotificationRepositoryImpl
+import net.jobSearchapplication_api.data.repository.notification.NotificationRepositoryImpl
 
 
 fun Application.notificationRoutes(repository: NotificationRepositoryImpl) {

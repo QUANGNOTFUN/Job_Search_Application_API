@@ -18,8 +18,8 @@ import net.jobSearchApplication_api.data.service.job.JobServiceImpl
 import net.jobSearchApplication_api.data.service.jobcategory.JobCategoryServiceImpl
 import net.jobSearchApplication_api.data.service.user.UserServiceImpl
 import net.jobSearchapplication_api.data.repository.notification.NotificationRepositoryImpl
-import net.jobSearchapplication_api.data.service.jobapplication.JobApplicationServiceImpl
 import net.jobSearchapplication_api.data.repository.jobapplication.JobApplicationRepositoryImpl
+import net.jobSearchapplication_api.data.service.jobapplication.JobApplicationServiceImpl
 import net.jobSearchapplication_api.data.service.notification.NotificationServiceImpl
 
 

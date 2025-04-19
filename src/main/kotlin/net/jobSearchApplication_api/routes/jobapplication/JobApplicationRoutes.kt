@@ -1,5 +1,4 @@
 package net.jobSearchapplication_api.routes.jobapplication
-package net.jobSearchApplication_api.routes.jobapplication
 
 import io.ktor.application.*
 import io.ktor.http.*
