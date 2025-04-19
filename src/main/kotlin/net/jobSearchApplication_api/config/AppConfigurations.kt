@@ -13,8 +13,8 @@ import net.jobSearchApplication_api.routes.job.jobRoutes
 import net.jobSearchApplication_api.routes.jobcategory.jobCategoryRoutes
 import net.jobSearchApplication_api.routes.favorite.favoritePostsRoutes
 import net.jobSearchApplication_api.routes.user.userRoutes
-import net.jobSearchApplication_api.routes.jobapplication.jobApplicationRoutes
-import net.jobSearchApplication_api.routes.notification.notificationRoutes
+import net.jobSearchapplication_api.routes.jobapplication.jobApplicationRoutes
+import net.jobSearchapplication_api.routes.notification.notificationRoutes
 
 fun configureDatabase() {
     DatabaseFactory.init()

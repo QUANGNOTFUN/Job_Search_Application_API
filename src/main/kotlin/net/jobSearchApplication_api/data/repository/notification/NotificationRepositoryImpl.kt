@@ -1,4 +1,4 @@
-package net.jobsearchapplication_api.data.repository.notification
+package net.jobSearchapplication_api.data.repository.notification
 
 import net.jobSearchApplication_api.base.BaseResponse
 import net.jobSearchApplication_api.config.SUCCESS
