@@ -10,10 +10,11 @@ import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.statements.InsertStatement
 import java.time.LocalDateTime
 
-class JobApplicationServiceImpl: JobApplicationService {
+class JobApplicationServiceImpl : JobApplicationService {
 
     override suspend fun createJobApplication(params: JobApplicationParams): JobApplication? {
         var statement: InsertStatement<Number>? = null
+
         DatabaseFactory.dbQuery {
             statement = JobApplicationTable.insert {
                 it[userId] = params.userId
@@ -21,9 +22,11 @@ class JobApplicationServiceImpl: JobApplicationService {
                 it[status] = params.status
                 it[coverLetter] = params.coverLetter
                 it[cvUrl] = params.cvUrl
+                it[additionalInfo] = params.additionalInfo
                 it[createdAt] = LocalDateTime.now()
             }
         }
+
         return statement?.resultedValues?.get(0)?.toJobApplication()
     }
 
@@ -34,6 +37,4 @@ class JobApplicationServiceImpl: JobApplicationService {
                 .map { it.toJobApplication() }
         }
     }
-
-
 }

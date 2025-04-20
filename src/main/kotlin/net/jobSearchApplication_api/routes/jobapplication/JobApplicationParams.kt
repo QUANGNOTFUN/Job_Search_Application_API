@@ -7,6 +7,6 @@ data class JobApplicationParams(
     val userId: String,
     val status: String,
     val coverLetter: String,
-    val cvUrl: String? = null,
-    val additionalInfo: String? = null
+    val cvUrl: String,
+    val additionalInfo: String
 )

@@ -8,5 +8,6 @@ data class JobApplication(
     val status: String,
     val createdAt: String,
     val coverLetter: String,
-    val cvUrl: String? = null
+    val additionalInfo: String,
+    val cvUrl: String
     )
