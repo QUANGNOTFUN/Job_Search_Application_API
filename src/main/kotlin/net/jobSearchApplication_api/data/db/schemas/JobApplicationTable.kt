@@ -9,6 +9,7 @@ object JobApplicationTable: Table("applications"){
     val createdAt = datetime("created_at")
     val status = varchar("status", 255)
     val coverLetter = text("cover_letter")
-    val cvUrl = text("cv").nullable()
+    val additionalInfo = text("additional_info")
+    val cvUrl = text("cv")
     override val primaryKey = PrimaryKey(userId, jobId)
 }

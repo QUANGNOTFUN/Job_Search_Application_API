@@ -42,7 +42,9 @@ fun ResultRow?.toJobApplication(): JobApplication? {
         jobId = this[JobApplicationTable.jobId],
         status = this[JobApplicationTable.status],
         createdAt = this[JobApplicationTable.createdAt].toString(),
+        additionalInfo = this[JobApplicationTable.additionalInfo].toString(),
         coverLetter = this[JobApplicationTable.coverLetter],
+        cvUrl = this[JobApplicationTable.cvUrl]
     )
 }
 
