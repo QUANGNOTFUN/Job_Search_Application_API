@@ -14,62 +14,61 @@ fun Application.jobApplicationRoutes(repository: JobApplicationRepository) {
     routing {
         route("/applications") {
             post("/apply") {
-                val multipart = call.receiveMultipart()
-                var jobId: UUID? = null
-                var userId: String? = null
-                var status: String? = null
-                var coverLetter: String? = null
-                var additionalInfo: String? = null
-                var cvFileName: String? = null
+                try {
+                    val multipart = call.receiveMultipart()
+                    val paramsMap = mutableMapOf<String, String>()
+                    var jobId: UUID? = null
+                    var cvFileName: String? = null
 
-                multipart.forEachPart { part ->
-                    when (part) {
-                        is PartData.FormItem -> {
-                            when (part.name) {
-                                "jobId" -> jobId = part.value.let { UUID.fromString(it) }
-                                "userId" -> userId = part.value
-                                "status" -> status = part.value
-                                "coverLetter" -> coverLetter = part.value
-                                "additionalInfo" -> additionalInfo = part.value
-                            }
-                        }
-                        is PartData.FileItem -> {
-                            if (part.name == "cv") {
-                                val fileExtension = part.originalFileName?.substringAfterLast(".") ?: "pdf"
-                                cvFileName = "${UUID.randomUUID()}.$fileExtension"
-                                val file = File("uploads/cvs/$cvFileName")
-                                file.parentFile.mkdirs()
-                                part.streamProvider().use { input ->
-                                    file.outputStream().buffered().use { output ->
-                                        input.copyTo(output)
+                    multipart.forEachPart { part ->
+                        try {
+                            when (part) {
+                                is PartData.FormItem -> {
+                                    when (part.name) {
+                                        "jobId" -> jobId = try { UUID.fromString(part.value) } catch (e: IllegalArgumentException) { null }
+                                        "userId", "status", "coverLetter", "additionalInfo" -> paramsMap[part.name!!] = part.value
+                                    }
+                                }
+                                is PartData.FileItem -> {
+                                    if (part.name == "cv") {
+                                        val fileExtension = part.originalFileName?.substringAfterLast(".", "") ?: "pdf"
+                                        cvFileName = "${UUID.randomUUID()}.$fileExtension"
+                                        val file = File("uploads/cvs").apply { mkdirs() }.resolve(cvFileName!!)
+                                        part.streamProvider().use { input ->
+                                            file.outputStream().buffered().use { output ->
+                                                input.copyTo(output)
+                                            }
+                                        }
                                     }
                                 }
                             }
+                        } finally {
+                            part.dispose()
                         }
-                        else -> Unit
                     }
-                    part.dispose()
+
+                    if (jobId == null || paramsMap["userId"] == null || cvFileName == null) {
+                        call.respond(HttpStatusCode.BadRequest, "Missing required fields or CV file")
+                        return@post
+                    }
+
+                    val params = JobApplicationParams(
+                        jobId = jobId!!,
+                        userId = paramsMap["userId"]!!,
+                        status = paramsMap["status"] ?: "pending",
+                        coverLetter = paramsMap["coverLetter"] ?: "",
+                        cvUrl = "/uploads/cvs/$cvFileName",
+                        additionalInfo = paramsMap["additionalInfo"] ?: ""
+                    )
+
+                    val result = repository.createJobApplication(params)
+                    call.respond(result.statusCode, result)
+                } catch (e: Exception) {
+                    call.respond(HttpStatusCode.InternalServerError, mapOf("error" to e.message))
                 }
-
-                if (jobId == null || userId == null || status == null || coverLetter == null || additionalInfo == null || cvFileName == null) {
-                    call.respond(HttpStatusCode.BadRequest, "Thiếu tham số hoặc file CV")
-                    return@post
-                }
-
-                val params = JobApplicationParams(
-                    jobId = jobId!!,
-                    userId = userId!!,
-                    status = status!!,
-                    coverLetter = coverLetter!!,
-                    cvUrl = "/uploads/cvs/$cvFileName",
-                    additionalInfo = additionalInfo!!
-                )
-
-                val result = repository.createJobApplication(params)
-                call.respond(result.statusCode, result)
             }
 
-            get("/{id}") {
+            get("/getAppliedJobs/{id}") {
                 val id = call.parameters["id"]
                 if (id != null) {
                     val result = repository.getJobApplicationsByUserId(id)

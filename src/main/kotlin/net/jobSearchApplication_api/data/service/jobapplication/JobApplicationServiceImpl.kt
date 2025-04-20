@@ -14,7 +14,6 @@ class JobApplicationServiceImpl : JobApplicationService {
 
     override suspend fun createJobApplication(params: JobApplicationParams): JobApplication? {
         var statement: InsertStatement<Number>? = null
-
         DatabaseFactory.dbQuery {
             statement = JobApplicationTable.insert {
                 it[userId] = params.userId
@@ -26,7 +25,6 @@ class JobApplicationServiceImpl : JobApplicationService {
                 it[createdAt] = LocalDateTime.now()
             }
         }
-
         return statement?.resultedValues?.get(0)?.toJobApplication()
     }
 
