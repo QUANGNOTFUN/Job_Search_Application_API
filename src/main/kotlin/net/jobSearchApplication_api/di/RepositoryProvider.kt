@@ -7,13 +7,10 @@ import net.jobSearchApplication_api.data.repository.job.JobRepositoryImpl
 import net.jobSearchApplication_api.data.repository.company.CompanyRepository
 import net.jobSearchApplication_api.data.repository.company.CompanyRepositoryImpl
 import net.jobSearchApplication_api.data.repository.company.CompanyServiceImpl
-import net.jobSearchApplication_api.data.repository.favorite.FavoriteRepository
-import net.jobSearchApplication_api.data.repository.favorite.FavoriteRepositoryImpl
 import net.jobSearchApplication_api.data.repository.jobcategory.JobCategoryRepositoryImpl
 import net.jobSearchApplication_api.data.repository.user.UserRepository
 import net.jobSearchApplication_api.data.repository.user.UserRepositoryImpl
 import net.jobSearchApplication_api.data.service.auth.AuthServiceImpl
-import net.jobSearchApplication_api.data.service.favorite.FavoriteServiceImpl
 import net.jobSearchApplication_api.data.service.job.JobServiceImpl
 import net.jobSearchApplication_api.data.service.jobcategory.JobCategoryServiceImpl
 import net.jobSearchApplication_api.data.service.user.UserServiceImpl
@@ -29,7 +26,6 @@ object RepositoryProvider {
     fun provideUserRepository(): UserRepository = UserRepositoryImpl(UserServiceImpl())
     fun provideJobRepository(): JobRepository = JobRepositoryImpl(JobServiceImpl())
     fun provideCompanyRepository(): CompanyRepository = CompanyRepositoryImpl(CompanyServiceImpl())
-    fun provideFavoriteJobPostingRepository(): FavoriteRepository = FavoriteRepositoryImpl(FavoriteServiceImpl())
     fun provideNotificationRepository(): NotificationRepositoryImpl = NotificationRepositoryImpl(NotificationServiceImpl())
     fun provideJobCategoryRepository(): JobCategoryRepositoryImpl = JobCategoryRepositoryImpl(JobCategoryServiceImpl())
     fun provideJobApplicationRepository(): JobApplicationRepositoryImpl = JobApplicationRepositoryImpl(

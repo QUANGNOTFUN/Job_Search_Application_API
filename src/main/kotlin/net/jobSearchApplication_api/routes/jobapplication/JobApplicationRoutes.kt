@@ -17,11 +17,11 @@ fun Application.jobApplicationRoutes(repository: JobApplicationRepository) {
                 call.respond(result.statusCode, result)
             }
 
-            get("/{id}") {
+            get("/getAppliedJobs/{id}") {
                 val id = call.parameters["id"]
                 if (id != null) {
                     val result = repository.getJobApplicationsByUserId(id)
-                    call.respond(result) // Trả về list
+                    call.respond(result)
                 } else {
                     call.respond(HttpStatusCode.BadRequest, "Missing user ID")
                 }

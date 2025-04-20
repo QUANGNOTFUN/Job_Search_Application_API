@@ -6,7 +6,7 @@ import net.jobSearchApplication_api.data.db.schemas.Gender
 import net.jobSearchApplication_api.data.db.schemas.UserTable
 import net.jobSearchApplication_api.data.models.User
 import net.jobSearchApplication_api.routes.user.UpdateInfoUserParams
-import net.jobsearchapplication_api.routes.user.FavoriteParams
+import net.jobSearchApplication_api.routes.user.FavoriteParams
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.update
 import java.time.LocalDate
@@ -50,9 +50,9 @@ class UserServiceImpl : UserService {
                 ?.filter { it.isNotBlank() }
                 ?.toMutableList() ?: mutableListOf()
 
-            if (params.status) {
+            if (params.status && !favoritePosts.contains(params.jobId.toString())) {
                 params.jobId.takeIf { it.toString().isNotBlank() }?.let { favoritePosts.add(params.jobId.toString()) }
-            } else {
+            } else if (!params.status) {
                 favoritePosts.remove(params.jobId.toString())
             }
 

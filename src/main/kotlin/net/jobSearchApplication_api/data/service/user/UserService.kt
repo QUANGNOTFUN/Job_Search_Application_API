@@ -2,7 +2,7 @@ package net.jobSearchApplication_api.data.service.user
 
 import net.jobSearchApplication_api.data.models.User
 import net.jobSearchApplication_api.routes.user.UpdateInfoUserParams
-import net.jobsearchapplication_api.routes.user.FavoriteParams
+import net.jobSearchApplication_api.routes.user.FavoriteParams
 
 interface UserService {
     suspend fun getUser(uuid: String): User?

@@ -7,7 +7,7 @@ import net.jobSearchApplication_api.config.SUCCESS_UPDATE_INFO_USER
 import net.jobSearchApplication_api.data.models.User
 import net.jobSearchApplication_api.data.service.user.UserService
 import net.jobSearchApplication_api.routes.user.UpdateInfoUserParams
-import net.jobsearchapplication_api.routes.user.FavoriteParams
+import net.jobSearchApplication_api.routes.user.FavoriteParams
 
 class UserRepositoryImpl(
     private val userService: UserService
