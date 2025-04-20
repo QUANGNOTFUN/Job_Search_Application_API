@@ -158,7 +158,13 @@ class JobRepositoryImpl(private val jobService: JobService ) : JobRepository {
     }
 
     override suspend fun searchJobs(query: String, location: String?, type: String?, page: Int): BaseResponse<Any> {
-        TODO("Not yet implemented")
+		return try {
+			BaseResponse.SuccessResponse(data = jobService.searchJobs(query,location,type,page ), message = SUCCESS)
+		} catch (e: Exception) {
+			BaseResponse.ErrorResponse(
+				message = "Error getting jobs: ${e.localizedMessage}"
+			)
+		}
     }
 
 }

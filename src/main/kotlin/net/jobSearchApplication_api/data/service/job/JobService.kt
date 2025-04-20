@@ -20,6 +20,6 @@ interface JobService {
 
     suspend fun deleteJob(id: UUID): Boolean
 
-    suspend fun searchJobs(query: String, location: String?, type: String?, page: Int): List<Job>
+    suspend fun searchJobs(query: String, location: String?, type: String?, page: Int): PaginatedResult<Job>
 }
 

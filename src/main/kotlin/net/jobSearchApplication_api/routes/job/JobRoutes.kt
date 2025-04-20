@@ -119,13 +119,17 @@ fun Application.jobRoutes(repository: JobRepository) {
                 }
 
                 // Tìm kiếm job -- CHƯA XONG --
-                get("/search") {
-                    val query = call.request.queryParameters["q"] ?: ""
-                    val location = call.request.queryParameters["location"]
-                    val type = call.request.queryParameters["type"]
-                    val page = call.request.queryParameters["page"]?.toIntOrNull() ?: 1
-                    call.respond(repository.searchJobs(query, location, type, page))
-                }
+				get("/search") {
+					val query = call.request.queryParameters["query"] ?: ""
+					val location = call.request.queryParameters["location"]
+					val type = call.request.queryParameters["type"]
+					val page = call.request.queryParameters["page"]?.toIntOrNull() ?: 1
+					if (page < 1) {
+						call.respond(HttpStatusCode.BadRequest, "Invalid page number")
+						return@get
+					}
+					call.respond(repository.searchJobs(query, location, type, page))
+				}
 //            }
         }
     }

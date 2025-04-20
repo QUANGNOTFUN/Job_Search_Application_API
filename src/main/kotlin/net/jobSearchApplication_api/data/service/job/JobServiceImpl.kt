@@ -9,6 +9,7 @@ import net.jobSearchApplication_api.data.models.common.PaginatedResult
 import net.jobSearchApplication_api.routes.job.JobParams
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.like
 import org.jetbrains.exposed.sql.statements.InsertStatement
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -243,8 +244,27 @@ class JobServiceImpl : JobService {
         return result == 1
    }
 
-    override suspend fun searchJobs(query: String, location: String?, type: String?, page: Int): List<Job> {
-        TODO("Not yet implemented")
-    }
-
+	override suspend fun searchJobs(query: String, location: String?, type: String?, page: Int): PaginatedResult<Job> {
+		var pageCount: Long = 0
+		var nextPage: Long? = null
+		val jobs = dbQuery {
+			try {
+				val limit = 20
+				val offset = (page - 1) * limit.toLong()
+				val totalJobs = JobTable.selectAll().count()
+				pageCount = (totalJobs + limit - 1) / limit
+				if (page < pageCount) {
+					nextPage = page + 1L
+				}
+				JobTable.selectAll()
+					.orderBy(JobTable.createdAt, SortOrder.DESC)
+					.limit(limit, offset)
+					.mapNotNull { it.toJob() }
+			} catch (e: Exception) {
+				println("Error in searchJobs: ${e.message}")
+				emptyList()
+			}
+		}
+		return PaginatedResult(pageCount, nextPage, jobs)
+	}
 }
