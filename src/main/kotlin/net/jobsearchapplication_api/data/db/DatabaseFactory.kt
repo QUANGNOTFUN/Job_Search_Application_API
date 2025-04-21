@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import net.jobSearchApplication_api.data.db.schemas.NotificationTable
 import net.jobsearchapplication_api.data.db.schemas.*
 
 import org.jetbrains.exposed.sql.Database

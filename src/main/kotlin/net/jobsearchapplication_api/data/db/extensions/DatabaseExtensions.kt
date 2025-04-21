@@ -1,5 +1,6 @@
 package net.jobsearchapplication_api.data.db.extensions
 
+import net.jobSearchApplication_api.data.db.schemas.NotificationTable
 import net.jobsearchapplication_api.data.db.schemas.*
 import net.jobsearchapplication_api.data.models.*
 import org.jetbrains.exposed.sql.ResultRow
