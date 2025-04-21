@@ -11,7 +11,7 @@ import net.jobsearchapplication_api.data.repository.company.CompanyRepository
 
 fun Application.companyRoutes(repository: CompanyRepository) {
     routing {
-        authenticate {
+//        authenticate {
             route("/company") {
                 // GET /companies - Lấy danh sách công ty với phân trang
                 get {
@@ -72,7 +72,8 @@ fun Application.companyRoutes(repository: CompanyRepository) {
                     val id: String = idString
                     val response = repository.deleteCompany(id)
                     call.respond(response)
-                }
+                }//        }
+
                 // GET /companies/{id}/jobs - Lấy danh sách công việc của công ty
                 get("/jobs/{id}") {
                     val id = call.parameters["id"]
@@ -81,6 +82,5 @@ fun Application.companyRoutes(repository: CompanyRepository) {
                     call.respond(response)
                 }
             }
-        }
     }
 }
