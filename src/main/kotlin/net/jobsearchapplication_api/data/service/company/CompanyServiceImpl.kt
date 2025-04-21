@@ -1,4 +1,4 @@
-package net.jobsearchapplication_api.data.repository.company
+package net.jobsearchapplication_api.data.service.company
 
 import net.jobsearchapplication_api.data.db.DatabaseFactory.dbQuery
 import net.jobsearchapplication_api.data.db.extensions.toCompany
@@ -7,7 +7,6 @@ import net.jobsearchapplication_api.data.db.schemas.CompanyTable
 import net.jobsearchapplication_api.data.db.schemas.JobTable
 import net.jobsearchapplication_api.data.models.Company
 import net.jobsearchapplication_api.data.models.Job
-import net.jobsearchapplication_api.data.service.company.CompanyService
 import net.jobsearchapplication_api.routes.company.CompanyParams
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert

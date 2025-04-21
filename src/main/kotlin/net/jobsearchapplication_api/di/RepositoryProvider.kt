@@ -8,7 +8,7 @@ import net.jobsearchapplication_api.data.repository.job.JobRepository
 import net.jobsearchapplication_api.data.repository.job.JobRepositoryImpl
 import net.jobsearchapplication_api.data.repository.company.CompanyRepository
 import net.jobsearchapplication_api.data.repository.company.CompanyRepositoryImpl
-import net.jobsearchapplication_api.data.repository.company.CompanyServiceImpl
+import net.jobsearchapplication_api.data.service.company.CompanyServiceImpl
 import net.jobsearchapplication_api.data.repository.jobcategory.JobCategoryRepositoryImpl
 import net.jobsearchapplication_api.data.repository.user.UserRepository
 import net.jobsearchapplication_api.data.repository.user.UserRepositoryImpl
