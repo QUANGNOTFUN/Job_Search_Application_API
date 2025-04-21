@@ -35,6 +35,19 @@ fun Application.jobRoutes(repository: JobRepository) {
                     }
                 }
 
+                get("/getAppliedJobs") {
+                    try {
+                        val query = call.request.queryParameters["userId"] ?: throw IllegalArgumentException(EMPTY_UUID)
+                        val response = repository.getAppliedJobs(query)
+                        call.respond(response.statusCode, response)
+                    } catch (e: Exception) {
+                        call.respond(
+                            HttpStatusCode.InternalServerError,
+                            BaseResponse.ErrorResponse("Failed to get jobs")
+                        )
+                    }
+                }
+
                 get("/getFavoriteJobs") {
                     try {
                         val query = call.request.queryParameters["userId"] ?: throw IllegalArgumentException(EMPTY_UUID)

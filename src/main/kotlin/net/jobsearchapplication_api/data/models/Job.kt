@@ -27,7 +27,7 @@ data class Job(
     val requirements: String?,
     val jobImage: String?,
     val createdAt: LocalDateTime
-    )
+)
 // Enums cần thiết
 enum class JobType {
     FULL_TIME,
