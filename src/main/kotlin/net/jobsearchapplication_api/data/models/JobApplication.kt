@@ -10,4 +10,4 @@ data class JobApplication(
     val coverLetter: String,
     val additionalInfo: String,
     val cvUrl: String
-    )
+)

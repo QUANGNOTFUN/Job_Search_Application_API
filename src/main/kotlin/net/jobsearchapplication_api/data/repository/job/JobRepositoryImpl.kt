@@ -4,6 +4,7 @@ import io.ktor.http.*
 import net.jobsearchapplication_api.base.BaseResponse
 import net.jobsearchapplication_api.config.GENERIC_ERROR
 import net.jobsearchapplication_api.config.SUCCESS
+import net.jobsearchapplication_api.data.models.AppliedJob
 import net.jobsearchapplication_api.data.models.GenderRequirement
 import net.jobsearchapplication_api.data.models.JobType
 import net.jobsearchapplication_api.data.service.job.JobService
@@ -49,6 +50,14 @@ class JobRepositoryImpl(private val jobService: JobService ) : JobRepository {
             BaseResponse.SuccessResponse(data = jobService.getJobsByCategory(cateId), message = SUCCESS)
         } catch (e: Exception) {
             BaseResponse.ErrorResponse(statusCode = HttpStatusCode.BadRequest ,message = "Lỗi: ${e.message}")
+        }
+    }
+
+    override suspend fun getAppliedJobs(userId: String): BaseResponse<Any> {
+        return try {
+            BaseResponse.SuccessResponse(data = jobService.getAppliedJobs(userId), message = SUCCESS)
+        } catch (e: Exception) {
+            BaseResponse.ErrorResponse("Error: ${e.message}")
         }
     }
 

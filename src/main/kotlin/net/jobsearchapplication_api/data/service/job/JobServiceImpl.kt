@@ -4,6 +4,7 @@ import net.jobsearchapplication_api.data.db.DatabaseFactory
 import net.jobsearchapplication_api.data.db.DatabaseFactory.dbQuery
 import net.jobsearchapplication_api.data.db.extensions.*
 import net.jobsearchapplication_api.data.db.schemas.*
+import net.jobsearchapplication_api.data.models.AppliedJob
 import net.jobsearchapplication_api.data.models.Job
 import net.jobsearchapplication_api.data.models.common.PaginatedResult
 import net.jobsearchapplication_api.routes.job.JobParams
@@ -45,6 +46,29 @@ class JobServiceImpl : JobService {
                 }
         }
     }
+
+    override suspend fun getAppliedJobs(userId: String): List<AppliedJob> {
+        return dbQuery {
+            (JobApplicationTable innerJoin JobTable)
+                .select { JobApplicationTable.userId eq userId }
+                .map { row ->
+                    val job = row.toJob()
+                    val jobApplication = row.toJobApplication()
+
+                    AppliedJob(
+                        id = job!!.id,
+                        title = job.title,
+                        salaryMin = job.salaryMin,
+                        salaryMax = job.salaryMax,
+                        location = job.location,
+                        jobImage = job.jobImage,
+                        statusResponse = jobApplication!!.status,
+                        createdAt = jobApplication.createdAt
+                    )
+                }
+        }
+    }
+
 
     override suspend fun getFavoriteJobs(userId: String): List<Job?> {
         return dbQuery {

@@ -163,6 +163,7 @@ fun ResultRow?.toJob(): Job? {
     )
 }
 
+
 fun ResultRow?.toStoryJoinedWithUser(): Story? {
     return if (this == null) null
     else Story(
