@@ -1,7 +1,6 @@
 package net.jobsearchapplication_api.di
 
-import net.jobSearchapplication_api.data.repository.notification.NotificationRepositoryImpl
-import net.jobSearchapplication_api.data.service.notification.NotificationServiceImpl
+import net.jobsearchapplication_api.data.repository.notification.NotificationRepositoryImpl
 import net.jobsearchapplication_api.data.repository.auth.AuthRepository
 import net.jobsearchapplication_api.data.repository.auth.AuthRepositoryImpl
 import net.jobsearchapplication_api.data.repository.job.JobRepository
@@ -18,6 +17,7 @@ import net.jobsearchapplication_api.data.service.jobcategory.JobCategoryServiceI
 import net.jobsearchapplication_api.data.service.user.UserServiceImpl
 import net.jobsearchapplication_api.data.repository.jobapplication.JobApplicationRepositoryImpl
 import net.jobsearchapplication_api.data.service.jobapplication.JobApplicationServiceImpl
+import net.jobsearchapplication_api.data.service.notification.NotificationServiceImpl
 
 
 object RepositoryProvider {

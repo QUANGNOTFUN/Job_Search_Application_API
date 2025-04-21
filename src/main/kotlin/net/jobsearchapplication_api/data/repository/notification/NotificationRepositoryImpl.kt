@@ -1,21 +1,19 @@
-package net.jobSearchapplication_api.data.repository.notification
+package net.jobsearchapplication_api.data.repository.notification
 
-
-import net.jobSearchApplication_api.data.repository.notification.NotificationRepository
-import net.jobSearchApplication_api.data.service.notification.NotificationService
-import net.jobSearchapplication_api.routes.notification.NotificationParams
+import net.jobsearchapplication_api.data.service.notification.NotificationService
 import net.jobsearchapplication_api.base.BaseResponse
 import net.jobsearchapplication_api.config.SUCCESS
+import net.jobsearchapplication_api.routes.notification.NotificationParams
 
 
 class NotificationRepositoryImpl(
-	private val NotificationService: NotificationService
+	private val notificationService: NotificationService
 ) : NotificationRepository {
 
 	override suspend fun getAllNotificationByUserId(page: Int, limit: Int, userId: String): BaseResponse<Any> {
 		return try {
 			run {
-				val notifications = NotificationService.getAllNotificationByUserId(page, limit, userId)
+				val notifications = notificationService.getAllNotificationByUserId(page, limit, userId)
 				BaseResponse.SuccessResponse(
 					data = notifications,
 					message = SUCCESS
@@ -31,7 +29,7 @@ class NotificationRepositoryImpl(
 
 	override suspend fun createNotification(params: NotificationParams): BaseResponse<Any> {
 		return try {
-			val notification = NotificationService.createNotification(params)
+			val notification =notificationService.createNotification(params)
 			BaseResponse.SuccessResponse(
 				data = notification,
 				message = SUCCESS
@@ -44,7 +42,7 @@ class NotificationRepositoryImpl(
 	}
 
 	override suspend fun deleteNotification(id: Long): BaseResponse<Any> {
-		val deletedId = NotificationService.deleteNotification(id)
+		val deletedId =notificationService.deleteNotification(id)
 		return BaseResponse.SuccessResponse(
 			data = deletedId,
 			message = SUCCESS
@@ -53,7 +51,7 @@ class NotificationRepositoryImpl(
 
 	override suspend fun updateNotification(id: Long, isRead: Boolean): BaseResponse<Any> {
 		return try {
-			val success = NotificationService.updateNotification(id, isRead)
+			val success = notificationService.updateNotification(id, isRead)
 			if (success) {
 				BaseResponse.SuccessResponse(
 					data = true,

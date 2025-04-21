@@ -5,7 +5,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.jackson.*
-import net.jobSearchapplication_api.routes.notification.notificationRoutes
 import net.jobsearchapplication_api.data.db.DatabaseFactory
 import net.jobsearchapplication_api.di.RepositoryProvider
 import net.jobsearchapplication_api.routes.auth.authRoutes
@@ -14,6 +13,7 @@ import net.jobsearchapplication_api.routes.job.jobRoutes
 import net.jobsearchapplication_api.routes.jobcategory.jobCategoryRoutes
 import net.jobsearchapplication_api.routes.user.userRoutes
 import net.jobsearchapplication_api.routes.jobapplication.jobApplicationRoutes
+import net.jobsearchapplication_api.routes.notification.notificationRoutes
 
 fun configureDatabase() {
     DatabaseFactory.init()
