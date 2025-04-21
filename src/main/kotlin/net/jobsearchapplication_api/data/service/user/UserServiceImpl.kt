@@ -6,7 +6,7 @@ import net.jobsearchapplication_api.data.db.schemas.Gender
 import net.jobsearchapplication_api.data.db.schemas.UserTable
 import net.jobsearchapplication_api.data.models.User
 import net.jobsearchapplication_api.routes.user.UpdateInfoUserParams
-import net.jobsearchapplication_api.routes.user.FavoriteParams
+import net.jobSearchApplication_api.routes.user.FavoriteParams
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.update
 import java.time.LocalDate

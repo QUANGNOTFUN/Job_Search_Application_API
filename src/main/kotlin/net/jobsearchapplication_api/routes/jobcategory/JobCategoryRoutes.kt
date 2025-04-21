@@ -11,7 +11,7 @@ fun Application.jobCategoryRoutes(repository: JobCategoryRepository) {
         route("/jobCategories") {
             get("/getAll"){
                val page = call.request.queryParameters["page"]?.toIntOrNull() ?: 1
-               val limit = call.request.queryParameters["limit"]?.toIntOrNull() ?: 10
+               val limit = call.request.queryParameters["limit"]?.toIntOrNull() ?: 20
                 call.respond(repository.getAllCategories(page, limit))
             }
 

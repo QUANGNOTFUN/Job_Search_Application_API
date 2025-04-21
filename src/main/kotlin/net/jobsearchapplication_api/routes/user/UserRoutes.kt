@@ -5,6 +5,7 @@ import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import net.jobSearchApplication_api.routes.user.FavoriteParams
 import net.jobsearchapplication_api.base.BaseResponse
 import net.jobsearchapplication_api.config.EMPTY_UUID
 import net.jobsearchapplication_api.data.repository.user.UserRepository
