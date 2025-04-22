@@ -1,7 +1,7 @@
 package net.jobsearchapplication_api.di
 
-import net.jobSearchapplication_api.data.repository.notification.NotificationRepositoryImpl
-import net.jobSearchapplication_api.data.service.notification.NotificationServiceImpl
+import net.jobsearchapplication_api.data.repository.notification.NotificationRepositoryImpl
+import net.jobsearchapplication_api.data.service.notification.NotificationServiceImpl
 import net.jobsearchapplication_api.data.repository.auth.AuthRepository
 import net.jobsearchapplication_api.data.repository.auth.AuthRepositoryImpl
 import net.jobsearchapplication_api.data.repository.job.JobRepository

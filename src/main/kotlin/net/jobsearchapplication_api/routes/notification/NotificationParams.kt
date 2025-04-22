@@ -1,4 +1,4 @@
-package net.jobSearchapplication_api.routes.notification
+package net.jobsearchapplication_api.routes.notification
 
 data class NotificationParams(
 	val userId: String,

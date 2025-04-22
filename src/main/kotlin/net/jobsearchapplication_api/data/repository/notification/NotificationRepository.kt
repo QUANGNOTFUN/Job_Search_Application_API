@@ -1,6 +1,6 @@
-package net.jobSearchApplication_api.data.repository.notification
+package net.jobsearchapplication_api.data.repository.notification
 
-import net.jobSearchapplication_api.routes.notification.NotificationParams
+import net.jobsearchapplication_api.routes.notification.NotificationParams
 import net.jobsearchapplication_api.base.BaseResponse
 
 

@@ -27,8 +27,8 @@ class JobApplicationRepositoryImpl(
         return BaseResponse.SuccessResponse(data = jobApplication, message = SUCCESS)
     }
 
-    override suspend fun getJobApplicationsByUserIdAndJobId(userId: String, jobId: UUID): BaseResponse<Any> {
-        val jobApplication = jobApplicationService.getJobApplicationsByUserIdAndJobId(userId, jobId)
+    override suspend fun getAppliedUsersByJobId(jobId: UUID): BaseResponse<Any> {
+        val jobApplication = jobApplicationService.getAppliedUsersByJobId(jobId)
         return BaseResponse.SuccessResponse(data = jobApplication, message = SUCCESS)
     }
 

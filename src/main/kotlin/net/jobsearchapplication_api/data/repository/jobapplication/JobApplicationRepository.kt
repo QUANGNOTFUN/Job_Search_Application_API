@@ -7,6 +7,6 @@ import java.util.UUID
 interface JobApplicationRepository {
     suspend fun createJobApplication(params: JobApplicationParams): BaseResponse<Any>
     suspend fun getJobApplicationsByUserId(id: String): BaseResponse<Any>
-    suspend fun getJobApplicationsByUserIdAndJobId(userId: String, jobId: UUID): BaseResponse<Any>
+    suspend fun getAppliedUsersByJobId(jobId: UUID): BaseResponse<Any>
 
 }

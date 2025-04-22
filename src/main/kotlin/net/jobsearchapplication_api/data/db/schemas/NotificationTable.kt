@@ -1,4 +1,4 @@
-package net.jobSearchApplication_api.data.db.schemas
+package net.jobsearchapplication_api.data.db.schemas
 
 import net.jobsearchapplication_api.data.db.schemas.UserTable
 import org.jetbrains.exposed.sql.Table

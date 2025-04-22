@@ -1,11 +1,14 @@
 package net.jobsearchapplication_api.data.service.jobapplication
 
 import net.jobsearchapplication_api.data.db.DatabaseFactory
+import net.jobsearchapplication_api.data.db.DatabaseFactory.dbQuery
+import net.jobsearchapplication_api.data.db.extensions.toAppliedUserWithApplication
 import net.jobsearchapplication_api.data.db.extensions.toJobApplication
 import net.jobsearchapplication_api.data.db.extensions.toUser
 import net.jobsearchapplication_api.data.db.schemas.JobApplicationTable
 import net.jobsearchapplication_api.data.db.schemas.JobTable
 import net.jobsearchapplication_api.data.db.schemas.UserTable
+import net.jobsearchapplication_api.data.models.AppliedJob
 import net.jobsearchapplication_api.data.models.JobApplication
 import net.jobsearchapplication_api.data.models.User
 import net.jobsearchapplication_api.routes.jobapplication.JobApplicationParams
@@ -21,7 +24,7 @@ class JobApplicationServiceImpl : JobApplicationService {
 
     override suspend fun createJobApplication(params: JobApplicationParams): JobApplication? {
         var statement: InsertStatement<Number>? = null
-        DatabaseFactory.dbQuery {
+        dbQuery {
             statement = JobApplicationTable.insert {
                 it[userId] = params.userId
                 it[jobId] = params.jobId
@@ -36,24 +39,20 @@ class JobApplicationServiceImpl : JobApplicationService {
     }
 
     override suspend fun getJobApplicationsByUserId(id: String): List<JobApplication?> {
-        return DatabaseFactory.dbQuery {
+        return dbQuery {
             JobApplicationTable
                 .select { JobApplicationTable.userId eq id }
                 .map { it.toJobApplication() }
         }
     }
 
-    override suspend fun getJobApplicationsByUserIdAndJobId(userId: String, jobId: UUID): List<User?> {
-        return DatabaseFactory.dbQuery {
-            JobTable
-                .innerJoin(JobApplicationTable, { JobTable.id }, { JobApplicationTable.jobId })
-                .innerJoin(UserTable, { JobApplicationTable.userId }, { UserTable.id })
-                .select {
-                    (JobTable.id eq jobId) and (JobTable.postedBy eq userId)
+    override suspend fun getAppliedUsersByJobId(jobId: UUID): List<Any?> {
+        return dbQuery {
+            (JobApplicationTable innerJoin UserTable)
+                .select { JobApplicationTable.jobId eq jobId }
+                .map { resultRow ->
+                    resultRow.toAppliedUserWithApplication()
                 }
-                .map { it.toUser() }
         }
     }
-
-
 }

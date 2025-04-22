@@ -8,5 +8,5 @@ import java.util.*
 interface JobApplicationService {
     suspend fun createJobApplication(params: JobApplicationParams): JobApplication?
     suspend fun getJobApplicationsByUserId(id: String): List<JobApplication?>
-    suspend fun getJobApplicationsByUserIdAndJobId(userId: String, jobId: UUID): List<User?>
+    suspend fun getAppliedUsersByJobId(jobId: UUID): List<Any?>
 }
