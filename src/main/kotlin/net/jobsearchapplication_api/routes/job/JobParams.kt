@@ -1,5 +1,6 @@
 package net.jobsearchapplication_api.routes.job
 
+import net.jobsearchapplication_api.data.models.ExperienceLevel
 import java.time.LocalDateTime
 
 data class JobParams(
@@ -13,13 +14,15 @@ data class JobParams(
     val categoryId: Int,
     
     // Thông tin lương
-    val salary: SalaryInfo,
-    
+    val salaryMin: Double,
+    val salaryMax: Double,
+
     // Thông tin việc làm
     val employmentType: String, // FULL_TIME, PART_TIME, CONTRACT
-    val location: LocationInfo,
-    val experience: ExperienceInfo,
-    
+    val location: String,
+    val experienceLevel: String,
+    val currency: String,
+
     // Thông tin bổ sung
     val deadline: LocalDateTime,
     val positionsAvailable: Int,
@@ -27,27 +30,7 @@ data class JobParams(
     val status: String = "ACTIVE", // ACTIVE, CLOSED, DRAFT
 
     // Thông tin thêm
-    val additionalInfo: AdditionalInfo
-)
-
-data class SalaryInfo(
-    val min: Double,
-    val max: Double,
-    val currency: String,
-    val isNegotiable: Boolean
-)
-
-data class LocationInfo(
-    val city: String,
-    val district: String,
-    val address: String,
-    val isRemote: Boolean
-)
-
-data class ExperienceInfo(
-    val minYears: Int,
-    val maxYears: Int,
-    val level: String // INTERN, FRESH, JUNIOR, SENIOR, LEAD
+    val additionalInfo: AdditionalInfo?
 )
 
 data class AdditionalInfo(
