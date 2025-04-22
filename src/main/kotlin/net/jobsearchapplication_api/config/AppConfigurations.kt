@@ -8,6 +8,7 @@ import com.google.firebase.FirebaseOptions
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.jackson.*
+import net.jobsearchapplication_api.routes.notification.notificationRoutes
 import net.jobsearchapplication_api.data.db.DatabaseFactory
 import net.jobsearchapplication_api.di.RepositoryProvider
 import net.jobsearchapplication_api.routes.auth.authRoutes

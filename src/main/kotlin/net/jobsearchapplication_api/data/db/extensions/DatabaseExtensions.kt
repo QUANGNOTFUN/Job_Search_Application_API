@@ -1,5 +1,6 @@
 package net.jobsearchapplication_api.data.db.extensions
 
+import net.jobsearchapplication_api.data.db.schemas.NotificationTable
 import net.jobsearchapplication_api.data.db.schemas.*
 import net.jobsearchapplication_api.data.models.*
 import org.jetbrains.exposed.sql.ResultRow
@@ -185,6 +186,32 @@ fun ResultRow?.toStoryJoinedWithUser(): Story? {
         createdAt = this[StoryTable.createdAt].toString()
     )
 }
+
+fun ResultRow.toAppliedUserWithApplication(): AppliedUserWithApplication {
+    val jobApplication = this.toJobApplication()
+    val user = this.toUser()
+        return AppliedUserWithApplication(
+            userId = jobApplication!!.userId,
+            fullName = user?.fullName,
+            phoneNumber = user?.phoneNumber,
+            avatar = user?.avatar,
+            bio = user?.bio,
+            birthDay = user?.birthDay,
+            gender = user?.gender,
+            userCvUrl = user?.cvUrl,
+            favoritePosts = user?.favoritePosts,
+            userCreatedAt = user!!.createdAt,
+            userUpdatedAt = user.updatedAt,
+            role = user.role,
+            jobId = jobApplication.jobId,
+            applicationStatus = jobApplication.status,
+            applicationCreatedAt = jobApplication.createdAt,
+            coverLetter = jobApplication.coverLetter,
+            additionalInfo = jobApplication.additionalInfo,
+            applicationCvUrl = jobApplication.cvUrl
+        )
+}
+
 fun ResultRow?.toCompany(): Company? {
     return if (this == null) null
     else Company(

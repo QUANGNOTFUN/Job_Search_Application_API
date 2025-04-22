@@ -1,7 +1,7 @@
 package net.jobsearchapplication_api.data.service.notification
 
-import net.jobsearchapplication_api.data.models.Notification
 import net.jobsearchapplication_api.routes.notification.NotificationParams
+import net.jobsearchapplication_api.data.models.Notification
 
 
 interface NotificationService {

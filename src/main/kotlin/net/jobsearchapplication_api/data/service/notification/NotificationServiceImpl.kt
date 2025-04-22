@@ -1,12 +1,10 @@
 package net.jobsearchapplication_api.data.service.notification
 
-import net.jobsearchapplication_api.data.db.DatabaseFactory.dbQuery
 import net.jobsearchapplication_api.data.db.schemas.NotificationTable
-
-
+import net.jobsearchapplication_api.routes.notification.NotificationParams
+import net.jobsearchapplication_api.data.db.DatabaseFactory.dbQuery
 import net.jobsearchapplication_api.data.db.extensions.toNotification
 import net.jobsearchapplication_api.data.models.Notification
-import net.jobsearchapplication_api.routes.notification.NotificationParams
 import org.jetbrains.exposed.sql.*
 import java.time.LocalDateTime
 

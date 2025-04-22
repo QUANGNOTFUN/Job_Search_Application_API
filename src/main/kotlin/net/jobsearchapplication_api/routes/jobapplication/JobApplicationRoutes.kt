@@ -77,6 +77,17 @@ fun Application.jobApplicationRoutes(repository: JobApplicationRepository) {
                     call.respond(HttpStatusCode.BadRequest, "Thiếu user ID")
                 }
             }
+
+            get("/getAppliedUsersByJobId") {
+                try {
+                    val jobId = call.request.queryParameters["jobId"] ?: throw IllegalArgumentException()
+
+                    val result = repository.getAppliedUsersByJobId(UUID.fromString(jobId))
+                    call.respond(result.statusCode, result)
+                } catch (e: Exception) {
+                    call.respond(status = HttpStatusCode.InternalServerError, message = "Error: ${e.message}")
+                }
+            }
         }
     }
 }
