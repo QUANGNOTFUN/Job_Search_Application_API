@@ -40,6 +40,8 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-java-time:0.37.3")
     implementation("org.postgresql:postgresql:42.7.2")
     implementation("com.zaxxer:HikariCP:5.0.1")
+	implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
+	implementation("com.google.firebase:firebase-admin")
 
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")

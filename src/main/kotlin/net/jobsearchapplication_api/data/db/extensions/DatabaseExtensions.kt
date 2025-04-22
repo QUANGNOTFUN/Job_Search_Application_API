@@ -212,3 +212,10 @@ fun ResultRow?.toNotification(): Notification? {
 		createAt = this[NotificationTable.createdAt].atZone(ZoneId.systemDefault()).toLocalDateTime(),
 	)
 }
+fun ResultRow?.toDeviceTokens(): DeviceToken?{
+	return if(this == null) null
+	else DeviceToken(
+		id = this[DeviceTokenTable.id],
+		token = this[DeviceTokenTable.token]
+	)
+}

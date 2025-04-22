@@ -1,5 +1,6 @@
 package net.jobsearchapplication_api.routes.notification
 
+import com.google.firebase.messaging.FirebaseMessaging
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.request.*
@@ -50,7 +51,7 @@ fun Application.notificationRoutes(repository: NotificationRepositoryImpl) {
 				val id = call.parameters["id"]?.toLongOrNull()
 					?: return@put call.respond(BaseResponse.ErrorResponse(null.toString(), HttpStatusCode.BadRequest))
 
-				val isRead = call.parameters["isRead"]?.toBoolean() ?: false
+				val isRead = call.parameters["isRead"]?.toBoolean() ?: true
 
 				val success = repository.updateNotification(id, isRead)
 				call.respond(
