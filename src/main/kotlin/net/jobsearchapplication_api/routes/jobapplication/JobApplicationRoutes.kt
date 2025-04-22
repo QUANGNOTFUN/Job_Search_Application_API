@@ -77,6 +77,28 @@ fun Application.jobApplicationRoutes(repository: JobApplicationRepository) {
                     call.respond(HttpStatusCode.BadRequest, "Thiếu user ID")
                 }
             }
+                get("/getAppliedUsers") {
+                val userId = call.request.queryParameters["userId"]
+                val jobIdStr = call.request.queryParameters["jobId"]
+
+                if (userId != null && jobIdStr != null) {
+                    // Chuyển jobId từ String thành UUID
+                    val jobId = try {
+                        UUID.fromString(jobIdStr)  // Chuyển đổi String thành UUID
+                    } catch (e: IllegalArgumentException) {
+                        call.respond(HttpStatusCode.BadRequest, "jobId không hợp lệ")
+                        return@get
+                    }
+
+                    // Gọi phương thức repository với userId và jobId đã chuyển đổi
+                    val result = repository.getJobApplicationsByUserIdAndJobId(userId, jobId)
+                    call.respond(result)
+                } else {
+                    call.respond(HttpStatusCode.BadRequest, "Thiếu userId hoặc jobId")
+                }
+            }
+
+
         }
     }
 }

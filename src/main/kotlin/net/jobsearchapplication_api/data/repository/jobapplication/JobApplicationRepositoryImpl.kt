@@ -6,6 +6,7 @@ import net.jobsearchapplication_api.config.GENERIC_ERROR
 import net.jobsearchapplication_api.config.SUCCESS
 import net.jobsearchapplication_api.data.service.jobapplication.JobApplicationService
 import net.jobsearchapplication_api.routes.jobapplication.JobApplicationParams
+import java.util.UUID
 
 class JobApplicationRepositoryImpl(
     private val jobApplicationService: JobApplicationService
@@ -23,6 +24,11 @@ class JobApplicationRepositoryImpl(
 
     override suspend fun getJobApplicationsByUserId(id: String): BaseResponse<Any> {
         val jobApplication = jobApplicationService.getJobApplicationsByUserId(id)
+        return BaseResponse.SuccessResponse(data = jobApplication, message = SUCCESS)
+    }
+
+    override suspend fun getJobApplicationsByUserIdAndJobId(userId: String, jobId: UUID): BaseResponse<Any> {
+        val jobApplication = jobApplicationService.getJobApplicationsByUserIdAndJobId(userId, jobId)
         return BaseResponse.SuccessResponse(data = jobApplication, message = SUCCESS)
     }
 
