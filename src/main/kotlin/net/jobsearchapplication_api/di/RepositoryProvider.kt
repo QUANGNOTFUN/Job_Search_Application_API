@@ -18,6 +18,7 @@ import net.jobsearchapplication_api.data.service.job.JobServiceImpl
 import net.jobsearchapplication_api.data.service.jobcategory.JobCategoryServiceImpl
 import net.jobsearchapplication_api.data.service.user.UserServiceImpl
 import net.jobsearchapplication_api.data.repository.jobapplication.JobApplicationRepositoryImpl
+import net.jobsearchapplication_api.data.service.devicetoken.DeviceTokenServiceImpl
 import net.jobsearchapplication_api.data.service.jobapplication.JobApplicationServiceImpl
 
 
