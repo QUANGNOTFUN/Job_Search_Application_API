@@ -69,7 +69,6 @@ class JobServiceImpl : JobService {
         }
     }
 
-
     override suspend fun getFavoriteJobs(userId: String): List<Job?> {
         return dbQuery {
             // Lấy favoriteJobPosting từ UserTable
@@ -152,14 +151,14 @@ class JobServiceImpl : JobService {
                     it[jobCategory] = params.categoryId
 
                     // Lương
-                    it[salaryMin] = BigDecimal(params.salary.min)
-                    it[salaryMax] = BigDecimal(params.salary.max)
-                    it[currency] = params.salary.currency
+                    it[salaryMin] = BigDecimal(params.salaryMin)
+                    it[salaryMax] = BigDecimal(params.salaryMax)
+                    it[currency] = params.currency
 
                     // Địa điểm và loại công việc
-                    it[location] = params.location.city
+                    it[location] = params.location
                     it[jobType] = params.employmentType
-                    it[experienceLevel] = params.experience.level
+                    it[experienceLevel] = params.experienceLevel
 
                     // Yêu cầu và quyền lợi
                     it[requirements] = params.requirements
@@ -172,7 +171,7 @@ class JobServiceImpl : JobService {
                     it[status] = params.status
 
                     // Hình ảnh job (nếu có)
-                    it[jobImage] = params.additionalInfo.jobImage
+                    it[jobImage] = params.additionalInfo?.jobImage
 
                     // Metadata
                     it[createdAt] = LocalDateTime.now()
@@ -192,14 +191,14 @@ class JobServiceImpl : JobService {
                     table[postedBy] = params.postedBy
 
                     // Thông tin lương
-                    table[salaryMin] = BigDecimal(params.salary.min.toString())
-                    table[salaryMax] = BigDecimal(params.salary.max.toString())
-                    table[currency] = params.salary.currency
+                    table[salaryMin] = BigDecimal(params.salaryMin.toString())
+                    table[salaryMax] = BigDecimal(params.salaryMax.toString())
+                    table[currency] = params.currency
 
                     // Địa điểm và loại công việc
-                    table[location] = params.location.city
+                    table[location] = params.location
                     table[jobType] = params.employmentType
-                    table[experienceLevel] = params.experience.level
+                    table[experienceLevel] = params.experienceLevel
 
                     // Yêu cầu và quyền lợi
                     table[requirements] = params.requirements
@@ -212,7 +211,7 @@ class JobServiceImpl : JobService {
                     table[status] = params.status
 
                     // Hình ảnh job
-                    params.additionalInfo.jobImage?.let {
+                    params.additionalInfo?.jobImage?.let {
                         table[jobImage] = it
                     }
                 }
@@ -226,36 +225,6 @@ class JobServiceImpl : JobService {
         } catch (e: Exception) {
             null
         }
-    }
-
-    // Hàm validate input
-    private fun validateJobParams(params: JobParams): List<String> {
-        val errors = mutableListOf<String>()
-
-        // Validate title
-        if (params.title.isBlank()) {
-            errors.add("Title is required")
-        }
-        if (params.title.length < 10) {
-            errors.add("Title must be at least 10 characters")
-        }
-
-        // Validate description
-        if (params.description.isBlank()) {
-            errors.add("Description is required")
-        }
-
-        // Validate salary
-        if (params.salary.min > params.salary.max) {
-            errors.add("Minimum salary cannot be greater than maximum salary")
-        }
-
-        // Validate deadline
-        if (params.deadline.isBefore(LocalDateTime.now())) {
-            errors.add("Deadline must be in the future")
-        }
-
-        return errors
     }
 
     override suspend fun deleteJob(id: UUID): Boolean {
