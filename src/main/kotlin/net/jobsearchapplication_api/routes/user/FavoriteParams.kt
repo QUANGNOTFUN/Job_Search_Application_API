@@ -1,4 +1,4 @@
-package net.jobSearchApplication_api.routes.user
+package net.jobsearchapplication_api.routes.user
 
 import com.google.gson.annotations.SerializedName
 import java.util.*

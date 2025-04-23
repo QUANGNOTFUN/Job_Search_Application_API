@@ -10,3 +10,9 @@ data class JobApplicationParams(
     val cvUrl: String,
     val additionalInfo: String
 )
+
+data class UpdateAppliedStatus(
+    val userId: String,
+    val jobId: UUID,
+    val status: String
+)

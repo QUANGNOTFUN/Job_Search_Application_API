@@ -27,7 +27,7 @@ dependencies {
     implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
     implementation("ch.qos.logback:logback-classic:1.4.11")
 
-    implementation("io.ktor:ktor-server-core:$ktor_version")
+        implementation("io.ktor:ktor-server-core:$ktor_version")
     implementation("io.ktor:ktor-server-tomcat:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("io.ktor:ktor-jackson:$ktor_version")

@@ -1,13 +1,14 @@
 package net.jobsearchapplication_api.data.repository.user
 
 import io.ktor.http.*
+import io.ktor.http.content.*
 import net.jobsearchapplication_api.base.BaseResponse
 import net.jobsearchapplication_api.config.EMPTY_UUID
 import net.jobsearchapplication_api.config.SUCCESS_UPDATE_INFO_USER
 import net.jobsearchapplication_api.data.models.User
 import net.jobsearchapplication_api.data.service.user.UserService
+import net.jobsearchapplication_api.routes.user.FavoriteParams
 import net.jobsearchapplication_api.routes.user.UpdateInfoUserParams
-import net.jobSearchApplication_api.routes.user.FavoriteParams
 
 class UserRepositoryImpl(
     private val userService: UserService
@@ -32,6 +33,14 @@ class UserRepositoryImpl(
             data = userService.updateInfoUser(uuid, params),
             message = SUCCESS_UPDATE_INFO_USER
         )
+    }
+
+    override suspend fun updateImageUser(
+        userId: String,
+        avatarPart: PartData.FileItem?,
+        cvPart: PartData.FileItem?
+    ): BaseResponse<Any> {
+        return userService.updateImageUser(userId, avatarPart, cvPart)
     }
 
     override suspend fun favoriteJobPosting(uuid: String, params: FavoriteParams): BaseResponse<Any> {
