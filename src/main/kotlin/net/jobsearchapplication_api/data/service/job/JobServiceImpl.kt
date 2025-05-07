@@ -154,6 +154,7 @@ class JobServiceImpl : JobService {
                     it[salaryMin] = BigDecimal(params.salaryMin)
                     it[salaryMax] = BigDecimal(params.salaryMax)
                     it[currency] = params.currency
+                    it[salaryPeriod] = params.salaryPeriod
 
                     // Địa điểm và loại công việc
                     it[location] = params.location

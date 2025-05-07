@@ -16,6 +16,7 @@ data class JobParams(
     // Thông tin lương
     val salaryMin: Double,
     val salaryMax: Double,
+    val salaryPeriod: String,
 
     // Thông tin việc làm
     val employmentType: String, // FULL_TIME, PART_TIME, CONTRACT
