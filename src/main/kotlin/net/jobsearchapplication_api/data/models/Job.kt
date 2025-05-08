@@ -13,7 +13,7 @@ data class Job(
     val salaryMin: BigDecimal?,
     val salaryMax: BigDecimal?,
     val currency: String = "VND",
-    val salaryPeriod: String,
+    val salaryPeriod: String = "MONTHLY",
     val location: String,
     val jobType: JobType,
     val experienceLevel: ExperienceLevel,

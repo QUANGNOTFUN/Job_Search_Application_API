@@ -11,7 +11,7 @@ object JobTable : Table("jobs") {
     val salaryMin = decimal("salary_min", 10, 2).nullable()
     val salaryMax = decimal("salary_max", 10, 2).nullable()
     val currency = varchar("currency", 10).default("VND")
-    val salaryPeriod = varchar("salary_period",20)
+    val salaryPeriod = varchar("salary_period",20).default("MONTHLY")
     val location = varchar("location", 255)
     val jobType = varchar("job_type", 50)
     val experienceLevel = varchar("experience_level", 50)

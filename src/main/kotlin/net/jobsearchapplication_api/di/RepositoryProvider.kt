@@ -30,9 +30,7 @@ object RepositoryProvider {
     fun provideCompanyRepository(): CompanyRepository = CompanyRepositoryImpl(CompanyServiceImpl())
     fun provideNotificationRepository(): NotificationRepositoryImpl = NotificationRepositoryImpl(NotificationServiceImpl())
     fun provideJobCategoryRepository(): JobCategoryRepositoryImpl = JobCategoryRepositoryImpl(JobCategoryServiceImpl())
-    fun provideJobApplicationRepository(): JobApplicationRepositoryImpl = JobApplicationRepositoryImpl(
-        JobApplicationServiceImpl()
-    )
+    fun provideJobApplicationRepository(): JobApplicationRepositoryImpl = JobApplicationRepositoryImpl(JobApplicationServiceImpl())
 	fun provideDeviceTokenRepository(): DeviceTokenRepositoryImpl = DeviceTokenRepositoryImpl(DeviceTokenServiceImpl())
 
 }

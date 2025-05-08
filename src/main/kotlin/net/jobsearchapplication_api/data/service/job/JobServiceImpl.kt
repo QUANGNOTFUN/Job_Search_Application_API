@@ -195,6 +195,7 @@ class JobServiceImpl : JobService {
                     table[salaryMin] = BigDecimal(params.salaryMin.toString())
                     table[salaryMax] = BigDecimal(params.salaryMax.toString())
                     table[currency] = params.currency
+					table[salaryPeriod] = params.salaryPeriod
 
                     // Địa điểm và loại công việc
                     table[location] = params.location
