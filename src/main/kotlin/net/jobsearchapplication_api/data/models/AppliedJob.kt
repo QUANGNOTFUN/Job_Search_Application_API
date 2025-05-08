@@ -18,7 +18,6 @@ data class AppliedJob(
 )
 
 data class AppliedUserWithApplication(
-    // Thông tin từ User
     val userId: String,
     val fullName: String?,
     val phoneNumber: String?,
@@ -26,17 +25,15 @@ data class AppliedUserWithApplication(
     val bio: String?,
     val birthDay: String?,
     val gender: Gender?,
-    val userCvUrl: String?, // cvUrl từ User
+    val userCvUrl: String?,
     val favoritePosts: String?,
     val userCreatedAt: LocalDateTime,
     val userUpdatedAt: LocalDateTime,
     val role: String,
-
-    // Thông tin từ JobApplication
     val jobId: UUID,
     val applicationStatus: String,
     val applicationCreatedAt: String,
     val coverLetter: String,
     val additionalInfo: String,
-    val applicationCvUrl: String // cvUrl từ JobApplication
+    val applicationCvUrl: String
 )

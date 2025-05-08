@@ -1,21 +1,16 @@
 package net.jobsearchapplication_api.data.service.jobapplication
 
-import net.jobsearchapplication_api.data.db.DatabaseFactory
+import io.ktor.http.*
+import net.jobsearchapplication_api.base.BaseResponse
+import net.jobsearchapplication_api.config.SUCCESS
 import net.jobsearchapplication_api.data.db.DatabaseFactory.dbQuery
 import net.jobsearchapplication_api.data.db.extensions.toAppliedUserWithApplication
 import net.jobsearchapplication_api.data.db.extensions.toJobApplication
-import net.jobsearchapplication_api.data.db.extensions.toUser
 import net.jobsearchapplication_api.data.db.schemas.JobApplicationTable
-import net.jobsearchapplication_api.data.db.schemas.JobTable
 import net.jobsearchapplication_api.data.db.schemas.UserTable
-import net.jobsearchapplication_api.data.models.AppliedJob
 import net.jobsearchapplication_api.data.models.JobApplication
-import net.jobsearchapplication_api.data.models.User
 import net.jobsearchapplication_api.routes.jobapplication.JobApplicationParams
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.innerJoin
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.statements.InsertStatement
 import java.time.LocalDateTime
 import java.util.UUID
@@ -43,6 +38,25 @@ class JobApplicationServiceImpl : JobApplicationService {
             JobApplicationTable
                 .select { JobApplicationTable.userId eq id }
                 .map { it.toJobApplication() }
+        }
+    }
+
+    override suspend fun updateStatusAppliedJob(userId: String, jobId: UUID, status: String): BaseResponse<Any> {
+        return try {
+            val updatedRows = dbQuery {
+                JobApplicationTable.update(
+                    where = { (JobApplicationTable.userId eq userId) and (JobApplicationTable.jobId eq jobId) }
+                ) { it[this.status] = status }
+            }
+
+            if (updatedRows > 0) {
+                BaseResponse.SuccessResponse(data = Any(), message = SUCCESS)
+            } else {
+                BaseResponse.ErrorResponse(message = "Không tìm thấy ứng tuyển với userId: $userId và jobId: $jobId", statusCode = HttpStatusCode.NotFound)
+            }
+        } catch (e: Exception) {
+            BaseResponse.ErrorResponse(message = "Lỗi khi cập nhật trạng thái ứng tuyển: ${e.message}",
+                statusCode = HttpStatusCode.InternalServerError)
         }
     }
 

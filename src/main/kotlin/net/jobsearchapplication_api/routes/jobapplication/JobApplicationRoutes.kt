@@ -6,6 +6,7 @@ import io.ktor.http.content.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import net.jobsearchapplication_api.config.SUCCESS
 import net.jobsearchapplication_api.data.repository.jobapplication.JobApplicationRepository
 import java.io.File
 import java.util.*
@@ -75,6 +76,16 @@ fun Application.jobApplicationRoutes(repository: JobApplicationRepository) {
                     call.respond(result)
                 } else {
                     call.respond(HttpStatusCode.BadRequest, "Thiếu user ID")
+                }
+            }
+
+            put("/updateStatusAppliedJob") {
+                try {
+                    val params = call.receive<UpdateAppliedStatus>()
+                    val response = repository.updateStatusAppliedJob(params.userId, params.jobId, params.status)
+                    call.respond(response)
+                } catch (e: Exception) {
+                    call.respond(status = HttpStatusCode.InternalServerError, message = "Lối server: ${e.message}")
                 }
             }
 

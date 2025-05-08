@@ -96,10 +96,7 @@ class JobRepositoryImpl(private val jobService: JobService ) : JobRepository {
             }
 
             // Kiểm tra job tồn tại
-            val existingJob = jobService.getJobById(id)
-            if (existingJob == null) {
-                return BaseResponse.ErrorResponse(message = "Job not found")
-            }
+            val existingJob = jobService.getJobById(id) ?: return BaseResponse.ErrorResponse(message = "Job not found")
 
             // Thực hiện update
             val updatedJob = jobService.updateJob(id, params)
@@ -130,7 +127,7 @@ class JobRepositoryImpl(private val jobService: JobService ) : JobRepository {
         }
 
         // Validate salary
-        if (params.salary.min > params.salary.max) {
+        if (params.salaryMin > params.salaryMax) {
             errors.add("Minimum salary cannot be greater than maximum salary")
         }
 
