@@ -34,9 +34,6 @@ class NotificationServiceImpl : NotificationService {
 	}
 
 	override suspend fun createNotification(params: NotificationParams): Notification {
-		if (params.title.isBlank() || params.type.isBlank()) {
-			throw IllegalArgumentException("Title and type are required")
-		}
 		val statement = dbQuery {
 			NotificationTable.insert {
 				it[userId] = params.userId

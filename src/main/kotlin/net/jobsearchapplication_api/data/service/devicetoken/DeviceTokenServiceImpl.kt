@@ -3,6 +3,7 @@ package net.jobsearchapplication_api.data.service.devicetoken
 import net.jobsearchapplication_api.data.db.DatabaseFactory.dbQuery
 import net.jobsearchapplication_api.data.db.schemas.DeviceTokenTable
 import net.jobsearchapplication_api.data.models.DeviceToken
+import net.jobsearchapplication_api.routes.devicetoken.DeviceTokenParams
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.update
@@ -19,21 +20,21 @@ class DeviceTokenServiceImpl : DeviceTokenService {
 		}
 	}
 
-	override suspend fun createToken(id: String, params: String): DeviceToken? {
+	override suspend fun createToken(id: String, params: DeviceTokenParams): DeviceToken? {
 		return dbQuery {
 			val existingToken = DeviceTokenTable.select { DeviceTokenTable.id eq id }.firstOrNull()
 			if (existingToken != null) {
 				DeviceTokenTable.update({ DeviceTokenTable.id eq id }) {
-					it[token] = params
+					it[token] = params.token
 				}
-				DeviceToken(id, params)
 			} else {
 				DeviceTokenTable.insert {
 					it[DeviceTokenTable.id] = id
-					it[DeviceTokenTable.token] = params
+					it[token] = params.token
 				}
-				DeviceToken(id, params)
 			}
+			DeviceToken(id, params.token) // ✅ trả lại object đúng kiểu
 		}
 	}
+
 }

@@ -3,11 +3,8 @@ package net.jobsearchapplication_api.data.repository.devicetoken
 import net.jobsearchapplication_api.base.BaseResponse
 import net.jobsearchapplication_api.config.ERROR_CREATE_COMPANY
 import net.jobsearchapplication_api.config.SUCCESS
-import net.jobsearchapplication_api.data.models.DeviceToken
-import net.jobsearchapplication_api.data.repository.company.CompanyRepository
-import net.jobsearchapplication_api.data.service.company.CompanyService
 import net.jobsearchapplication_api.data.service.devicetoken.DeviceTokenService
-import net.jobsearchapplication_api.routes.company.CompanyParams
+import net.jobsearchapplication_api.routes.devicetoken.DeviceTokenParams
 
 class DeviceTokenRepositoryImpl(
 	private val DeviceTokenService: DeviceTokenService
@@ -20,7 +17,7 @@ class DeviceTokenRepositoryImpl(
 		)
 	}
 
-	override suspend fun createToken(id: String,params:String): BaseResponse<Any> {
+	override suspend fun createToken(id: String,params:DeviceTokenParams): BaseResponse<Any> {
 		val token = DeviceTokenService.createToken(id,params)
 		val response = if (token != null) SUCCESS else ERROR_CREATE_COMPANY
 		return BaseResponse.SuccessResponse(
