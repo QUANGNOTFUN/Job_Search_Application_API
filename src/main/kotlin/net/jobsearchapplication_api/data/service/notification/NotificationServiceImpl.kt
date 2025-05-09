@@ -1,7 +1,6 @@
 package net.jobsearchapplication_api.data.service.notification
 
 import net.jobsearchapplication_api.data.db.schemas.NotificationTable
-import net.jobsearchapplication_api.data.service.notification.NotificationService
 import net.jobsearchapplication_api.routes.notification.NotificationParams
 import net.jobsearchapplication_api.data.db.DatabaseFactory.dbQuery
 import net.jobsearchapplication_api.data.db.extensions.toNotification
@@ -35,9 +34,6 @@ class NotificationServiceImpl : NotificationService {
 	}
 
 	override suspend fun createNotification(params: NotificationParams): Notification {
-		if (params.title.isBlank() || params.type.isBlank()) {
-			throw IllegalArgumentException("Title and type are required")
-		}
 		val statement = dbQuery {
 			NotificationTable.insert {
 				it[userId] = params.userId

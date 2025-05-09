@@ -1,7 +1,6 @@
 package net.jobsearchapplication_api.data.repository.job
 
 import net.jobsearchapplication_api.base.BaseResponse
-import net.jobsearchapplication_api.data.models.AppliedJob
 import net.jobsearchapplication_api.routes.job.JobParams
 import java.util.*
 

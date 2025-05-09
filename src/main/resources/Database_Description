@@ -35,6 +35,7 @@ Table Jobs {
   salary_min DECIMAL(10,2) [null] // Lương tối thiểu
   salary_max DECIMAL(10,2) [null] // Lương tối đa
   currency VARCHAR(10) [default: "VND"] // Đơn vị tiền tệ
+  salary_period VARCHAR(20) [default: "MONTHLY"]
   location VARCHAR(255) // Địa điểm làm việc
   job_type VARCHAR(50) // Loại hình công việc (FULL_TIME, PART_TIME,...)
   experience_level VARCHAR(50) // Cấp độ kinh nghiệm (ENTRY, MID_LEVEL,...)

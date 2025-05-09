@@ -5,9 +5,8 @@ import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import io.ktor.util.*
-import net.jobsearchapplication_api.data.repository.notification.NotificationRepositoryImpl
 import net.jobsearchapplication_api.base.BaseResponse
+import net.jobsearchapplication_api.data.repository.notification.NotificationRepositoryImpl
 
 
 fun Application.notificationRoutes(repository: NotificationRepositoryImpl) {
@@ -51,7 +50,7 @@ fun Application.notificationRoutes(repository: NotificationRepositoryImpl) {
 				val id = call.parameters["id"]?.toLongOrNull()
 					?: return@put call.respond(BaseResponse.ErrorResponse(null.toString(), HttpStatusCode.BadRequest))
 
-				val isRead = call.parameters["isRead"]?.toBoolean() ?: false
+				val isRead = call.parameters["isRead"]?.toBoolean() ?: true
 
 				val success = repository.updateNotification(id, isRead)
 				call.respond(

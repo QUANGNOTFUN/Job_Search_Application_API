@@ -23,6 +23,7 @@ object DatabaseFactory {
 			SchemaUtils.create(NotificationTable)
             SchemaUtils.create(JobCategoryTable)
             SchemaUtils.create(JobApplicationTable)
+			SchemaUtils.create(DeviceTokenTable)
         }
     }
 

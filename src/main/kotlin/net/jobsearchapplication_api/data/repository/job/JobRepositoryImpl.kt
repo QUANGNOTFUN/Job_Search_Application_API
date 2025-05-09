@@ -4,7 +4,6 @@ import io.ktor.http.*
 import net.jobsearchapplication_api.base.BaseResponse
 import net.jobsearchapplication_api.config.GENERIC_ERROR
 import net.jobsearchapplication_api.config.SUCCESS
-import net.jobsearchapplication_api.data.models.AppliedJob
 import net.jobsearchapplication_api.data.models.GenderRequirement
 import net.jobsearchapplication_api.data.models.JobType
 import net.jobsearchapplication_api.data.service.job.JobService
